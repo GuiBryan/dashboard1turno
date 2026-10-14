@@ -36,7 +36,7 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .dropdown-divider{height:1px;background:var(--border)}
 /* ===== MAIN / KPIs ===== */
 .app-main{max-width:1400px;margin:1.75rem auto 0;padding:0 1.5rem;display:flex;flex-direction:column;gap:1.5rem}
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem}
 .kpi-card{background:var(--surface);border-top:4px solid var(--bps-light-blue);border-radius:var(--radius);box-shadow:0 1px 3px rgba(20,23,31,.08);padding:1rem 1.2rem}
 .kpi-card-label{font-size:.78rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted)}
 .kpi-card-val{font-size:2rem;font-weight:700;color:var(--bps-navy);line-height:1.2;margin:.2rem 0}
@@ -69,6 +69,7 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .card-top-row{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .badge-folga-pill{color:#fff;font-size:.76rem;font-weight:500;padding:3px 9px;border-radius:6px;display:inline-flex;align-items:center}
 .badge-folga-pill-A{background:#2E75B6}.badge-folga-pill-B{background:#548235}.badge-folga-pill-C{background:#ED7D31}.badge-folga-pill-D{background:#7030A0}
+.badge-funcao{background:#eef2ff;color:#4338ca;font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:6px;display:inline-flex;align-items:center}
 .badge-status-chip{background:var(--bps-navy);color:#fff;font-size:.75rem;font-weight:500;padding:3px 9px;border-radius:6px}
 .badge-afastado{background:#94a3b8;color:#fff;font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:6px}
 .badge-iop{background:var(--bps-navy);color:#fff;font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:6px;letter-spacing:.03em}
@@ -82,6 +83,7 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .chip-pend{background:#fee2e2;color:#991b1b;font-size:.78rem;font-weight:500;padding:3px 10px;border-radius:999px}
 .chip-exp{background:#dc2626;color:#fff;font-size:.78rem;font-weight:500;padding:3px 10px;border-radius:999px}
 .chip-warn{background:#fef3c7;color:#92400e;font-size:.78rem;font-weight:500;padding:3px 10px;border-radius:999px}
+.chip-na{background:#f1f5f9;color:#94a3b8;font-size:.78rem;font-weight:500;padding:3px 10px;border-radius:999px}
 .progress-bar{height:5px;background:#eef2f7;border-radius:999px;overflow:hidden;margin-top:auto}
 .progress-bar-fill{height:100%;background:var(--bps-green);border-radius:999px}
 .progress-bar-fill.critical{background:var(--status-danger)}
@@ -90,12 +92,23 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .card-item.afastado{opacity:.55}
 .card-item.afastado .card-name{text-decoration:line-through}
 .card-dates{font-size:.74rem;color:var(--text-muted);line-height:1.5}
+/* Balão de adicionar (último card da grade, mesma formatação dos retângulos) */
+.add-card{border:2px dashed #b6c6e0;background:#f8fafc;box-shadow:none;align-items:center;justify-content:center;min-height:150px;text-align:center;color:var(--bps-navy)}
+.add-card:hover{transform:translateY(-2px);background:#eef2ff;border-color:var(--bps-light-blue);box-shadow:0 6px 16px rgba(20,23,31,.1)}
+.add-card .plus{font-size:1.7rem;line-height:1}
+.add-card b{font-size:.92rem;font-weight:600}
+/* ===== TAGS DE TREINAMENTO ===== */
+.train-tag{font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:6px;display:inline-block}
+.tag-nr{background:#fff0df;color:#a85e11}
+.tag-iop{background:#e4effa;color:#345e88}
+.tag-int{background:#eaf4dd;color:#4f7928}
 /* ===== MATRIZ ===== */
 .matrix-wrap{background:var(--surface);border-radius:var(--radius);box-shadow:0 1px 3px rgba(20,23,31,.08);overflow:auto}
 .matrix-table{width:100%;border-collapse:collapse;font-size:.82rem;min-width:900px}
 .matrix-table th,.matrix-table td{border:1px solid #e2e8f0;padding:7px 9px;text-align:center;white-space:nowrap}
 .matrix-table th{background:var(--bps-navy);color:#fff;font-weight:500;position:sticky;top:0}
 .matrix-table td.name-cell{text-align:left;font-weight:500;letter-spacing:.02em}
+.funcao-mini{font-size:.7rem;color:var(--text-muted);font-weight:500}
 .matrix-ok{color:var(--status-success);font-weight:700}
 .matrix-no{color:var(--status-danger);font-weight:700}
 .matrix-pend{color:var(--status-danger);font-weight:700}
@@ -105,6 +118,7 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
 /* ===== MODAIS ===== */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:500;align-items:flex-start;justify-content:center;padding:4vh 1rem;overflow:auto}
 .modal-overlay.show{display:flex}
+.modal-overlay.on-top{z-index:520}
 .modal-box{background:#fff;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.3);width:100%;max-width:680px;animation:modalIn .18s ease}
 @keyframes modalIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .modal-header{display:flex;justify-content:space-between;align-items:flex-start;padding:1.1rem 1.3rem .6rem;gap:.8rem}
@@ -126,6 +140,8 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
 .iop-edit-row input[type=date]{border:1px solid var(--border);border-radius:6px;padding:5px 7px;font-size:.8rem;font-family:inherit}
 .iop-edit-row .custom-lbl{display:flex;align-items:center;gap:.25rem;font-size:.72rem;color:var(--text-muted);white-space:nowrap}
 .iop-edit-row .row-dates{grid-column:1/-1;display:flex;gap:.6rem;flex-wrap:wrap}
+.btn-add-training{width:100%;background:#8DB4E2;color:#243F5E;border:2px solid #6894c5;border-radius:8px;padding:10px;font-weight:600;cursor:pointer;font-size:.88rem;margin-top:.5rem;font-family:inherit}
+.btn-add-training:hover{background:#7ba6d8}
 .detail-card{display:flex;justify-content:space-between;align-items:center;gap:.7rem;padding:.6rem .7rem;border:1px solid var(--border);border-radius:8px;margin-bottom:.5rem;font-size:.85rem}
 .detail-card .dc-title{font-weight:500}
 .summary-row{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin:.6rem 0 .2rem}
@@ -133,6 +149,12 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
 .summary-ok{background:#e7f6d8;color:#3f6212}
 .summary-pend{background:#fee2e2;color:#991b1b}
 .view-section-title{font-size:.8rem;font-weight:700;color:var(--bps-navy);text-transform:uppercase;letter-spacing:.04em;margin:.9rem 0 .5rem}
+.choice-cards{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-bottom:1rem}
+.choice-card{text-align:left;background:#fff;border:1px solid var(--border);border-radius:10px;padding:.8rem .9rem;cursor:pointer;font-family:inherit}
+.choice-card.active{border:2px solid var(--bps-light-blue);background:#f5f9fd}
+.choice-card b{display:block;font-size:.88rem;color:var(--bps-navy)}
+.choice-card span{display:block;font-size:.75rem;color:var(--text-muted);margin-top:.3rem;line-height:1.4}
+.train-form{border-top:1px solid var(--border);padding-top:1rem}
 .btn-primary{background:var(--bps-green);color:var(--bps-navy);border:none;border-radius:8px;padding:10px 18px;font-weight:700;cursor:pointer;font-size:.9rem}
 .btn-secondary-action{background:#f1f5f9;color:var(--text);border:1px solid var(--border);border-radius:8px;padding:10px 18px;font-weight:500;cursor:pointer;font-size:.9rem}
 .btn-danger-action{background:var(--status-danger);color:#fff;border:none;border-radius:8px;padding:10px 18px;font-weight:600;cursor:pointer;font-size:.9rem}
@@ -145,7 +167,7 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
 .toast-item.show{opacity:1;transform:none}
 /* ===== IMPRESSÃO: apenas Matriz Geral ===== */
 @media print{
-  .app-header,.control-panel,.alert-banner,.kpi-grid,#viewColab,#viewIops,.toast-container{display:none!important}
+  .app-header,.control-panel,.alert-banner,.kpi-grid,#viewColab,#viewIops,#viewTrein,.toast-container{display:none!important}
   #viewMatriz{display:block!important}
   body{background:#fff}
   .matrix-table{font-size:9pt!important}
@@ -194,6 +216,7 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
     <nav class="view-tabs" role="tablist">
       <button class="tab-btn active" id="tabColabBtn" onclick="switchTab('colab')">👤 Por Colaborador</button>
       <button class="tab-btn" id="tabIopsBtn" onclick="switchTab('iops')">📋 Por IOPS</button>
+      <button class="tab-btn" id="tabTreinBtn" onclick="switchTab('trein')">🎓 Outros Treinamentos</button>
       <button class="tab-btn" id="tabMatrizBtn" onclick="switchTab('matriz')">▦ Matriz Geral</button>
     </nav>
     <div class="filter-row">
@@ -211,6 +234,7 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
 
   <section id="viewColab" class="cards-grid"></section>
   <section id="viewIops" class="cards-grid" style="display:none"></section>
+  <section id="viewTrein" class="cards-grid" style="display:none"></section>
   <section id="viewMatriz" style="display:none">
     <div class="matrix-wrap">
       <table class="matrix-table" id="matrixTable">
@@ -221,7 +245,7 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
   </section>
 </main>
 
-<!-- ===== MODAL: VISUALIZAR COLABORADOR (clique no card) ===== -->
+<!-- ===== MODAL: VISUALIZAR COLABORADOR ===== -->
 <div class="modal-overlay" id="modalViewColab">
   <div class="modal-box">
     <div class="modal-header">
@@ -236,7 +260,7 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
   </div>
 </div>
 
-<!-- ===== MODAL: VISUALIZAR IOP (clique no card) ===== -->
+<!-- ===== MODAL: VISUALIZAR IOP ===== -->
 <div class="modal-overlay" id="modalViewIop">
   <div class="modal-box">
     <div class="modal-header">
@@ -247,6 +271,88 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
     <div class="modal-footer">
       <button class="btn-secondary-action" onclick="closeModal('modalViewIop')">Fechar</button>
       <button class="btn-primary" onclick="viewToRev()">✏️ Editar revisão</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL: VISUALIZAR TREINAMENTO ===== -->
+<div class="modal-overlay" id="modalViewTraining">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2 class="modal-title" id="viewTrainingTitle">Treinamento</h2>
+      <button class="btn-close-modal" onclick="closeModal('modalViewTraining')">×</button>
+    </div>
+    <div class="modal-body" id="viewTrainingBody"></div>
+    <div class="modal-footer">
+      <button class="btn-warn-action" onclick="deleteTraining()" style="margin-right:auto">🗑️ Excluir treinamento</button>
+      <button class="btn-secondary-action" onclick="closeModal('modalViewTraining')">Fechar</button>
+      <button class="btn-primary" onclick="viewToTrainingReg()">📝 Registrar realização</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL: ADICIONAR TREINAMENTO (sempre por cima) ===== -->
+<div class="modal-overlay on-top" id="modalAddTraining">
+  <div class="modal-box" style="max-width:580px">
+    <div class="modal-header">
+      <h2 class="modal-title">➕ Adicionar Treinamento</h2>
+      <button class="btn-close-modal" onclick="closeAddTraining()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="choice-cards">
+        <button type="button" class="choice-card active" id="choiceReg" onclick="setTrainingMode('reg')">
+          <b>📝 Registrar realização</b>
+          <span>Colaborador • treinamento do catálogo • data • validade</span>
+        </button>
+        <button type="button" class="choice-card" id="choiceCat" onclick="setTrainingMode('cat')">
+          <b>📚 Cadastrar treinamento</b>
+          <span>Nome • tipo (NR / IOP / Interno) • validade padrão • obrigatório para</span>
+        </button>
+      </div>
+      <div id="formReg" class="train-form">
+        <div class="form-grid">
+          <div class="form-field"><label>Colaborador</label><select id="trColab" onchange="updateTrPreview()"></select></div>
+          <div class="form-field"><label>Treinamento do catálogo</label><select id="trTrain" onchange="updateTrPreview()"></select></div>
+          <div class="form-field full"><label>Data de realização</label><input type="date" id="trDate" onchange="updateTrPreview()"></div>
+        </div>
+        <p class="card-dates" id="trValidityPreview" style="margin:.6rem 0"></p>
+        <button class="btn-danger-action" id="btnRemoveReg" onclick="removeTrainingRecord()" style="display:none">🗑️ Remover registro</button>
+      </div>
+      <div id="formCat" class="train-form" style="display:none">
+        <div class="form-grid">
+          <div class="form-field full"><label>Nome do treinamento</label><input type="text" id="catName" placeholder="Ex.: NR-35 Trabalho em Altura"></div>
+          <div class="form-field"><label>Tipo</label><select id="catType"><option value="NR">NR's</option><option value="IOP">IOP's</option><option value="INTERNO">Treinamentos Internos</option></select></div>
+          <div class="form-field"><label>Validade padrão (meses)</label><input type="number" id="catMonths" value="12" min="1"></div>
+          <div class="form-field"><label>Carga horária (h)</label><input type="number" id="catHours" placeholder="Ex.: 8"></div>
+          <div class="form-field full"><label>Obrigatório para</label><input type="text" id="catFor" list="obrigList" placeholder="Ex.: OP I, OP II — ou Todos" autocomplete="off"><datalist id="obrigList"></datalist></div>
+        </div>
+        <p class="card-dates" style="margin-top:.4rem">Deixe vazio ou escreva "Todos" para valer para toda a equipe. Separe funções por vírgula — só quem pertence a essas funções entra no indicador deste treinamento.</p>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary-action" onclick="closeAddTraining()">Cancelar</button>
+      <button class="btn-primary" onclick="saveTraining()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL: ADICIONAR IOP ===== -->
+<div class="modal-overlay" id="modalAddIop">
+  <div class="modal-box" style="max-width:460px">
+    <div class="modal-header">
+      <h2 class="modal-title">➕ Adicionar IOP</h2>
+      <button class="btn-close-modal" onclick="closeModal('modalAddIop')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-field"><label>Código (número)</label><input type="text" id="fIopCode" maxlength="3" placeholder="Ex.: 075"></div>
+        <div class="form-field"><label>Descrição</label><input type="text" id="fIopDesc" placeholder="Ex.: Operar Correia 02"></div>
+      </div>
+      <p class="card-dates" style="margin-top:.6rem">A nova IOP entra na matriz de todos os colaboradores como pendente e é gravada na lista IOPs do SharePoint.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary-action" onclick="closeModal('modalAddIop')">Cancelar</button>
+      <button class="btn-primary" onclick="saveIop()">Salvar</button>
     </div>
   </div>
 </div>
@@ -262,10 +368,12 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
       <div class="form-grid">
         <div class="form-field full"><label>Nome do colaborador</label><input type="text" id="fName" placeholder="NOME DO COLABORADOR"></div>
         <div class="form-field"><label>Letra de Folga</label><select id="fFolga"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div>
-        <div class="form-field"><label>Situação</label><button type="button" class="situation-toggle on" id="fSituationToggle" onclick="toggleSituation()">🟢 Habilitado</button></div>
+        <div class="form-field"><label>Função</label><input type="text" id="fFuncao" list="funcaoList" placeholder="Ex.: OP I" autocomplete="off"><datalist id="funcaoList"></datalist></div>
+        <div class="form-field full"><label>Situação</label><button type="button" class="situation-toggle on" id="fSituationToggle" onclick="toggleSituation()">🟢 Habilitado</button></div>
       </div>
-      <div class="modal-subtitle">Treinamentos das 12 IOPs</div>
+      <div class="modal-subtitle">Treinamentos das IOPs</div>
       <div id="fIopsList"></div>
+      <button class="btn-add-training" onclick="openAddTrainingModal(state.editingId, null, true)">➕ Adicionar Treinamento (NR / IOP / Interno)</button>
     </div>
     <div class="modal-footer">
       <button class="btn-danger-action" id="btnDeleteColab" onclick="openConfirmDelete()" style="margin-right:auto; display:none">🗑️ Excluir</button>
@@ -276,7 +384,7 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
 </div>
 
 <!-- ===== MODAL: CONFIRMAÇÃO DE EXCLUSÃO ===== -->
-<div class="modal-overlay" id="modalConfirmDelete">
+<div class="modal-overlay on-top" id="modalConfirmDelete">
   <div class="modal-box" style="max-width:440px">
     <div class="modal-header">
       <h2 class="modal-title">⚠️ Excluir Colaborador</h2>
@@ -317,7 +425,7 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
 
 <!-- ===== MODAL: SINCRONIZAÇÃO SHAREPOINT ===== -->
 <div class="modal-overlay" id="modalSyncConfig">
-  <div class="modal-box" style="max-width:620px">
+  <div class="modal-box" style="max-width:640px">
     <div class="modal-header">
       <h2 class="modal-title">🔗 Sincronização com SharePoint</h2>
       <button class="btn-close-modal" onclick="closeModal('modalSyncConfig')">×</button>
@@ -327,14 +435,18 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
         <div class="form-field full"><label>URL do site SharePoint</label><input type="text" id="spSiteUrl" placeholder="https://empresa.sharepoint.com/sites/seu-site"></div>
         <div class="form-field"><label>Lista Colaboradores</label><input type="text" id="spListColab" value="Colaboradores"></div>
         <div class="form-field"><label>Lista IOPs</label><input type="text" id="spListIops" value="IOPs"></div>
-        <div class="form-field full"><label>Lista Treinamentos</label><input type="text" id="spListTrein" value="Treinamentos"></div>
+        <div class="form-field"><label>Lista Treinamentos</label><input type="text" id="spListTrein" value="Treinamentos"></div>
+        <div class="form-field"><label>Lista TreinamentosCatalogo</label><input type="text" id="spListCatalog" value="TreinamentosCatalogo"></div>
+        <div class="form-field full"><label>Lista RegistrosGerais</label><input type="text" id="spListReg" value="RegistrosGerais"></div>
       </div>
       <div class="help-text" style="margin-top:.8rem">
         <strong>Colunas esperadas (nomes internos sem espaço/acento):</strong><br>
-        • Colaboradores: <code>Title</code> (nome), <code>Folga</code>, <code>Habilitado</code>, <code>IdColab</code><br>
+        • Colaboradores: <code>Title</code> (nome), <code>Folga</code>, <code>Funcao</code>, <code>Habilitado</code>, <code>IdColab</code><br>
         • IOPs: <code>Title</code>, <code>Codigo</code>, <code>Descricao</code>, <code>REV</code>, <code>DataRevisao</code><br>
-        • Treinamentos: <code>Title</code>, <code>ColaboradorId</code>, <code>IopCodigo</code>, <code>Realizado</code>, <code>DataRealizacao</code>, <code>DataValidade</code>, <code>ValidadePersonalizada</code><br><br>
-        A leitura/gravação usa a API REST do SharePoint com a sessão do navegador (conta corporativa). Hospede esta página dentro do site para funcionar sem login extra.
+        • Treinamentos (IOPs críticas): <code>Title</code>, <code>ColaboradorId</code>, <code>IopCodigo</code>, <code>Realizado</code>, <code>DataRealizacao</code>, <code>DataValidade</code>, <code>ValidadePersonalizada</code><br>
+        • TreinamentosCatalogo: <code>Title</code> (nome), <code>Tipo</code> (NR / IOP / INTERNO), <code>CargaHoraria</code>, <code>ValidadeMeses</code>, <code>ObrigatorioPara</code>, <code>IdTrein</code><br>
+        • RegistrosGerais: <code>Title</code>, <code>ColaboradorId</code>, <code>TreinamentoId</code>, <code>DataRealizacao</code>, <code>DataValidade</code><br><br>
+        O SharePoint é a fonte principal: ao abrir, o dashboard carrega das listas; o cache local serve para consulta offline e preserva edições ainda não enviadas.
       </div>
     </div>
     <div class="modal-footer">
@@ -351,62 +463,96 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
 <script>
 'use strict';
 // ==================== CONSTANTES ====================
-const IOPS = [
-  {code:'006',desc:'Tripper AG 255',critical:false},
-  {code:'008',desc:'Operar TB 015',critical:false},
-  {code:'009',desc:'Operar TB 1720',critical:true},
-  {code:'011',desc:'Descarregar Vagões',critical:false},
-  {code:'012',desc:'Descarregar Óleo',critical:false},
-  {code:'027',desc:'Rechegar Produto',critical:false},
-  {code:'034',desc:'Expedir Óleo',critical:true},
-  {code:'040',desc:'Coletar Grãos na Triagem',critical:false},
-  {code:'046',desc:'Coletar Grãos no Terminal',critical:false},
-  {code:'057',desc:'Tripper AG 1780',critical:false},
-  {code:'064',desc:'Operar Carpuller',critical:false},
-  {code:'112',desc:'Operar BF',critical:false}
-];
-const IOP_ORDER = ['112','006','008','009','011','012','027','034','040','046','057','064'];
-// Chave nova e isolada: garante primeira abertura LIMPA (sem dados), sem conflito com o dashboard original
-const STORAGE_KEY = 'controle-treinamentos-iops-v4-sp';
+const CRITICAL_CODES = ['009','034'];
+const DEFAULT_FUNCOES = ['OP I','OP II','OP III','OP IV','CONFERENTE','SUPERVISOR'];
+const TYPE_META = {
+  'NR': {label:"NR's", cls:'tag-nr'},
+  'IOP': {label:"IOP's", cls:'tag-iop'},
+  'INTERNO': {label:'Treinamentos Internos', cls:'tag-int'}
+};
+const STORAGE_KEY = 'controle-treinamentos-iops-v5-sp';
 const SP_CONFIG_KEY = 'controle-treinamentos-iops-sp-config';
 
 const state = {
-  collaborators: [], iops: {}, selectedFolga: 'TODAS', searchQuery: '',
-  activeTab: 'colab', syncStatus: 'gray', lastSyncTime: null,
-  editingId: null, editingSituation: true, viewColabId: null, viewIopCode: null
+  collaborators: [], iopDefs: [], iops: {}, catalog: [], registros: [],
+  selectedFolga: 'TODAS', searchQuery: '', activeTab: 'colab',
+  syncStatus: 'gray', lastSyncTime: null, pendingPush: false, returnToEditId: null,
+  editingId: null, editingSituation: true,
+  viewColabId: null, viewIopCode: null, viewTrainingId: null
 };
 
-// ==================== SEED (sem nenhum treinamento concluído) ====================
-function defaultRecords(){ const r={}; IOP_ORDER.forEach(c=>r[c]={done:false,realizationDate:'',validityDate:'',userCustomValidity:false}); return r; }
+// ==================== IOPs DINÂMICAS ====================
+function seedIopDefs(){
+  return [
+    {code:'006',desc:'Tripper AG 255'},{code:'008',desc:'Operar TB 015'},{code:'009',desc:'Operar TB 1720'},
+    {code:'011',desc:'Descarregar Vagões'},{code:'012',desc:'Descarregar Óleo'},{code:'027',desc:'Rechegar Produto'},
+    {code:'034',desc:'Expedir Óleo'},{code:'040',desc:'Coletar Grãos na Triagem'},{code:'046',desc:'Coletar Grãos no Terminal'},
+    {code:'057',desc:'Tripper AG 1780'},{code:'064',desc:'Operar Carpuller'},{code:'112',desc:'Operar BF'}
+  ].map(d=>({code:d.code,desc:d.desc,critical:CRITICAL_CODES.includes(d.code)}));
+}
+function getIops(){ return [...state.iopDefs].sort((a,b)=>a.code.localeCompare(b.code,'pt-BR')); }
+
+// ==================== SEED (todos habilitados, sem treinamentos concluídos, catálogo vazio) ====================
+function defaultRecords(){ const r={}; getIops().forEach(i=>r[i.code]={done:false,realizationDate:'',validityDate:'',userCustomValidity:false}); return r; }
 function seedCollaborators(){
   const defs = [
-    ['ADRIANO DOS SANTOS','A',true],['ALISON LUIZ LOPES','A',true],['DIOGO MAIA','A',true],
-    ['JESSÉ DA SILVA','A',true],['MARCIO DA SILVA','A',true],['NILSON DE OLIVEIRA BITTENCOURT','A',true],
-    ['WELLISON F. S. DA SILVA','A',true],['GABRIEL COSTA NOVAES DE OLIVEIRA','B',true],
-    ['GUILHERME BRYAN DA ROSA','B',true],['JORGE L. ROMÃO','B',false],['JULIO COSTA JUNIOR','B',true],
-    ['PAULO CESAR GREGÓRIO JUNIOR','B',true],['VINICIUS H. DE LIMA','B',false],['VITOR HUGO MARTINS','B',true],
-    ['CARLOS ROBERTO DE O. GUIMARÃES','C',true],['EDILSON SIQUEIRA','C',true],['EDNILSON LIMA DE OLIVEIRA','C',true],
-    ['HENRIQUE CORGONI DE SOUZA','C',true],['LARRY PAIVA DA COSTA','C',true],['ODAIR JOSÉ CUNHA','C',false],
-    ['ARTHUR FONSECA DA SILVA','D',true],['FELIPE ALVES DIAS','D',true],['GIULEANO JOSE DOS SANTOS','D',true],
-    ['MARLON VIEIRA MENDES','D',true],['ROBERTO BRAULOS DE MELLO','D',true],['SAMARA LUCIA DOS SANTOS','D',true]
+    ['ADRIANO DOS SANTOS','A'],['ALISON LUIZ LOPES','A'],['DIOGO MAIA','A'],
+    ['JESSÉ DA SILVA','A'],['MARCIO DA SILVA','A'],['NILSON DE OLIVEIRA BITTENCOURT','A'],
+    ['WELLISON F. S. DA SILVA','A'],['GABRIEL COSTA NOVAES DE OLIVEIRA','B'],
+    ['GUILHERME BRYAN DA ROSA','B'],['JORGE L. ROMÃO','B'],['JULIO COSTA JUNIOR','B'],
+    ['PAULO CESAR GREGÓRIO JUNIOR','B'],['VINICIUS H. DE LIMA','B'],['VITOR HUGO MARTINS','B'],
+    ['CARLOS ROBERTO DE O. GUIMARÃES','C'],['EDILSON SIQUEIRA','C'],['EDNILSON LIMA DE OLIVEIRA','C'],
+    ['HENRIQUE CORGONI DE SOUZA','C'],['LARRY PAIVA DA COSTA','C'],['ODAIR JOSÉ CUNHA','C'],
+    ['ARTHUR FONSECA DA SILVA','D'],['FELIPE ALVES DIAS','D'],['GIULEANO JOSE DOS SANTOS','D'],
+    ['MARLON VIEIRA MENDES','D'],['ROBERTO BRAULOS DE MELLO','D'],['SAMARA LUCIA DOS SANTOS','D']
   ];
-  return defs.map((d,i)=>({id:'colab_'+(i+1),name:d[0],folga:d[1],enabled:d[2],records:defaultRecords()}));
+  return defs.map((d,i)=>({id:'colab_'+(i+1),name:d[0],folga:d[1],funcao:'',enabled:true,records:defaultRecords()}));
 }
-function defaultIopsRev(){ const o={}; IOPS.forEach(i=>o[i.code]={rev:'',revDate:''}); return o; }
+function defaultIopsRev(){ const o={}; getIops().forEach(i=>o[i.code]={rev:'',revDate:''}); return o; }
 
 // ==================== DATAS ====================
 function todayStr(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function addYear(dateStr){ if(!dateStr) return ''; const d=new Date(dateStr+'T12:00:00'); if(isNaN(d)) return ''; d.setFullYear(d.getFullYear()+1); return d.toISOString().slice(0,10); }
+function addMonths(dateStr, m){ if(!dateStr) return ''; const d=new Date(dateStr+'T12:00:00'); if(isNaN(d)) return ''; d.setMonth(d.getMonth()+parseInt(m||0,10)); return d.toISOString().slice(0,10); }
 function getValidity(rec){ return (rec.userCustomValidity && rec.validityDate) ? rec.validityDate : addYear(rec.realizationDate); }
 function isExpired(rec){ if(!rec.done) return false; const v=getValidity(rec); return !!v && v < todayStr(); }
 function isExpiring(rec){ if(!rec.done||isExpired(rec)) return false; const v=getValidity(rec); if(!v) return false; const lim=new Date(); lim.setDate(lim.getDate()+30); return v <= lim.toISOString().slice(0,10); }
 function formatDateBR(s){ if(!s) return ''; const p=s.split('-'); return p.length===3 ? p[2]+'/'+p[1]+'/'+p[0] : s; }
 function getRevValidityInfo(revDate){ return revDate ? {valDateStr:addYear(revDate)} : null; }
 
+// ==================== TREINAMENTOS GERAIS (CAMADA 2) ====================
+function getTrainingById(id){ return state.catalog.find(t=>t.id===id); }
+function trainingValidity(rec, cat){ return rec.validityDate || addMonths(rec.realizationDate, cat ? cat.validadeMeses : 12); }
+function isTrainingExpired(rec, cat){ const v=trainingValidity(rec,cat); return !!v && v < todayStr(); }
+function isTrainingExpiring(rec, cat){ const v=trainingValidity(rec,cat); if(!v||isTrainingExpired(rec,cat)) return false; const lim=new Date(); lim.setDate(lim.getDate()+30); return v <= lim.toISOString().slice(0,10); }
+function getTrainingRecord(colabId, treinamentoId){ return state.registros.find(x=>x.colabId===colabId && x.treinamentoId===treinamentoId); }
+function isTrainingRequiredFor(c, t){
+  const req = (t.obrigatorioPara||'').trim();
+  if(!req || req.toUpperCase()==='TODOS' || req.toUpperCase()==='TODA EQUIPE') return true;
+  if(!c.funcao) return false;
+  return req.split(/[,;]/).map(s=>s.trim().toUpperCase()).filter(Boolean).includes(c.funcao.toUpperCase());
+}
+function getTrainingStats(t){
+  const req = enabledColabs().filter(c=>isTrainingRequiredFor(c,t));
+  const total = req.length;
+  let emDia=0, vencidos=0;
+  req.forEach(c=>{ const r=getTrainingRecord(c.id,t.id); if(r){ if(isTrainingExpired(r,t)) vencidos++; else emDia++; } });
+  return { emDia, vencidos, pend: total-emDia-vencidos, total, pct: total?Math.round(emDia/total*100):0 };
+}
+
 // ==================== PERSISTÊNCIA ====================
-function saveState(){
-  const payload = { collaborators: state.collaborators, iops: IOPS.map(i=>({code:i.code,desc:i.desc,...(state.iops[i.code]||{})})) };
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+function persistCache(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({
+    collaborators: state.collaborators,
+    iops: getIops().map(i=>({code:i.code,desc:i.desc,...(state.iops[i.code]||{})})),
+    catalog: state.catalog, registros: state.registros,
+    pendingPush: !!state.pendingPush
+  }));
+}
+// markPending=true em edições do usuário; false para gravações internas (seed/sync) que não devem disparar envio
+function saveState(markPending=true){
+  state.pendingPush = markPending ? true : !!state.pendingPush;
+  persistCache();
   triggerRemotePush();
 }
 function loadState(){
@@ -415,42 +561,57 @@ function loadState(){
     if(raw){
       const parsed = JSON.parse(raw);
       if(Array.isArray(parsed.collaborators) && parsed.collaborators.length){
+        if(Array.isArray(parsed.iops) && parsed.iops.length){
+          state.iopDefs = parsed.iops.filter(it=>it&&it.code).map(it=>{
+            const code = String(it.code).padStart(3,'0');
+            return {code, desc: it.desc||code, critical: CRITICAL_CODES.includes(code)};
+          });
+        }
         state.collaborators = normalizeCollaborators(parsed.collaborators);
-        if(Array.isArray(parsed.iops)) applyIopsList(parsed.iops);
+        applyIopsList(parsed.iops||[]);
+        if(Array.isArray(parsed.catalog)) state.catalog = parsed.catalog;
+        if(Array.isArray(parsed.registros)) state.registros = parsed.registros;
+        state.pendingPush = !!parsed.pendingPush;
         return;
       }
     }
   }catch(e){ console.warn('Erro ao carregar localStorage:', e); }
+  state.iopDefs = seedIopDefs();
   state.collaborators = seedCollaborators();
   state.iops = defaultIopsRev();
-  saveState();
+  state.catalog = [];
+  state.registros = [];
+  state.pendingPush = false;
+  persistCache();
 }
 function applyIopsList(list){
-  list.forEach(it=>{ if(it && it.code){ state.iops[it.code] = { rev: it.rev||'', revDate: it.revDate||'' }; } });
+  (list||[]).forEach(it=>{ if(it && it.code){ state.iops[String(it.code).padStart(3,'0')] = { rev: it.rev||'', revDate: it.revDate||'' }; } });
 }
 function normalizeCollaborators(list){
+  const defs = getIops();
   return list.map(c=>{
     const records = {};
-    IOPS.forEach(iop=>{
+    defs.forEach(iop=>{
       const rec = (c.records && c.records[iop.code]) || {};
       records[iop.code] = { done: !!rec.done, realizationDate: rec.realizationDate||'', validityDate: rec.validityDate||'', userCustomValidity: !!rec.userCustomValidity };
     });
-    return { id: c.id || 'colab_'+Math.random().toString(36).slice(2), name: c.name||'Sem Nome', folga: c.folga||'A', enabled: typeof c.enabled==='boolean'?c.enabled:true, records };
+    return { id: c.id || 'colab_'+Math.random().toString(36).slice(2), name: c.name||'Sem Nome', folga: c.folga||'A', funcao: c.funcao||'', enabled: typeof c.enabled==='boolean'?c.enabled:true, records };
   });
 }
 
 // ==================== ESTATÍSTICAS ====================
 function enabledColabs(){ return state.collaborators.filter(c=>c.enabled); }
 function getCollaboratorStats(c){
+  const defs = getIops();
   let done=0, expired=0;
-  IOPS.forEach(i=>{ const r=c.records[i.code]; if(r.done){ done++; if(isExpired(r)) expired++; } });
-  return { done, pend: 12-done, expired };
+  defs.forEach(i=>{ const r=c.records[i.code]; if(r&&r.done){ done++; if(isExpired(r)) expired++; } });
+  return { done, pend: defs.length-done, expired };
 }
 function getIopStats(){
   const total = enabledColabs().length;
-  return IOPS.map(iop=>{
+  return getIops().map(iop=>{
     let emDia=0, pend=0;
-    enabledColabs().forEach(c=>{ const r=c.records[iop.code]; if(r.done && !isExpired(r)) emDia++; else pend++; });
+    enabledColabs().forEach(c=>{ const r=c.records[iop.code]; if(r&&r.done && !isExpired(r)) emDia++; else pend++; });
     const pct = total ? Math.round(emDia/total*100) : 0;
     const pctPend = total ? Math.round(pend/total*100) : 0;
     return { code:iop.code, desc:iop.desc, critical:!!iop.critical, emDia, pend, pct, pctPend, total };
@@ -461,19 +622,25 @@ function getIopStats(){
 function renderAll(){ renderKPIs(); renderAlertBanner(); renderFilterCounts(); renderActiveView(); }
 
 function renderKPIs(){
+  const defs = getIops();
   const enabled = enabledColabs();
   const afastados = state.collaborators.length - enabled.length;
   let done=0, expired=0;
   enabled.forEach(c=>{ const s=getCollaboratorStats(c); done+=s.done; expired+=s.expired; });
-  const totalSlots = enabled.length*12;
+  const totalSlots = enabled.length*defs.length;
   const missing = totalSlots - done;
   const pend = missing + expired;
   const pct = totalSlots ? (done/totalSlots*100).toFixed(1).replace('.',',') : '0,0';
+  let trEmDia=0, trVenc=0, trSlots=0;
+  state.catalog.forEach(t=>{ const s=getTrainingStats(t); trEmDia+=s.emDia; trVenc+=s.vencidos; trSlots+=s.total; });
+  const trPct = trSlots ? Math.round(trEmDia/trSlots*100)+'%' : '—';
+  const trSub = state.catalog.length ? `${trEmDia} em dia • ${trVenc} vencidos • catálogo: ${state.catalog.length}` : 'Nenhum treinamento no catálogo';
   document.getElementById('kpisContainer').innerHTML = `
     <div class="kpi-card"><div class="kpi-card-label">Colaboradores Monitorados</div><div class="kpi-card-val">${enabled.length}</div><div class="kpi-card-sub">1º Turno Operacional (Letras A, B, C, D) • ${afastados} afastado(s)</div></div>
-    <div class="kpi-card"><div class="kpi-card-label">IOPS Críticas Mapeadas</div><div class="kpi-card-val">${IOPS.length}</div><div class="kpi-card-sub">Instruções Operacionais Padronizadas</div></div>
+    <div class="kpi-card"><div class="kpi-card-label">IOPS Críticas Mapeadas</div><div class="kpi-card-val">${defs.length}</div><div class="kpi-card-sub">Instruções Operacionais Padronizadas</div></div>
     <div class="kpi-card"><div class="kpi-card-label">Total de Pendências</div><div class="kpi-card-val">${pend}</div><div class="kpi-legend">🟠 Faltando treinamento: ${missing}<br>🔴 Vencidos: ${expired}</div></div>
-    <div class="kpi-card"><div class="kpi-card-label">Treinamentos Realizados</div><div class="kpi-card-val">${done}</div><div class="kpi-card-sub">${pct}% de conclusão (${done} de ${totalSlots})</div></div>`;
+    <div class="kpi-card"><div class="kpi-card-label">Treinamentos Realizados</div><div class="kpi-card-val">${done}</div><div class="kpi-card-sub">${pct}% de conclusão (${done} de ${totalSlots})</div></div>
+    <div class="kpi-card"><div class="kpi-card-label">Panorama Geral</div><div class="kpi-card-val">${trPct}</div><div class="kpi-card-sub">Outros treinamentos: ${trSub}</div></div>`;
 }
 
 function renderAlertBanner(){
@@ -487,6 +654,15 @@ function renderAlertBanner(){
   const top3Str = top3.map(i=>`IOP ${i.code} (${i.pend} • ${i.pctPend}%)`).join(', ');
   const expiredCount = enabledColabs().filter(c=>getCollaboratorStats(c).expired>0).length;
   const vencidasText = expiredCount>0 ? `${expiredCount} colaborador(es)` : 'Nenhum colaborador com IOPS vencida no momento';
+  let trExpiredTotal=0, trExpiring=0;
+  state.catalog.forEach(t=>{
+    const s = getTrainingStats(t);
+    trExpiredTotal += s.vencidos;
+    trExpiring += enabledColabs().filter(c=>isTrainingRequiredFor(c,t) && (()=>{ const r=getTrainingRecord(c.id,t.id); return r && isTrainingExpiring(r,t); })()).length;
+  });
+  const trText = !state.catalog.length ? 'Nenhum treinamento complementar no catálogo'
+    : (trExpiredTotal||trExpiring) ? `${trExpiredTotal} vencido(s), ${trExpiring} vencendo em 30 dias`
+    : 'Nenhum vencido no momento';
   document.getElementById('alertBanner').innerHTML = `
     <div class="alert-icon">⚠️</div>
     <div class="alert-content">
@@ -496,13 +672,15 @@ function renderAlertBanner(){
         <li><strong>Destaque Positivo:</strong> ${escapeHtml(destaqueText)}</li>
         <li><strong>IOPs com maior pendência:</strong> ${escapeHtml(top3Str)}</li>
         <li><strong>Colaboradores com IOPS vencidas:</strong> ${escapeHtml(vencidasText)}</li>
+        <li><strong>Outros treinamentos:</strong> ${escapeHtml(trText)}</li>
       </ul>
     </div>`;
 }
 
 function renderFilterCounts(){
   document.getElementById('tabColabBtn').textContent = `👤 Por Colaborador (${enabledColabs().length})`;
-  document.getElementById('tabIopsBtn').textContent = `📋 Por IOPS (${IOPS.length})`;
+  document.getElementById('tabIopsBtn').textContent = `📋 Por IOPS (${getIops().length})`;
+  document.getElementById('tabTreinBtn').textContent = `🎓 Outros Treinamentos (${state.catalog.length})`;
 }
 
 function getFilteredCollaborators(){
@@ -518,26 +696,31 @@ function getFilteredCollaborators(){
   return list;
 }
 
+function addCardHtml(icon, title, sub, fn){
+  return `<div class="card-item add-card" onclick="${fn}"><span class="plus">${icon}</span><b>${title}</b><span class="card-count">${sub}</span></div>`;
+}
+
 function renderColabView(){
   const container = document.getElementById('viewColab');
+  const defs = getIops();
   const list = getFilteredCollaborators();
   if(!list.length){ container.innerHTML = '<div class="help-text">Nenhum colaborador encontrado.</div>'; return; }
   container.innerHTML = list.map(c=>{
     const s = getCollaboratorStats(c);
-    const pct = Math.round(s.done/12*100);
+    const pct = Math.round(s.done/defs.length*100);
     if(!c.enabled){
       return `<div class="card-item afastado">
-        <div class="card-top-row"><span class="badge-folga-pill badge-folga-pill-${c.folga}">Folga ${c.folga}</span><span class="badge-afastado">Afastado</span></div>
+        <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">Folga ${c.folga}</span>${c.funcao?`<span class="badge-funcao">${escapeHtml(c.funcao)}</span>`:''}</span><span class="badge-afastado">Afastado</span></div>
         <div class="card-name">${escapeHtml(c.name)}</div>
       </div>`;
     }
     return `<div class="card-item clickable" onclick="openViewColab('${c.id}')">
-      <div class="card-top-row"><span class="badge-folga-pill badge-folga-pill-${c.folga}">Folga ${c.folga}</span><span class="card-count">${s.done}/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">Folga ${c.folga}</span>${c.funcao?`<span class="badge-funcao">${escapeHtml(c.funcao)}</span>`:''}</span><span class="card-count">${s.done}/${defs.length} Concluídas</span></div>
       <div class="card-name">${escapeHtml(c.name)}</div>
       <div class="chip-row"><span class="chip-ok">✓ ${s.done} Realizadas</span><span class="chip-pend">✗ ${s.pend} Pendentes</span>${s.expired?`<span class="chip-exp">🔴 ${s.expired} Vencida(s)</span>`:''}</div>
       <div class="progress-bar"><div class="progress-bar-fill ${pct<50?'critical':''}" style="width:${pct}%"></div></div>
     </div>`;
-  }).join('');
+  }).join('') + addCardHtml('➕','Adicionar Colaborador','Cadastrar novo membro do turno','openAddModal()');
 }
 
 function renderIopsView(){
@@ -546,7 +729,7 @@ function renderIopsView(){
   const q = state.searchQuery.trim().toLowerCase();
   let stats = getIopStats();
   if(q) stats = stats.filter(i=>i.code.includes(q)||i.desc.toLowerCase().includes(q));
-  if(!stats.length){ container.innerHTML = '<div class="help-text">Nenhuma IOP encontrada.</div>'; return; }
+  if(!stats.length){ container.innerHTML = '<div class="help-text">Nenhuma IOP encontrada.</div>' + addCardHtml('➕','Adicionar IOP','Nova IOP para a matriz do turno','openAddIopModal()'); return; }
   container.innerHTML = stats.map(i=>{
     const rev = state.iops[i.code]||{};
     const revInfo = getRevValidityInfo(rev.revDate);
@@ -560,26 +743,48 @@ function renderIopsView(){
       <div class="chip-row"><span class="chip-ok">✔ ${i.emDia} em dia (${i.pct}%)</span><span class="chip-pend">✗ ${i.pend} pendentes</span></div>
       <div class="progress-bar"><div class="progress-bar-fill ${i.pct<50?'critical':''}" style="width:${i.pct}%"></div></div>
     </div>`;
-  }).join('');
+  }).join('') + addCardHtml('➕','Adicionar IOP','Nova IOP para a matriz do turno','openAddIopModal()');
+}
+
+function renderTreinamentosView(){
+  const container = document.getElementById('viewTrein');
+  const q = state.searchQuery.trim().toLowerCase();
+  const list = state.catalog.filter(t=>!q || t.name.toLowerCase().includes(q));
+  if(!list.length){
+    container.innerHTML = '<div class="help-text">Nenhum treinamento no catálogo. Cadastre NRs, IOPs complementares ou treinamentos internos para começar o controle.</div>' + addCardHtml('➕','Adicionar Treinamento','Registrar realização ou cadastrar no catálogo','openAddTrainingModal()');
+    return;
+  }
+  container.innerHTML = list.map(t=>{
+    const s = getTrainingStats(t);
+    const meta = TYPE_META[t.type]||TYPE_META['INTERNO'];
+    const doneClass = s.total>0 && s.emDia===s.total ? 'iop-100' : '';
+    return `<div class="card-item clickable ${doneClass}" onclick="openViewTraining('${t.id}')">
+      <div class="card-top-row"><span class="train-tag ${meta.cls}">${meta.label}</span><span class="card-count">${s.emDia}/${s.total} em dia</span></div>
+      <div class="card-desc">${escapeHtml(t.name)}</div>
+      <div class="chip-row"><span class="chip-ok">✔ ${s.emDia} em dia (${s.pct}%)</span><span class="chip-pend">✗ ${s.pend} pendentes</span>${s.vencidos?`<span class="chip-exp">🔴 ${s.vencidos} vencidos</span>`:''}</div>
+      <div class="progress-bar"><div class="progress-bar-fill ${s.pct<50?'critical':''}" style="width:${s.pct}%"></div></div>
+    </div>`;
+  }).join('') + addCardHtml('➕','Adicionar Treinamento','Registrar realização ou cadastrar no catálogo','openAddTrainingModal()');
 }
 
 function renderMatrizGeral(){
   const head = document.getElementById('matrixHead');
   const body = document.getElementById('matrixBody');
-  head.innerHTML = '<tr><th>Folga</th><th style="text-align:left">Colaborador</th>' + IOPS.map(i=>`<th>${i.code}</th>`).join('') + '<th>Pendências</th><th>Ações</th></tr>';
+  const defs = getIops();
+  head.innerHTML = '<tr><th>Folga</th><th style="text-align:left">Colaborador</th>' + defs.map(i=>`<th>${i.code}</th>`).join('') + '<th>Pendências</th><th>Ações</th></tr>';
   const list = getFilteredCollaborators();
-  if(!list.length){ body.innerHTML = '<tr><td colspan="16" style="padding:24px;color:var(--text-muted)">Nenhum colaborador encontrado.</td></tr>'; return; }
+  if(!list.length){ body.innerHTML = `<tr><td colspan="${defs.length+4}" style="padding:24px;color:var(--text-muted)">Nenhum colaborador encontrado.</td></tr>`; return; }
   body.innerHTML = list.map(c=>{
     const s = getCollaboratorStats(c);
-    const cells = IOPS.map(i=>{
+    const cells = defs.map(i=>{
       const r = c.records[i.code];
       if(!c.enabled) return '<td>–</td>';
-      if(!r.done) return '<td class="matrix-no">✗</td>';
+      if(!r||!r.done) return '<td class="matrix-no">✗</td>';
       return isExpired(r) ? '<td class="matrix-no">🔴</td>' : '<td class="matrix-ok">✓</td>';
     }).join('');
     return `<tr class="${c.enabled?'':'row-afastado'}">
       <td><span class="badge-folga-pill badge-folga-pill-${c.folga}">${c.folga}</span></td>
-      <td class="name-cell">${escapeHtml(c.name)}${c.enabled?'':' <span class="badge-afastado">Afastado</span>'}</td>
+      <td class="name-cell">${escapeHtml(c.name)}${c.funcao?` <span class="funcao-mini">(${escapeHtml(c.funcao)})</span>`:''}${c.enabled?'':' <span class="badge-afastado">Afastado</span>'}</td>
       ${cells}
       <td class="matrix-pend">${c.enabled?s.pend:'–'}</td>
       <td><button class="btn-edit-mini" onclick="openEditModal('${c.id}')">✏️ Editar</button></td>
@@ -590,9 +795,11 @@ function renderMatrizGeral(){
 function renderActiveView(){
   document.getElementById('viewColab').style.display = state.activeTab==='colab' ? 'grid' : 'none';
   document.getElementById('viewIops').style.display = state.activeTab==='iops' ? 'grid' : 'none';
+  document.getElementById('viewTrein').style.display = state.activeTab==='trein' ? 'grid' : 'none';
   document.getElementById('viewMatriz').style.display = state.activeTab==='matriz' ? 'block' : 'none';
   if(state.activeTab==='colab') renderColabView();
   else if(state.activeTab==='iops') renderIopsView();
+  else if(state.activeTab==='trein') renderTreinamentosView();
   else renderMatrizGeral();
 }
 
@@ -601,6 +808,7 @@ function switchTab(tab){
   state.activeTab = tab;
   document.getElementById('tabColabBtn').classList.toggle('active', tab==='colab');
   document.getElementById('tabIopsBtn').classList.toggle('active', tab==='iops');
+  document.getElementById('tabTreinBtn').classList.toggle('active', tab==='trein');
   document.getElementById('tabMatrizBtn').classList.toggle('active', tab==='matriz');
   renderActiveView();
 }
@@ -620,22 +828,24 @@ function closeModal(id){ document.getElementById(id).classList.remove('show'); }
 function openViewColab(id){
   const c = state.collaborators.find(x=>x.id===id); if(!c) return;
   state.viewColabId = id;
+  const defs = getIops();
   const s = getCollaboratorStats(c);
   document.getElementById('viewColabTitle').textContent = c.name;
   const realizadas = [], pendentes = [];
-  IOPS.forEach(iop=>{
+  defs.forEach(iop=>{
     const r = c.records[iop.code];
-    if(c.enabled && r.done) realizadas.push({iop, r});
+    if(c.enabled && r && r.done) realizadas.push({iop, r});
     else pendentes.push({iop, r});
   });
   let html = `
     <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
       <span class="badge-folga-pill badge-folga-pill-${c.folga}">Folga ${c.folga}</span>
+      ${c.funcao?`<span class="badge-funcao">${escapeHtml(c.funcao)}</span>`:''}
       ${c.enabled?'<span class="badge-status-chip">Habilitado</span>':'<span class="badge-afastado">Afastado</span>'}
     </div>
     <div class="summary-row">
-      <div class="summary-box summary-ok">✅ ${s.done} / 12 Realizadas</div>
-      <div class="summary-box summary-pend">❌ ${s.pend} / 12 Pendências</div>
+      <div class="summary-box summary-ok">✅ ${s.done} / ${defs.length} Realizadas</div>
+      <div class="summary-box summary-pend">❌ ${s.pend} / ${defs.length} Pendências</div>
     </div>`;
   if(c.enabled){
     html += '<div class="view-section-title">Realizadas</div>';
@@ -648,6 +858,21 @@ function openViewColab(id){
     }).join('') : '<div class="help-text">Nenhuma IOP realizada.</div>';
     html += '<div class="view-section-title">Pendentes</div>';
     html += pendentes.length ? pendentes.map(({iop})=>`<div class="detail-card"><span class="dc-title">${iop.code} – ${escapeHtml(iop.desc)}</span><span class="chip-pend">Faltando Treinamento</span></div>`).join('') : '<div class="help-text">Nenhuma pendência. 🎉</div>';
+    if(state.catalog.length){
+      html += '<div class="view-section-title">Outros treinamentos</div>';
+      html += state.catalog.map(t=>{
+        const meta = TYPE_META[t.type]||TYPE_META['INTERNO'];
+        if(!isTrainingRequiredFor(c,t)){
+          return `<div class="detail-card"><span class="dc-title"><span class="train-tag ${meta.cls}">${meta.label}</span> ${escapeHtml(t.name)}</span><span class="chip-na">Não se aplica (${escapeHtml(c.funcao||'sem função')})</span></div>`;
+        }
+        const r = getTrainingRecord(c.id, t.id);
+        let chip;
+        if(!r) chip = '<span class="chip-pend">Faltando</span>';
+        else if(isTrainingExpired(r,t)) chip = '<span class="chip-exp">🔴 Vencido</span>';
+        else chip = `<span class="chip-ok">Válido até ${formatDateBR(trainingValidity(r,t))}</span>`;
+        return `<div class="detail-card"><span class="dc-title"><span class="train-tag ${meta.cls}">${meta.label}</span> ${escapeHtml(t.name)}</span>${chip}</div>`;
+      }).join('');
+    }
   } else {
     html += '<div class="help-text" style="margin-top:.8rem">Colaborador afastado — fora dos indicadores do turno.</div>';
   }
@@ -658,7 +883,7 @@ function viewToEdit(){ const id = state.viewColabId; closeModal('modalViewColab'
 
 // ==================== MODAL VISUALIZAR IOP ====================
 function openViewIop(code){
-  const iop = IOPS.find(i=>i.code===code); if(!iop) return;
+  const iop = getIops().find(i=>i.code===code); if(!iop) return;
   state.viewIopCode = code;
   const rev = state.iops[code]||{};
   const revInfo = getRevValidityInfo(rev.revDate);
@@ -674,10 +899,10 @@ function openViewIop(code){
     const r = c.records[code];
     let chip;
     if(!c.enabled) chip = '<span class="badge-afastado">Afastado</span>';
-    else if(!r.done) chip = '<span class="chip-pend">Faltando Treinamento</span>';
+    else if(!r||!r.done) chip = '<span class="chip-pend">Faltando Treinamento</span>';
     else if(isExpired(r)) chip = '<span class="chip-exp">🔴 Vencida</span>';
     else chip = `<span class="chip-ok">Válido até ${formatDateBR(getValidity(r))||'—'}</span>`;
-    const dates = r.done && c.enabled ? `<div class="card-dates">Realizado em ${formatDateBR(r.realizationDate)||'—'}${r.userCustomValidity?' (val. personalizada)':''}</div>` : '';
+    const dates = r && r.done && c.enabled ? `<div class="card-dates">Realizado em ${formatDateBR(r.realizationDate)||'—'}${r.userCustomValidity?' (val. personalizada)':''}</div>` : '';
     return `<div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">${c.folga}</span><span class="dc-title">${escapeHtml(c.name)}</span>${dates}</span>${chip}</div>`;
   }).join('');
   document.getElementById('viewIopBody').innerHTML = html;
@@ -685,10 +910,164 @@ function openViewIop(code){
 }
 function viewToRev(){ const code = state.viewIopCode; closeModal('modalViewIop'); openRevModal(code); }
 
-// ==================== MODAL EDITAR/ADICIONAR ====================
+// ==================== MODAL VISUALIZAR TREINAMENTO ====================
+function openViewTraining(id){
+  const t = getTrainingById(id); if(!t) return;
+  state.viewTrainingId = id;
+  const meta = TYPE_META[t.type]||TYPE_META['INTERNO'];
+  const s = getTrainingStats(t);
+  document.getElementById('viewTrainingTitle').innerHTML = `${escapeHtml(t.name)} <span class="train-tag ${meta.cls}">${meta.label}</span>`;
+  let html = `<div class="card-count" style="margin-bottom:.6rem">Validade padrão: ${t.validadeMeses} ${t.validadeMeses==1?'mês':'meses'}${t.cargaHoraria?` • ${escapeHtml(t.cargaHoraria)}h`:''}${t.obrigatorioPara?` • Obrigatório para: ${escapeHtml(t.obrigatorioPara)}`:' • Obrigatório para: Todos'} • ${s.emDia}/${s.total} em dia (apenas funções obrigatórias)</div>`;
+  const sorted = [...state.collaborators].sort((a,b)=>{
+    if(a.enabled!==b.enabled) return a.enabled?-1:1;
+    if(a.folga!==b.folga) return a.folga.localeCompare(b.folga,'pt-BR');
+    return a.name.localeCompare(b.name,'pt-BR');
+  });
+  const reqList = sorted.filter(c=>c.enabled && isTrainingRequiredFor(c,t));
+  const naList = sorted.filter(c=>c.enabled && !isTrainingRequiredFor(c,t));
+  const afastados = sorted.filter(c=>!c.enabled);
+  html += reqList.map(c=>{
+    const r = getTrainingRecord(c.id, id);
+    let chip;
+    if(!r) chip = '<span class="chip-pend">Faltando Treinamento</span>';
+    else if(isTrainingExpired(r,t)) chip = '<span class="chip-exp">🔴 Vencido</span>';
+    else chip = `<span class="chip-ok">Válido até ${formatDateBR(trainingValidity(r,t))}</span>`;
+    const dates = r ? `<div class="card-dates">Realizado em ${formatDateBR(r.realizationDate)||'—'}</div>` : '';
+    return `<div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">${c.folga}</span><span class="dc-title">${escapeHtml(c.name)}${c.funcao?` <span class="funcao-mini">(${escapeHtml(c.funcao)})</span>`:''}</span>${dates}</span>${chip}</div>`;
+  }).join('');
+  if(naList.length){
+    html += `<div class="view-section-title">Não se aplica (função fora do escopo)</div>`;
+    html += naList.map(c=>`<div class="detail-card" style="opacity:.6"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">${c.folga}</span><span class="dc-title">${escapeHtml(c.name)}${c.funcao?` <span class="funcao-mini">(${escapeHtml(c.funcao)})</span>`:''}</span></span><span class="chip-na">Não se aplica</span></div>`).join('');
+  }
+  if(afastados.length){
+    html += `<div class="view-section-title">Afastados</div>`;
+    html += afastados.map(c=>`<div class="detail-card" style="opacity:.6"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">${c.folga}</span><span class="dc-title" style="text-decoration:line-through">${escapeHtml(c.name)}</span></span><span class="badge-afastado">Afastado</span></div>`).join('');
+  }
+  document.getElementById('viewTrainingBody').innerHTML = html;
+  openModal('modalViewTraining');
+}
+function viewToTrainingReg(){ const id = state.viewTrainingId; closeModal('modalViewTraining'); openAddTrainingModal(null, id); }
+function deleteTraining(){
+  const t = getTrainingById(state.viewTrainingId); if(!t) return;
+  if(!confirm(`Excluir "${t.name}" do catálogo e todos os registros dele?`)) return;
+  state.catalog = state.catalog.filter(x=>x.id!==t.id);
+  state.registros = state.registros.filter(x=>x.treinamentoId!==t.id);
+  saveState(); renderAll(); closeModal('modalViewTraining');
+  showToast('Treinamento excluído do catálogo.');
+}
+
+// ==================== MODAL ADICIONAR TREINAMENTO ====================
+let trainingMode = 'reg';
+function buildObrigList(){
+  const used = state.collaborators.map(c=>c.funcao).filter(Boolean);
+  const all = [...new Set(['Todos', ...DEFAULT_FUNCOES, ...used])];
+  const dl = document.getElementById('obrigList');
+  if(dl) dl.innerHTML = all.map(f=>`<option value="${escapeHtml(f)}">`).join('');
+}
+function openAddTrainingModal(presetColab, presetTrain, returnToEdit){
+  trainingMode = 'reg';
+  // Se veio do editor de colaborador: fecha o editor e guarda o retorno
+  state.returnToEditId = returnToEdit ? (presetColab||state.editingId) : null;
+  if(state.returnToEditId) closeModal('modalEditColab');
+  buildObrigList();
+  const sorted = enabledColabs().slice().sort((a,b)=> a.folga!==b.folga ? a.folga.localeCompare(b.folga,'pt-BR') : a.name.localeCompare(b.name,'pt-BR'));
+  document.getElementById('trColab').innerHTML = sorted.map(c=>`<option value="${c.id}">${escapeHtml(c.name)}${c.funcao?` (${escapeHtml(c.funcao)})`:''}</option>`).join('');
+  document.getElementById('trTrain').innerHTML = state.catalog.length
+    ? state.catalog.map(t=>`<option value="${t.id}">${escapeHtml(t.name)}</option>`).join('')
+    : '<option value="">Catálogo vazio — cadastre um treinamento primeiro</option>';
+  if(presetColab) document.getElementById('trColab').value = presetColab;
+  if(presetTrain) document.getElementById('trTrain').value = presetTrain;
+  document.getElementById('trDate').value = todayStr();
+  document.getElementById('catName').value = '';
+  document.getElementById('catMonths').value = 12;
+  document.getElementById('catHours').value = '';
+  document.getElementById('catFor').value = '';
+  setTrainingMode('reg');
+  updateTrPreview();
+  openModal('modalAddTraining');
+}
+function closeAddTraining(){
+  closeModal('modalAddTraining');
+  // Volta para o editor de colaborador quando a modal foi aberta a partir dele
+  if(state.returnToEditId){ const id = state.returnToEditId; state.returnToEditId = null; openEditModal(id); }
+}
+function setTrainingMode(m){
+  trainingMode = m;
+  document.getElementById('choiceReg').classList.toggle('active', m==='reg');
+  document.getElementById('choiceCat').classList.toggle('active', m==='cat');
+  document.getElementById('formReg').style.display = m==='reg' ? 'block' : 'none';
+  document.getElementById('formCat').style.display = m==='cat' ? 'block' : 'none';
+}
+function updateTrPreview(){
+  const t = getTrainingById(document.getElementById('trTrain').value);
+  const d = document.getElementById('trDate').value;
+  const v = d ? addMonths(d, t?t.validadeMeses:12) : '';
+  document.getElementById('trValidityPreview').textContent = v ? `Validade: ${formatDateBR(v)} (realização + ${t?t.validadeMeses:12} meses)` : '';
+  const cId = document.getElementById('trColab').value;
+  const existing = t && cId && getTrainingRecord(cId, t.id);
+  document.getElementById('btnRemoveReg').style.display = existing ? 'inline-block' : 'none';
+}
+function saveTraining(){
+  if(trainingMode==='reg'){
+    const cId = document.getElementById('trColab').value;
+    const tId = document.getElementById('trTrain').value;
+    const d = document.getElementById('trDate').value;
+    if(!cId || !tId || !d){ showToast('Preencha colaborador, treinamento e data.', true); return; }
+    const existing = getTrainingRecord(cId, tId);
+    if(existing){ existing.realizationDate = d; existing.validityDate = ''; }
+    else state.registros.push({ id:'reg_'+Date.now(), colabId:cId, treinamentoId:tId, realizationDate:d, validityDate:'' });
+    showToast('Treinamento registrado.');
+  } else {
+    const name = document.getElementById('catName').value.trim();
+    if(!name){ showToast('Informe o nome do treinamento.', true); return; }
+    state.catalog.push({
+      id:'t_'+Date.now(), name,
+      type: document.getElementById('catType').value,
+      validadeMeses: parseInt(document.getElementById('catMonths').value,10)||12,
+      cargaHoraria: document.getElementById('catHours').value.trim(),
+      obrigatorioPara: document.getElementById('catFor').value.trim()
+    });
+    showToast('Treinamento cadastrado no catálogo.');
+  }
+  saveState(); renderAll(); closeAddTraining();
+}
+function removeTrainingRecord(){
+  const cId = document.getElementById('trColab').value;
+  const tId = document.getElementById('trTrain').value;
+  state.registros = state.registros.filter(x=>!(x.colabId===cId && x.treinamentoId===tId));
+  saveState(); renderAll(); closeAddTraining();
+  showToast('Registro removido.');
+}
+
+// ==================== MODAL ADICIONAR IOP ====================
+function openAddIopModal(){
+  document.getElementById('fIopCode').value = '';
+  document.getElementById('fIopDesc').value = '';
+  openModal('modalAddIop');
+}
+function saveIop(){
+  let code = document.getElementById('fIopCode').value.trim();
+  const desc = document.getElementById('fIopDesc').value.trim();
+  if(!/^\d{1,3}$/.test(code)){ showToast('Informe o código numérico da IOP (até 3 dígitos).', true); return; }
+  code = code.padStart(3,'0');
+  if(!desc){ showToast('Informe a descrição da IOP.', true); return; }
+  if(getIops().some(i=>i.code===code)){ showToast('Já existe uma IOP com o código '+code+'.', true); return; }
+  state.iopDefs.push({code, desc, critical: CRITICAL_CODES.includes(code)});
+  state.iops[code] = {rev:'',revDate:''};
+  state.collaborators.forEach(c=>{ if(!c.records[code]) c.records[code]={done:false,realizationDate:'',validityDate:'',userCustomValidity:false}; });
+  saveState(); renderAll(); closeModal('modalAddIop');
+  showToast('IOP '+code+' adicionada à matriz.');
+}
+
+// ==================== MODAL EDITAR/ADICIONAR COLABORADOR ====================
+function buildFuncaoDatalist(){
+  const used = state.collaborators.map(c=>c.funcao).filter(Boolean);
+  const all = [...new Set([...DEFAULT_FUNCOES, ...used])];
+  document.getElementById('funcaoList').innerHTML = all.map(f=>`<option value="${escapeHtml(f)}">`).join('');
+}
 function buildIopEditRows(c){
-  return IOPS.map(iop=>{
-    const r = c.records[iop.code];
+  return getIops().map(iop=>{
+    const r = c.records[iop.code] || {done:false,realizationDate:'',validityDate:'',userCustomValidity:false};
     return `<div class="iop-edit-row">
       <span class="iop-code">IOP ${iop.code}</span>
       <span>${escapeHtml(iop.desc)}</span>
@@ -701,10 +1080,7 @@ function buildIopEditRows(c){
     </div>`;
   }).join('');
 }
-function toggleSituation(){
-  state.editingSituation = !state.editingSituation;
-  updateSituationToggle();
-}
+function toggleSituation(){ state.editingSituation = !state.editingSituation; updateSituationToggle(); }
 function updateSituationToggle(){
   const btn = document.getElementById('fSituationToggle');
   btn.textContent = state.editingSituation ? '🟢 Habilitado' : 'Afastado';
@@ -718,6 +1094,8 @@ function openEditModal(id){
   document.getElementById('editColabTitle').textContent = '✏️ Editar Colaborador';
   document.getElementById('fName').value = c.name;
   document.getElementById('fFolga').value = c.folga;
+  buildFuncaoDatalist();
+  document.getElementById('fFuncao').value = c.funcao||'';
   updateSituationToggle();
   document.getElementById('fIopsList').innerHTML = buildIopEditRows(c);
   document.getElementById('btnDeleteColab').style.display = 'inline-block';
@@ -729,6 +1107,8 @@ function openAddModal(){
   document.getElementById('editColabTitle').textContent = '➕ Adicionar Colaborador';
   document.getElementById('fName').value = '';
   document.getElementById('fFolga').value = 'A';
+  buildFuncaoDatalist();
+  document.getElementById('fFuncao').value = '';
   updateSituationToggle();
   document.getElementById('fIopsList').innerHTML = buildIopEditRows({records:defaultRecords()});
   document.getElementById('btnDeleteColab').style.display = 'none';
@@ -738,9 +1118,10 @@ function saveColab(){
   const name = document.getElementById('fName').value.trim();
   if(!name){ showToast('Informe o nome do colaborador.', true); return; }
   const folga = document.getElementById('fFolga').value;
+  const funcao = document.getElementById('fFuncao').value.trim();
   const enabled = state.editingSituation;
   const records = {};
-  IOPS.forEach(iop=>{
+  getIops().forEach(iop=>{
     records[iop.code] = {
       done: document.getElementById('ck_'+iop.code).checked,
       realizationDate: document.getElementById('dt_'+iop.code).value,
@@ -750,9 +1131,9 @@ function saveColab(){
   });
   if(state.editingId){
     const c = state.collaborators.find(x=>x.id===state.editingId);
-    Object.assign(c, {name, folga, enabled, records});
+    Object.assign(c, {name, folga, funcao, enabled, records});
   } else {
-    state.collaborators.push({id:'colab_'+Date.now(), name, folga, enabled, records});
+    state.collaborators.push({id:'colab_'+Date.now(), name, folga, funcao, enabled, records});
   }
   saveState(); renderAll(); closeModal('modalEditColab');
   showToast(state.editingId ? 'Colaborador atualizado.' : 'Colaborador adicionado.');
@@ -771,7 +1152,7 @@ function executeDeleteColab(){
 // ==================== MODAL REVISÃO ====================
 function openRevModal(code){
   const sel = document.getElementById('revIopSelect');
-  sel.innerHTML = IOPS.map(i=>`<option value="${i.code}" ${i.code===code?'selected':''}>IOP ${i.code} – ${escapeHtml(i.desc)}</option>`).join('');
+  sel.innerHTML = getIops().map(i=>`<option value="${i.code}" ${i.code===code?'selected':''}>IOP ${i.code} – ${escapeHtml(i.desc)}</option>`).join('');
   fillRevFields();
   openModal('modalEditRev');
 }
@@ -802,8 +1183,10 @@ function clearRev(){
 
 // ==================== BACKUP / EXCEL / IMPRESSÃO ====================
 function exportBackup(){
-  const payload = { app:'controle-treinamentos-iops', version:2, exportedAt:new Date().toISOString(),
-    collaborators: state.collaborators, iops: IOPS.map(i=>({code:i.code,desc:i.desc,...(state.iops[i.code]||{})})) };
+  const payload = { app:'controle-treinamentos-iops', version:3, exportedAt:new Date().toISOString(),
+    collaborators: state.collaborators,
+    iops: getIops().map(i=>({code:i.code,desc:i.desc,...(state.iops[i.code]||{})})),
+    catalog: state.catalog, registros: state.registros };
   downloadFile(JSON.stringify(payload,null,2), 'backup-treinamentos-iops.json', 'application/json');
   showToast('Backup exportado.');
 }
@@ -814,8 +1197,16 @@ function handleImportBackup(e){
     try{
       const parsed = JSON.parse(ev.target.result);
       if(Array.isArray(parsed.collaborators)){
+        if(Array.isArray(parsed.iops) && parsed.iops.length){
+          state.iopDefs = parsed.iops.filter(it=>it&&it.code).map(it=>{
+            const code = String(it.code).padStart(3,'0');
+            return {code, desc: it.desc||code, critical: CRITICAL_CODES.includes(code)};
+          });
+        }
         state.collaborators = normalizeCollaborators(parsed.collaborators);
-        if(Array.isArray(parsed.iops)) applyIopsList(parsed.iops);
+        applyIopsList(parsed.iops||[]);
+        if(Array.isArray(parsed.catalog)) state.catalog = parsed.catalog;
+        if(Array.isArray(parsed.registros)) state.registros = parsed.registros;
         saveState(); renderAll();
         showToast('Backup importado com sucesso.');
       } else showToast('Arquivo de backup inválido.', true);
@@ -825,22 +1216,32 @@ function handleImportBackup(e){
   e.target.value = '';
 }
 function exportExcel(){
+  const defs = getIops();
   let html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"></head><body>
   <table border="1" style="border-collapse:collapse;font-family:sans-serif;font-size:11pt">
-  <thead><tr style="font-weight:bold"><th>Folga</th><th>Colaborador</th><th>Código IOP</th><th>Descrição IOP</th><th>Status</th><th>Data de Realização</th><th>Validade</th></tr></thead><tbody>`;
+  <thead><tr style="font-weight:bold"><th>Folga</th><th>Colaborador</th><th>Função</th><th>Código IOP</th><th>Descrição IOP</th><th>Status</th><th>Data de Realização</th><th>Validade</th></tr></thead><tbody>`;
   getFilteredCollaborators().forEach(c=>{
-    IOPS.forEach(iop=>{
-      const r = c.records[iop.code];
+    defs.forEach(iop=>{
+      const r = c.records[iop.code]||{done:false,realizationDate:'',validityDate:'',userCustomValidity:false};
       const status = !c.enabled ? 'Afastado' : (!r.done ? 'Pendente' : (isExpired(r)?'Vencido':'Realizado'));
-      html += `<tr><td>${c.folga}</td><td>${escapeHtml(c.name)}</td><td style="text-align:center">${iop.code}</td><td>${escapeHtml(iop.desc)}</td><td>${status}</td><td>${formatDateBR(r.realizationDate)}</td><td>${formatDateBR(getValidity(r))}</td></tr>`;
+      html += `<tr><td>${c.folga}</td><td>${escapeHtml(c.name)}</td><td>${escapeHtml(c.funcao||'')}</td><td style="text-align:center">${iop.code}</td><td>${escapeHtml(iop.desc)}</td><td>${status}</td><td>${formatDateBR(r.realizationDate)}</td><td>${formatDateBR(getValidity(r))}</td></tr>`;
     });
   });
   html += `</tbody></table><br><table border="1" style="border-collapse:collapse;font-family:sans-serif;font-size:11pt">
   <thead><tr style="font-weight:bold"><th colspan="5">Revisões das IOPs</th></tr><tr style="font-weight:bold"><th>Código</th><th>Descrição</th><th>REV</th><th>Data da Revisão</th><th>Validade da Revisão</th></tr></thead><tbody>`;
-  IOPS.forEach(iop=>{
+  defs.forEach(iop=>{
     const rev = state.iops[iop.code]||{};
     const v = getRevValidityInfo(rev.revDate);
     html += `<tr><td style="text-align:center">${iop.code}</td><td>${escapeHtml(iop.desc)}</td><td style="text-align:center">${escapeHtml(rev.rev||'')}</td><td style="text-align:center">${formatDateBR(rev.revDate)}</td><td style="text-align:center">${v?formatDateBR(v.valDateStr):''}</td></tr>`;
+  });
+  html += `</tbody></table><br><table border="1" style="border-collapse:collapse;font-family:sans-serif;font-size:11pt">
+  <thead><tr style="font-weight:bold"><th colspan="6">Outros Treinamentos</th></tr><tr style="font-weight:bold"><th>Colaborador</th><th>Função</th><th>Treinamento</th><th>Tipo</th><th>Data de Realização</th><th>Validade</th></tr></thead><tbody>`;
+  state.registros.forEach(r=>{
+    const c = state.collaborators.find(x=>x.id===r.colabId);
+    const t = getTrainingById(r.treinamentoId);
+    if(!c || !t) return;
+    const meta = TYPE_META[t.type]||TYPE_META['INTERNO'];
+    html += `<tr><td>${escapeHtml(c.name)}</td><td>${escapeHtml(c.funcao||'')}</td><td>${escapeHtml(t.name)}</td><td>${meta.label}</td><td>${formatDateBR(r.realizationDate)}</td><td>${formatDateBR(trainingValidity(r,t))}</td></tr>`;
   });
   html += '</tbody></table></body></html>';
   downloadFile(html, 'controle-treinamentos-iops.xls', 'application/vnd.ms-excel;charset=utf-8;');
@@ -855,7 +1256,7 @@ function downloadFile(content, filename, type){
 }
 function triggerPrint(){ switchTab('matriz'); setTimeout(()=>window.print(), 150); }
 
-// ==================== SINCRONIZAÇÃO SHAREPOINT (API REST) ====================
+// ==================== SINCRONIZAÇÃO SHAREPOINT (API REST — FONTE PRINCIPAL) ====================
 function getSpConfig(){
   try{ return JSON.parse(localStorage.getItem(SP_CONFIG_KEY)) || {}; }catch(e){ return {}; }
 }
@@ -865,11 +1266,19 @@ function openSyncModal(){
   document.getElementById('spListColab').value = cfg.listColab||'Colaboradores';
   document.getElementById('spListIops').value = cfg.listIops||'IOPs';
   document.getElementById('spListTrein').value = cfg.listTrein||'Treinamentos';
+  document.getElementById('spListCatalog').value = cfg.listCatalog||'TreinamentosCatalogo';
+  document.getElementById('spListReg').value = cfg.listReg||'RegistrosGerais';
   openModal('modalSyncConfig');
 }
 function saveSyncConfig(){
-  const cfg = { siteUrl: document.getElementById('spSiteUrl').value.trim(), listColab: document.getElementById('spListColab').value.trim()||'Colaboradores',
-    listIops: document.getElementById('spListIops').value.trim()||'IOPs', listTrein: document.getElementById('spListTrein').value.trim()||'Treinamentos' };
+  const cfg = {
+    siteUrl: document.getElementById('spSiteUrl').value.trim(),
+    listColab: document.getElementById('spListColab').value.trim()||'Colaboradores',
+    listIops: document.getElementById('spListIops').value.trim()||'IOPs',
+    listTrein: document.getElementById('spListTrein').value.trim()||'Treinamentos',
+    listCatalog: document.getElementById('spListCatalog').value.trim()||'TreinamentosCatalogo',
+    listReg: document.getElementById('spListReg').value.trim()||'RegistrosGerais'
+  };
   localStorage.setItem(SP_CONFIG_KEY, JSON.stringify(cfg));
   closeModal('modalSyncConfig');
   updateSyncIndicator('gray', cfg.siteUrl ? 'Configurado. Use "Sincronizar agora".' : 'Sem configuração');
@@ -908,28 +1317,44 @@ async function testConnection(){
     updateSyncIndicator('green','Conexão OK');
   }catch(e){ showToast('Falha na conexão: '+e.message+'. Verifique a URL e se você está logado.', true); updateSyncIndicator('red','Falha na conexão'); }
 }
-async function syncNow(){
+async function syncNow(silent){
   const cfg = getSpConfig();
-  if(!cfg.siteUrl){ showToast('Configure a sincronização primeiro (🔗 Configurar sincronização…).', true); openSyncModal(); return; }
+  if(!cfg.siteUrl){ showToast('Configure a sincronização primeiro (🔗 Configurar sincronização…).', true); openSyncModal(); return false; }
+  // Se há edições locais pendentes, tenta enviá-las ANTES de puxar (evita perder dados)
+  if(state.pendingPush){
+    updateSyncIndicator('amber','Enviando alterações pendentes…');
+    const sent = await triggerRemotePush();
+    if(!sent){
+      if(!silent) showToast('Há alterações locais que não puderam ser enviadas. Verifique as colunas das listas e tente de novo — dados locais preservados.', true);
+      updateSyncIndicator('red','Falha ao enviar alterações pendentes');
+      return false;
+    }
+  }
   updateSyncIndicator('amber','Sincronizando…');
   try{
-    const [colabs, iops, treins] = await Promise.all([
+    const [colabs, iops, treins, cats, regs] = await Promise.all([
       spFetch(`${spBase()}/_api/web/lists/getbytitle('${encodeURIComponent(cfg.listColab)}')/items?$top=5000`),
       spFetch(`${spBase()}/_api/web/lists/getbytitle('${encodeURIComponent(cfg.listIops)}')/items?$top=5000`),
-      spFetch(`${spBase()}/_api/web/lists/getbytitle('${encodeURIComponent(cfg.listTrein)}')/items?$top=5000`)
+      spFetch(`${spBase()}/_api/web/lists/getbytitle('${encodeURIComponent(cfg.listTrein)}')/items?$top=5000`),
+      spFetch(`${spBase()}/_api/web/lists/getbytitle('${encodeURIComponent(cfg.listCatalog)}')/items?$top=5000`),
+      spFetch(`${spBase()}/_api/web/lists/getbytitle('${encodeURIComponent(cfg.listReg)}')/items?$top=5000`)
     ]);
     if(colabs.value && colabs.value.length){
       state.collaborators = colabs.value.map(it=>{
         const id = it.IdColab ? String(it.IdColab) : 'colab_'+it.Id;
         const existing = state.collaborators.find(c=>c.id===id);
         const records = existing ? existing.records : defaultRecords();
-        return { id, name: it.Title||'Sem Nome', folga: it.Folga||'A', enabled: it.Habilitado!==false, records };
+        return { id, name: it.Title||'Sem Nome', folga: it.Folga||'A', funcao: it.Funcao||'', enabled: it.Habilitado!==false, records };
       });
     }
     if(iops.value && iops.value.length){
+      state.iopDefs = iops.value.map(it=>{
+        const code = String(it.Codigo||'').padStart(3,'0');
+        return { code, desc: it.Descricao||code, critical: CRITICAL_CODES.includes(code) };
+      }).filter(d=>/^\d{3}$/.test(d.code));
       iops.value.forEach(it=>{
         const code = String(it.Codigo||'').padStart(3,'0');
-        if(IOPS.some(i=>i.code===code)) state.iops[code] = { rev: it.REV||'', revDate: it.DataRevisao ? it.DataRevisao.slice(0,10) : '' };
+        state.iops[code] = { rev: it.REV||'', revDate: it.DataRevisao ? it.DataRevisao.slice(0,10) : '' };
       });
     }
     if(treins.value && treins.value.length){
@@ -945,19 +1370,42 @@ async function syncNow(){
         };
       });
     }
+    if(cats.value && cats.value.length){
+      state.catalog = cats.value.map(it=>({
+        id: it.IdTrein ? String(it.IdTrein) : 't_sp_'+it.Id,
+        name: it.Title||'Treinamento',
+        type: (it.Tipo&&TYPE_META[it.Tipo]) ? it.Tipo : 'INTERNO',
+        validadeMeses: it.ValidadeMeses || 12,
+        cargaHoraria: it.CargaHoraria ? String(it.CargaHoraria) : '',
+        obrigatorioPara: it.ObrigatorioPara || ''
+      }));
+    }
+    if(regs.value && regs.value.length){
+      state.registros = regs.value.map(it=>({
+        id:'reg_sp_'+it.Id,
+        colabId: String(it.ColaboradorId||''),
+        treinamentoId: String(it.TreinamentoId||''),
+        realizationDate: it.DataRealizacao ? it.DataRealizacao.slice(0,10) : '',
+        validityDate: it.DataValidade ? it.DataValidade.slice(0,10) : ''
+      }));
+    }
     state.lastSyncTime = new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
-    saveState(); renderAll();
+    state.pendingPush = false;
+    persistCache();
+    renderAll();
     updateSyncIndicator('green','Sincronizado do SharePoint');
-    showToast('Dados sincronizados do SharePoint. ✔');
+    if(!silent) showToast('Dados sincronizados do SharePoint. ✔');
+    return true;
   }catch(e){
     updateSyncIndicator('red','Falha na última sincronização');
-    showToast('Erro ao sincronizar: '+e.message, true);
+    if(!silent) showToast('Erro ao sincronizar: '+e.message, true);
+    return false;
   }
 }
 async function triggerRemotePush(){
-  // Envia o estado ao SharePoint quando configurado (cria/atualiza por chave única, sem duplicar)
   const cfg = getSpConfig();
-  if(!cfg.siteUrl) return;
+  if(!cfg.siteUrl) return true;
+  let errors = 0;
   try{
     const digest = await getDigest();
     const base = spBase();
@@ -966,39 +1414,73 @@ async function triggerRemotePush(){
     const getAll = async list=>{ const j = await spFetch(listUrl(list)+'/items?$top=5000'); return j.value||[]; };
     const post = (list, body)=>fetch(listUrl(list)+'/items', {method:'POST', credentials:'include', headers:jsonHeaders, body:JSON.stringify(body)});
     const patch = (list, id, body)=>fetch(`${listUrl(list)}/items(${id})`, {method:'POST', credentials:'include', headers:{...jsonHeaders,'X-HTTP-Method':'MERGE','IF-MATCH':'*'}, body:JSON.stringify(body)});
+    // Erro em UM item não aborta os demais
+    const send = async (list, found, body)=>{
+      try{ if(found) await patch(list, found.Id, body); else await post(list, body); }
+      catch(e){ errors++; }
+    };
+    const d10 = v => v ? String(v).slice(0,10) : '';
 
-    // Colaboradores (chave: IdColab)
+    // Colaboradores (chave: IdColab) — envia apenas se mudou
     const spColabs = await getAll(cfg.listColab);
     for(const c of state.collaborators){
       const found = spColabs.find(it=>String(it.IdColab)===String(c.id));
-      const body = { Title:c.name, Folga:c.folga, Habilitado:c.enabled, IdColab:c.id };
-      if(found) await patch(cfg.listColab, found.Id, body); else await post(cfg.listColab, body);
+      const body = { Title:c.name, Folga:c.folga, Funcao:c.funcao||'', Habilitado:c.enabled, IdColab:c.id };
+      if(found && found.Title===body.Title && found.Folga===body.Folga && (found.Funcao||'')===(body.Funcao||'') && !!found.Habilitado===!!body.Habilitado) continue;
+      await send(cfg.listColab, found, body);
     }
-    // Revisões (chave: Codigo)
+    // IOPs: definições + revisões (chave: Codigo)
     const spIops = await getAll(cfg.listIops);
-    for(const code of Object.keys(state.iops)){
-      const iop = IOPS.find(i=>i.code===code); const r = state.iops[code];
-      const found = spIops.find(it=>String(it.Codigo).padStart(3,'0')===code);
-      const body = { Title:code, Codigo:parseInt(code,10), Descricao:iop?iop.desc:'', REV:r.rev||'', DataRevisao:r.revDate||null };
-      if(found) await patch(cfg.listIops, found.Id, body); else await post(cfg.listIops, body);
+    for(const iop of getIops()){
+      const r = state.iops[iop.code]||{rev:'',revDate:''};
+      const found = spIops.find(it=>String(it.Codigo).padStart(3,'0')===iop.code);
+      const body = { Title:iop.code, Codigo:parseInt(iop.code,10), Descricao:iop.desc, REV:r.rev||'', DataRevisao:r.revDate||null };
+      if(found && found.Title===body.Title && (found.REV||'')===(body.REV||'') && d10(found.DataRevisao)===(body.DataRevisao||'')) continue;
+      await send(cfg.listIops, found, body);
     }
-    // Treinamentos (chave: ColaboradorId + IopCodigo)
+    // Treinamentos IOPs críticas (chave: ColaboradorId + IopCodigo) — apenas realizados
     const spTreins = await getAll(cfg.listTrein);
     for(const c of state.collaborators){
       for(const code of Object.keys(c.records)){
         const r = c.records[code];
+        if(!r.done) continue;
         const found = spTreins.find(it=>String(it.ColaboradorId)===String(c.id) && String(it.IopCodigo).padStart(3,'0')===code);
-        const body = { Title:c.id+'|'+code, ColaboradorId:c.id, IopCodigo:code, Realizado:!!r.done, DataRealizacao:r.realizationDate||null, DataValidade:r.validityDate||null, ValidadePersonalizada:!!r.userCustomValidity };
-        if(found && r.done) await patch(cfg.listTrein, found.Id, body);
-        else if(!found && r.done) await post(cfg.listTrein, body);
+        const body = { Title:c.id+'|'+code, ColaboradorId:c.id, IopCodigo:code, Realizado:true, DataRealizacao:r.realizationDate||null, DataValidade:r.validityDate||null, ValidadePersonalizada:!!r.userCustomValidity };
+        if(found && !!found.Realizado===!!body.Realizado && d10(found.DataRealizacao)===(body.DataRealizacao||'') && d10(found.DataValidade)===(body.DataValidade||'') && !!found.ValidadePersonalizada===!!body.ValidadePersonalizada) continue;
+        await send(cfg.listTrein, found, body);
       }
     }
-    state.lastSyncTime = new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
-    updateSyncIndicator('green','Enviado ao SharePoint');
-    showToast('Alterações enviadas ao SharePoint. ✔');
+    // Catálogo (chave: Title)
+    const spCats = await getAll(cfg.listCatalog);
+    for(const t of state.catalog){
+      const found = spCats.find(it=>String(it.Title)===t.name);
+      const body = { Title:t.name, Tipo:t.type, CargaHoraria:t.cargaHoraria?parseInt(t.cargaHoraria,10):null, ValidadeMeses:t.validadeMeses, ObrigatorioPara:t.obrigatorioPara||'', IdTrein:t.id };
+      if(found && (found.Tipo||'')===body.Tipo && (found.ValidadeMeses||0)===(body.ValidadeMeses||0) && (found.ObrigatorioPara||'')===(body.ObrigatorioPara||'') && String(found.IdTrein||'')===String(body.IdTrein||'')) continue;
+      await send(cfg.listCatalog, found, body);
+    }
+    // Registros gerais (chave: ColaboradorId + TreinamentoId)
+    const spRegs = await getAll(cfg.listReg);
+    for(const r of state.registros){
+      const found = spRegs.find(it=>String(it.ColaboradorId)===String(r.colabId) && String(it.TreinamentoId)===String(r.treinamentoId));
+      const body = { Title:r.colabId+'|'+r.treinamentoId, ColaboradorId:r.colabId, TreinamentoId:r.treinamentoId, DataRealizacao:r.realizationDate||null, DataValidade:r.validityDate||null };
+      if(found && d10(found.DataRealizacao)===(body.DataRealizacao||'') && d10(found.DataValidade)===(body.DataValidade||'')) continue;
+      await send(cfg.listReg, found, body);
+    }
+    if(errors===0){
+      state.pendingPush = false;
+      persistCache();
+      state.lastSyncTime = new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+      updateSyncIndicator('green','Enviado ao SharePoint');
+      showToast('Alterações enviadas ao SharePoint. ✔');
+      return true;
+    }
+    updateSyncIndicator('red','Falha ao enviar ao SharePoint');
+    showToast(errors+' item(ns) não puderam ser salvos. Verifique se as colunas existem nas listas (ex.: Funcao em Colaboradores).', true);
+    return false;
   }catch(e){
     updateSyncIndicator('red','Falha ao enviar ao SharePoint');
     showToast('Erro ao enviar ao SharePoint: '+e.message, true);
+    return false;
   }
 }
 
@@ -1014,9 +1496,24 @@ function showToast(message, isError=false){
   setTimeout(()=>{ item.classList.remove('show'); setTimeout(()=>item.remove(), 300); }, 3500);
 }
 
-// ==================== INIT ====================
-loadState();
-renderAll();
+// ==================== INIT: SharePoint como fonte principal, sem perder edições locais ====================
+(async function init(){
+  const cfg = getSpConfig();
+  if(cfg.siteUrl){
+    loadState(); renderAll(); // cache primeiro: nada some enquanto o SharePoint responde
+    if(state.pendingPush){
+      updateSyncIndicator('amber','Enviando alterações pendentes…');
+      const sent = await triggerRemotePush();
+      if(!sent){
+        showToast('Há alterações locais aguardando envio. Elas estão preservadas — resolva o problema (ex.: colunas das listas) e use "Sincronizar agora".', true);
+        return; // NÃO puxa: preserva as edições locais
+      }
+    }
+    await syncNow(true);
+  }else{
+    loadState(); renderAll();
+  }
+})();
 </script>
 </body>
 </html>

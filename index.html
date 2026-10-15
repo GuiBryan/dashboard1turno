@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0105)file:///C:/Users/c2597705/OneDrive%20-%20BUNGE/Documentos/dashboard%20panorama%20geral/panoramageral.html -->
+<html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Controle de Treinamentos – IOPS Críticas | 1º Turno</title>
 <style>
@@ -178,507 +178,505 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
 <body>
 
 <header class="app-header">
-  
-    
-      BPS
-
-
-      
-
-
+  <div class="header-content">
+    <div class="header-brand">
+      <div class="brand-badge">BPS</div>
+      <div class="header-divider"></div>
       <h1 class="header-title">CONTROLE DE TREINAMENTOS | 1º TURNO</h1>
-    
-
-
-    
-      
-        
-      
-
-
-      
-        
-
-
+    </div>
+    <div class="header-actions">
+      <div class="sync-status-indicator" id="syncStatusIndicator" onclick="openSyncModal()" title="Sincronização SharePoint" role="button" aria-label="Status da sincronização">
+        <span class="sync-dot sync-gray" id="syncStatusDot"></span>
+      </div>
+      <div class="dropdown">
+        <div class="dropdown-backdrop" id="dropdownBackdrop" onclick="closeDropdown()"></div>
         <button class="btn-action" onclick="toggleDropdown(event)">⚙️ Opções ▾</button>
-        
+        <div class="dropdown-menu" id="optionsMenu">
           <button class="dropdown-item dropdown-item-primary" onclick="openAddModal(); closeDropdown();">➕ Adicionar Colaborador</button>
-          
-
-
+          <div class="dropdown-divider"></div>
           <button class="dropdown-item" onclick="syncNow(); closeDropdown();">🔄 Sincronizar agora</button>
           <button class="dropdown-item" onclick="openSyncModal(); closeDropdown();">🔗 Configurar sincronização…</button>
-          
-
-
+          <div class="dropdown-divider"></div>
           <button class="dropdown-item" onclick="exportExcel(); closeDropdown();">📊 Exportar Excel</button>
           <button class="dropdown-item" onclick="triggerPrint(); closeDropdown();">🖨️ Imprimir / PDF</button>
           <button class="dropdown-item" onclick="exportBackup(); closeDropdown();">💾 Exportar backup</button>
           <button class="dropdown-item" onclick="document.getElementById('fileBackupInput').click(); closeDropdown();">📂 Importar backup</button>
-        
-
-
-      
-
-
+        </div>
+      </div>
       <input type="file" id="fileBackupInput" accept=".json" style="display:none" onchange="handleImportBackup(event)">
-    
-
-
-  
-
-
+    </div>
+  </div>
 </header>
 
 <main class="app-main">
-  
+  <section class="kpi-grid" id="kpisContainer">
+    <div class="kpi-card"><div class="kpi-card-label">Colaboradores Monitorados</div><div class="kpi-card-val">26</div><div class="kpi-card-sub">1º Turno Operacional (Letras A, B, C, D) • 0 afastado(s)</div></div>
+    <div class="kpi-card"><div class="kpi-card-label">IOPS Críticas Mapeadas</div><div class="kpi-card-val">12</div><div class="kpi-card-sub">Instruções Operacionais Padronizadas</div></div>
+    <div class="kpi-card"><div class="kpi-card-label">Total de Pendências</div><div class="kpi-card-val">312</div><div class="kpi-legend">🟠 Faltando treinamento: 312<br>🔴 Vencidos: 0</div></div>
+    <div class="kpi-card"><div class="kpi-card-label">Treinamentos Realizados</div><div class="kpi-card-val">0</div><div class="kpi-card-sub">0,0% de conclusão (0 de 312)</div></div>
+    <div class="kpi-card"><div class="kpi-card-label">Panorama Geral</div><div class="kpi-card-val">—</div><div class="kpi-card-sub">Outros treinamentos: Nenhum treinamento no catálogo</div></div></section>
+  <section class="alert-banner" id="alertBanner">
+    <div class="alert-icon">⚠️</div>
+    <div class="alert-content">
+      <div class="alert-title">Alertas Prioritários do 1º Turno</div>
+      <ul>
+        <li><strong>Gargalo Crítico:</strong> IOP 006 (Tripper AG 255) com 0 de 26 treinados (0%), IOP 008 (Operar TB 015) com 0 de 26 treinados (0%), IOP 009 (Operar TB 1720) com 0 de 26 treinados (0%), IOP 011 (Descarregar Vagões) com 0 de 26 treinados (0%), IOP 012 (Descarregar Óleo) com 0 de 26 treinados (0%), IOP 027 (Rechegar Produto) com 0 de 26 treinados (0%), IOP 034 (Expedir Óleo) com 0 de 26 treinados (0%), IOP 040 (Coletar Grãos na Triagem) com 0 de 26 treinados (0%), IOP 046 (Coletar Grãos no Terminal) com 0 de 26 treinados (0%), IOP 057 (Tripper AG 1780) com 0 de 26 treinados (0%), IOP 064 (Operar Carpuller) com 0 de 26 treinados (0%), IOP 112 (Operar BF) com 0 de 26 treinados (0%)</li>
+        <li><strong>Destaque Positivo:</strong> Nenhuma IOP 100% concluída no momento</li>
+        <li><strong>IOPs com maior pendência:</strong> IOP 006 (26 • 100%), IOP 008 (26 • 100%), IOP 009 (26 • 100%)</li>
+        <li><strong>Colaboradores com IOPS vencidas:</strong> Nenhum colaborador com IOPS vencida no momento</li>
+        <li><strong>Outros treinamentos:</strong> Nenhum treinamento complementar no catálogo</li>
+      </ul>
+    </div></section>
 
-
-  
-
-
-
-  
+  <section class="control-panel">
     <nav class="view-tabs" role="tablist">
-      <button class="tab-btn active" id="tabColabBtn" onclick="switchTab('colab')">👤 Por Colaborador</button>
-      <button class="tab-btn" id="tabIopsBtn" onclick="switchTab('iops')">📋 Por IOPS</button>
-      <button class="tab-btn" id="tabTreinBtn" onclick="switchTab('trein')">🎓 Outros Treinamentos</button>
+      <button class="tab-btn active" id="tabColabBtn" onclick="switchTab('colab')">👤 Por Colaborador (26)</button>
+      <button class="tab-btn" id="tabIopsBtn" onclick="switchTab('iops')">📋 Por IOPS (12)</button>
+      <button class="tab-btn" id="tabTreinBtn" onclick="switchTab('trein')">🎓 Outros Treinamentos (0)</button>
       <button class="tab-btn" id="tabMatrizBtn" onclick="switchTab('matriz')">▦ Matriz Geral</button>
     </nav>
-    
-      
+    <div class="filter-row">
+      <div class="folga-chips">
         Folga:
         <button class="chip-folga chip-folga-todas active" id="chipFolgaTodas" onclick="setFolgaFilter('TODAS', this)">Todas</button>
         <button class="chip-folga chip-folga-a" id="chipFolgaA" onclick="setFolgaFilter('A', this)">A</button>
         <button class="chip-folga chip-folga-b" id="chipFolgaB" onclick="setFolgaFilter('B', this)">B</button>
         <button class="chip-folga chip-folga-c" id="chipFolgaC" onclick="setFolgaFilter('C', this)">C</button>
         <button class="chip-folga chip-folga-d" id="chipFolgaD" onclick="setFolgaFilter('D', this)">D</button>
-      
+      </div>
+      <div class="search-box">🔍<input id="searchInput" placeholder="Buscar colaborador ou IOP..." oninput="handleSearch(event)"></div>
+    </div>
+  </section>
 
-
-      🔍<input id="searchInput" placeholder="Buscar colaborador ou IOP..." oninput="handleSearch(event)">
-
-
-    
-
-
-  
-
-
-
-  
-
-
-  
-
-
-  
-
-
-  
-    
-      
-    
-
-
-  
-
-
+  <section id="viewColab" class="cards-grid" style="display: grid;"><div class="card-item clickable" onclick="openViewColab('colab_1')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">Folga A</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">ADRIANO DOS SANTOS</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_2')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">Folga A</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">ALISON LUIZ LOPES</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_3')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">Folga A</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">DIOGO MAIA</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_4')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">Folga A</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">JESSÉ DA SILVA</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_5')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">Folga A</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">MARCIO DA SILVA</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_6')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">Folga A</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">NILSON DE OLIVEIRA BITTENCOURT</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_7')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">Folga A</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">WELLISON F. S. DA SILVA</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_8')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">Folga B</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">GABRIEL COSTA NOVAES DE OLIVEIRA</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_9')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">Folga B</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">GUILHERME BRYAN DA ROSA</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_10')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">Folga B</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">JORGE L. ROMÃO</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_11')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">Folga B</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">JULIO COSTA JUNIOR</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_12')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">Folga B</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">PAULO CESAR GREGÓRIO JUNIOR</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_13')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">Folga B</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">VINICIUS H. DE LIMA</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_14')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">Folga B</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">VITOR HUGO MARTINS</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_15')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">Folga C</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">CARLOS ROBERTO DE O. GUIMARÃES</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_16')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">Folga C</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">EDILSON SIQUEIRA</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_17')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">Folga C</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">EDNILSON LIMA DE OLIVEIRA</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_18')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">Folga C</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">HENRIQUE CORGONI DE SOUZA</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_19')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">Folga C</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">LARRY PAIVA DA COSTA</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_20')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">Folga C</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">ODAIR JOSÉ CUNHA</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_21')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">Folga D</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">ARTHUR FONSECA DA SILVA</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_22')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">Folga D</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">FELIPE ALVES DIAS</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_23')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">Folga D</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">GIULEANO JOSE DOS SANTOS</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_24')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">Folga D</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">MARLON VIEIRA MENDES</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_25')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">Folga D</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">ROBERTO BRAULOS DE MELLO</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable" onclick="openViewColab('colab_26')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">Folga D</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-name">SAMARA LUCIA DOS SANTOS</div>
+      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item add-card" onclick="openAddModal()"><span class="plus">➕</span><b>Adicionar Colaborador</b><span class="card-count">Cadastrar novo membro do turno</span></div></section>
+  <section id="viewIops" class="cards-grid" style="display: none;"><div class="card-item clickable iop-zero" onclick="openViewIop('006')">
+      <div class="card-top-row"><span class="badge-iop">IOP 006</span></div>
+      <div class="card-desc">006 – Tripper AG 255</div>
+      <div class="card-count">0/26 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable iop-zero" onclick="openViewIop('008')">
+      <div class="card-top-row"><span class="badge-iop">IOP 008</span></div>
+      <div class="card-desc">008 – Operar TB 015</div>
+      <div class="card-count">0/26 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable iop-zero" onclick="openViewIop('009')">
+      <div class="card-top-row"><span class="badge-iop">IOP 009</span></div>
+      <div class="card-desc">009 – Operar TB 1720</div>
+      <div class="card-count">0/26 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable iop-zero" onclick="openViewIop('011')">
+      <div class="card-top-row"><span class="badge-iop">IOP 011</span></div>
+      <div class="card-desc">011 – Descarregar Vagões</div>
+      <div class="card-count">0/26 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable iop-zero" onclick="openViewIop('012')">
+      <div class="card-top-row"><span class="badge-iop">IOP 012</span></div>
+      <div class="card-desc">012 – Descarregar Óleo</div>
+      <div class="card-count">0/26 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable iop-zero" onclick="openViewIop('027')">
+      <div class="card-top-row"><span class="badge-iop">IOP 027</span></div>
+      <div class="card-desc">027 – Rechegar Produto</div>
+      <div class="card-count">0/26 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable iop-zero" onclick="openViewIop('034')">
+      <div class="card-top-row"><span class="badge-iop">IOP 034</span></div>
+      <div class="card-desc">034 – Expedir Óleo</div>
+      <div class="card-count">0/26 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable iop-zero" onclick="openViewIop('040')">
+      <div class="card-top-row"><span class="badge-iop">IOP 040</span></div>
+      <div class="card-desc">040 – Coletar Grãos na Triagem</div>
+      <div class="card-count">0/26 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable iop-zero" onclick="openViewIop('046')">
+      <div class="card-top-row"><span class="badge-iop">IOP 046</span></div>
+      <div class="card-desc">046 – Coletar Grãos no Terminal</div>
+      <div class="card-count">0/26 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable iop-zero" onclick="openViewIop('057')">
+      <div class="card-top-row"><span class="badge-iop">IOP 057</span></div>
+      <div class="card-desc">057 – Tripper AG 1780</div>
+      <div class="card-count">0/26 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable iop-zero" onclick="openViewIop('064')">
+      <div class="card-top-row"><span class="badge-iop">IOP 064</span></div>
+      <div class="card-desc">064 – Operar Carpuller</div>
+      <div class="card-count">0/26 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item clickable iop-zero" onclick="openViewIop('112')">
+      <div class="card-top-row"><span class="badge-iop">IOP 112</span></div>
+      <div class="card-desc">112 – Operar BF</div>
+      <div class="card-count">0/26 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+    </div><div class="card-item add-card" onclick="openAddIopModal()"><span class="plus">➕</span><b>Adicionar IOP</b><span class="card-count">Nova IOP para a matriz do turno</span></div></section>
+  <section id="viewTrein" class="cards-grid" style="display: none;"><div class="help-text">Nenhum treinamento no catálogo. Cadastre NRs, IOPs complementares ou treinamentos internos para começar o controle.</div><div class="card-item add-card" onclick="openAddTrainingModal()"><span class="plus">➕</span><b>Adicionar Treinamento</b><span class="card-count">Registrar realização ou cadastrar no catálogo</span></div></section>
+  <section id="viewMatriz" style="display:none">
+    <div class="matrix-wrap">
+      <table class="matrix-table" id="matrixTable">
+        <thead id="matrixHead"></thead>
+        <tbody id="matrixBody"></tbody>
+      </table>
+    </div>
+  </section>
 </main>
 
-
-
-  
-    
+<!-- ===== MODAL: VISUALIZAR COLABORADOR ===== -->
+<div class="modal-overlay" id="modalViewColab">
+  <div class="modal-box">
+    <div class="modal-header">
       <h2 class="modal-title" id="viewColabTitle">Colaborador</h2>
       <button class="btn-close-modal" onclick="closeModal('modalViewColab')">×</button>
-    
-
-
-    
-
-
-    
+    </div>
+    <div class="modal-body" id="viewColabBody"></div>
+    <div class="modal-footer">
       <button class="btn-secondary-action" onclick="closeModal('modalViewColab')">Fechar</button>
       <button class="btn-primary" onclick="viewToEdit()">✏️ Editar</button>
-    
+    </div>
+  </div>
+</div>
 
-
-  
-
-
-
-
-
-
-
-
-  
-    
+<!-- ===== MODAL: VISUALIZAR IOP ===== -->
+<div class="modal-overlay" id="modalViewIop">
+  <div class="modal-box">
+    <div class="modal-header">
       <h2 class="modal-title" id="viewIopTitle">IOP</h2>
       <button class="btn-close-modal" onclick="closeModal('modalViewIop')">×</button>
-    
-
-
-    
-
-
-    
+    </div>
+    <div class="modal-body" id="viewIopBody"></div>
+    <div class="modal-footer">
       <button class="btn-secondary-action" onclick="closeModal('modalViewIop')">Fechar</button>
       <button class="btn-primary" onclick="viewToRev()">✏️ Editar revisão</button>
-    
+    </div>
+  </div>
+</div>
 
-
-  
-
-
-
-
-
-
-
-
-  
-    
+<!-- ===== MODAL: VISUALIZAR TREINAMENTO ===== -->
+<div class="modal-overlay" id="modalViewTraining">
+  <div class="modal-box">
+    <div class="modal-header">
       <h2 class="modal-title" id="viewTrainingTitle">Treinamento</h2>
       <button class="btn-close-modal" onclick="closeModal('modalViewTraining')">×</button>
-    
-
-
-    
-
-
-    
+    </div>
+    <div class="modal-body" id="viewTrainingBody"></div>
+    <div class="modal-footer">
       <button class="btn-warn-action" onclick="deleteTraining()" style="margin-right:auto">🗑️ Excluir treinamento</button>
       <button class="btn-secondary-action" onclick="closeModal('modalViewTraining')">Fechar</button>
       <button class="btn-primary" onclick="viewToTrainingReg()">📝 Registrar realização</button>
-    
+    </div>
+  </div>
+</div>
 
-
-  
-
-
-
-
-
-
-
-
-  
-    
+<!-- ===== MODAL: ADICIONAR TREINAMENTO (sempre por cima) ===== -->
+<div class="modal-overlay on-top" id="modalAddTraining">
+  <div class="modal-box" style="max-width:580px">
+    <div class="modal-header">
       <h2 class="modal-title">➕ Adicionar Treinamento</h2>
       <button class="btn-close-modal" onclick="closeAddTraining()">×</button>
-    
-
-
-    
-      
+    </div>
+    <div class="modal-body">
+      <div class="choice-cards">
         <button type="button" class="choice-card active" id="choiceReg" onclick="setTrainingMode('reg')">
-          **📝 Registrar realização**
-          Colaborador • treinamento do catálogo • data • validade
+          <b>📝 Registrar realização</b>
+          <span>Colaborador • treinamento do catálogo • data • validade</span>
         </button>
         <button type="button" class="choice-card" id="choiceCat" onclick="setTrainingMode('cat')">
-          **📚 Cadastrar treinamento**
-          Nome • tipo (NR / IOP / Interno) • validade padrão • obrigatório para
+          <b>📚 Cadastrar treinamento</b>
+          <span>Nome • tipo (NR / IOP / Interno) • validade padrão • obrigatório para</span>
         </button>
-      
-
-
-      
-        
-          <label>Colaborador</label><select id="trColab" onchange="updateTrPreview()"></select>
-
-
-          <label>Treinamento do catálogo</label><select id="trTrain" onchange="updateTrPreview()"></select>
-
-
-          <label>Data de realização</label><input type="date" id="trDate" onchange="updateTrPreview()">
-
-
-        
-
-
-        
-
-
+      </div>
+      <div id="formReg" class="train-form">
+        <div class="form-grid">
+          <div class="form-field"><label>Colaborador</label><select id="trColab" onchange="updateTrPreview()"></select></div>
+          <div class="form-field"><label>Treinamento do catálogo</label><select id="trTrain" onchange="updateTrPreview()"></select></div>
+          <div class="form-field full"><label>Data de realização</label><input type="date" id="trDate" onchange="updateTrPreview()"></div>
+        </div>
+        <p class="card-dates" id="trValidityPreview" style="margin:.6rem 0"></p>
         <button class="btn-danger-action" id="btnRemoveReg" onclick="removeTrainingRecord()" style="display:none">🗑️ Remover registro</button>
-      
-
-
-      
-        
-          <label>Nome do treinamento</label><input type="text" id="catName" placeholder="Ex.: NR-35 Trabalho em Altura">
-
-
-          <label>Tipo</label><select id="catType"><option value="NR">NR's</option><option value="IOP">IOP's</option><option value="INTERNO">Treinamentos Internos</option></select>
-
-
-          <label>Validade padrão (meses)</label><input type="number" id="catMonths" value="12" min="1">
-
-
-          <label>Carga horária (h)</label><input type="number" id="catHours" placeholder="Ex.: 8">
-
-
-          <label>Obrigatório para</label><input type="text" id="catFor" list="obrigList" placeholder="Ex.: OP I, OP II — ou Todos" autocomplete="off"><datalist id="obrigList"></datalist>
-
-
-        
-
-
-        Deixe vazio ou escreva "Todos" para valer para toda a equipe. Separe funções por vírgula — só quem pertence a essas funções entra no indicador deste treinamento.
-
-
-      
-
-
-    
-
-
-    
+      </div>
+      <div id="formCat" class="train-form" style="display:none">
+        <div class="form-grid">
+          <div class="form-field full"><label>Nome do treinamento</label><input type="text" id="catName" placeholder="Ex.: NR-35 Trabalho em Altura"></div>
+          <div class="form-field"><label>Tipo</label><select id="catType"><option value="NR">NR's</option><option value="IOP">IOP's</option><option value="INTERNO">Treinamentos Internos</option></select></div>
+          <div class="form-field"><label>Validade padrão (meses)</label><input type="number" id="catMonths" value="12" min="1"></div>
+          <div class="form-field"><label>Carga horária (h)</label><input type="number" id="catHours" placeholder="Ex.: 8"></div>
+          <div class="form-field full"><label>Obrigatório para</label><input type="text" id="catFor" list="obrigList" placeholder="Ex.: OP I, OP II — ou Todos" autocomplete="off"><datalist id="obrigList"></datalist></div>
+        </div>
+        <p class="card-dates" style="margin-top:.4rem">Deixe vazio ou escreva "Todos" para valer para toda a equipe. Separe funções por vírgula — só quem pertence a essas funções entra no indicador deste treinamento.</p>
+      </div>
+    </div>
+    <div class="modal-footer">
       <button class="btn-secondary-action" onclick="closeAddTraining()">Cancelar</button>
       <button class="btn-primary" onclick="saveTraining()">Salvar</button>
-    
+    </div>
+  </div>
+</div>
 
-
-  
-
-
-
-
-
-
-
-
-  
-    
+<!-- ===== MODAL: ADICIONAR IOP ===== -->
+<div class="modal-overlay" id="modalAddIop">
+  <div class="modal-box" style="max-width:460px">
+    <div class="modal-header">
       <h2 class="modal-title">➕ Adicionar IOP</h2>
       <button class="btn-close-modal" onclick="closeModal('modalAddIop')">×</button>
-    
-
-
-    
-      
-        <label>Código (número)</label><input type="text" id="fIopCode" maxlength="3" placeholder="Ex.: 075">
-
-
-        <label>Descrição</label><input type="text" id="fIopDesc" placeholder="Ex.: Operar Correia 02">
-
-
-      
-
-
-      A nova IOP entra na matriz de todos os colaboradores como pendente e é gravada na lista IOPs do SharePoint.
-
-
-    
-
-
-    
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-field"><label>Código (número)</label><input type="text" id="fIopCode" maxlength="3" placeholder="Ex.: 075"></div>
+        <div class="form-field"><label>Descrição</label><input type="text" id="fIopDesc" placeholder="Ex.: Operar Correia 02"></div>
+      </div>
+      <p class="card-dates" style="margin-top:.6rem">A nova IOP entra na matriz de todos os colaboradores como pendente e é gravada na lista IOPs do SharePoint.</p>
+    </div>
+    <div class="modal-footer">
       <button class="btn-secondary-action" onclick="closeModal('modalAddIop')">Cancelar</button>
       <button class="btn-primary" onclick="saveIop()">Salvar</button>
-    
+    </div>
+  </div>
+</div>
 
-
-  
-
-
-
-
-
-
-
-
-  
-    
+<!-- ===== MODAL: EDITAR/ADICIONAR COLABORADOR ===== -->
+<div class="modal-overlay" id="modalEditColab">
+  <div class="modal-box">
+    <div class="modal-header">
       <h2 class="modal-title" id="editColabTitle">✏️ Editar Colaborador</h2>
       <button class="btn-close-modal" onclick="closeModal('modalEditColab')">×</button>
-    
-
-
-    
-      
-        <label>Nome do colaborador</label><input type="text" id="fName" placeholder="NOME DO COLABORADOR">
-
-
-        <label>Letra de Folga</label><select id="fFolga"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select>
-
-
-        <label>Função</label><input type="text" id="fFuncao" list="funcaoList" placeholder="Ex.: OP I" autocomplete="off"><datalist id="funcaoList"></datalist>
-
-
-        <label>Situação</label><button type="button" class="situation-toggle on" id="fSituationToggle" onclick="toggleSituation()">🟢 Habilitado</button>
-
-
-      
-
-
-      Treinamentos das IOPs
-
-
-      
-
-
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-field full"><label>Nome do colaborador</label><input type="text" id="fName" placeholder="NOME DO COLABORADOR"></div>
+        <div class="form-field"><label>Letra de Folga</label><select id="fFolga"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div>
+        <div class="form-field"><label>Função</label><input type="text" id="fFuncao" list="funcaoList" placeholder="Ex.: OP I" autocomplete="off"><datalist id="funcaoList"></datalist></div>
+        <div class="form-field full"><label>Situação</label><button type="button" class="situation-toggle on" id="fSituationToggle" onclick="toggleSituation()">🟢 Habilitado</button></div>
+      </div>
+      <div class="modal-subtitle">Treinamentos das IOPs</div>
+      <div id="fIopsList"></div>
       <button class="btn-add-training" onclick="openAddTrainingModal(state.editingId, null, true)">➕ Adicionar Treinamento (NR / IOP / Interno)</button>
-    
-
-
-    
+    </div>
+    <div class="modal-footer">
       <button class="btn-danger-action" id="btnDeleteColab" onclick="openConfirmDelete()" style="margin-right:auto; display:none">🗑️ Excluir</button>
       <button class="btn-secondary-action" onclick="closeModal('modalEditColab')">Cancelar</button>
       <button class="btn-primary" onclick="saveColab()">Salvar</button>
-    
+    </div>
+  </div>
+</div>
 
-
-  
-
-
-
-
-
-
-
-
-  
-    
+<!-- ===== MODAL: CONFIRMAÇÃO DE EXCLUSÃO ===== -->
+<div class="modal-overlay on-top" id="modalConfirmDelete">
+  <div class="modal-box" style="max-width:440px">
+    <div class="modal-header">
       <h2 class="modal-title">⚠️ Excluir Colaborador</h2>
       <button class="btn-close-modal" onclick="closeModal('modalConfirmDelete')">×</button>
-    
-
-
-    
-      Excluir colaborador? Esta ação não pode ser desfeita. Use para mudança de turno ou desligamento.
-
-
-    
-
-
-    
+    </div>
+    <div class="modal-body">
+      <p id="deleteConfirmText" style="font-size:.9rem;line-height:1.4;margin:0">Excluir colaborador? Esta ação não pode ser desfeita. Use para mudança de turno ou desligamento.</p>
+    </div>
+    <div class="modal-footer">
       <button class="btn-secondary-action" onclick="closeModal('modalConfirmDelete')">Cancelar</button>
       <button class="btn-danger-action" onclick="executeDeleteColab()">🗑️ Excluir</button>
-    
+    </div>
+  </div>
+</div>
 
-
-  
-
-
-
-
-
-
-
-
-  
-    
+<!-- ===== MODAL: EDITAR REVISÃO ===== -->
+<div class="modal-overlay" id="modalEditRev">
+  <div class="modal-box" style="max-width:480px">
+    <div class="modal-header">
       <h2 class="modal-title">✏️ Editar Revisão</h2>
       <button class="btn-close-modal" onclick="closeModal('modalEditRev')">×</button>
-    
-
-
-    
-      
-        <label>IOP</label><select id="revIopSelect" onchange="fillRevFields()"></select>
-
-
-        <label>Número da Revisão (REV)</label><input type="text" id="fRev" placeholder="Ex.: 14">
-
-
-        <label>Data da Revisão</label><input type="date" id="fRevDate" onchange="updateRevPreview()">
-
-
-      
-
-
-      
-
-
-    
-
-
-    
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-field full"><label>IOP</label><select id="revIopSelect" onchange="fillRevFields()"></select></div>
+        <div class="form-field"><label>Número da Revisão (REV)</label><input type="text" id="fRev" placeholder="Ex.: 14"></div>
+        <div class="form-field"><label>Data da Revisão</label><input type="date" id="fRevDate" onchange="updateRevPreview()"></div>
+      </div>
+      <p class="card-dates" id="revValidityPreview" style="margin-top:.7rem"></p>
+    </div>
+    <div class="modal-footer">
       <button class="btn-warn-action" onclick="clearRev()" style="margin-right:auto">🧹 Limpar revisão</button>
       <button class="btn-secondary-action" onclick="closeModal('modalEditRev')">Cancelar</button>
       <button class="btn-primary" onclick="saveRev()">Salvar</button>
-    
+    </div>
+  </div>
+</div>
 
-
-  
-
-
-
-
-
-
-
-
-  
-    
+<!-- ===== MODAL: SINCRONIZAÇÃO SHAREPOINT ===== -->
+<div class="modal-overlay" id="modalSyncConfig">
+  <div class="modal-box" style="max-width:640px">
+    <div class="modal-header">
       <h2 class="modal-title">🔗 Sincronização com SharePoint</h2>
       <button class="btn-close-modal" onclick="closeModal('modalSyncConfig')">×</button>
-    
-
-
-    
-      
-        <label>URL do site SharePoint</label><input type="text" id="spSiteUrl" placeholder="https://empresa.sharepoint.com/sites/seu-site">
-
-
-        <label>Lista Colaboradores</label><input type="text" id="spListColab" value="Colaboradores">
-
-
-        <label>Lista IOPs</label><input type="text" id="spListIops" value="IOPs">
-
-
-        <label>Lista Treinamentos</label><input type="text" id="spListTrein" value="Treinamentos">
-
-
-        <label>Lista TreinamentosCatalogo</label><input type="text" id="spListCatalog" value="TreinamentosCatalogo">
-
-
-        <label>Lista RegistrosGerais</label><input type="text" id="spListReg" value="RegistrosGerais">
-
-
-      
-
-
-      
-        **Colunas esperadas (nomes internos sem espaço/acento):**
-
-        • Colaboradores: `Title` (nome), `Folga`, `Funcao`, `Habilitado`, `IdColab`
-
-        • IOPs: `Title`, `Codigo`, `Descricao`, `REV`, `DataRevisao`
-
-        • Treinamentos (IOPs críticas): `Title`, `ColaboradorId`, `IopCodigo`, `Realizado`, `DataRealizacao`, `DataValidade`, `ValidadePersonalizada`
-
-        • TreinamentosCatalogo: `Title` (nome), `Tipo` (NR / IOP / INTERNO), `CargaHoraria`, `ValidadeMeses`, `ObrigatorioPara`, `IdTrein`
-
-        • RegistrosGerais: `Title`, `ColaboradorId`, `TreinamentoId`, `DataRealizacao`, `DataValidade`
-
-
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-field full"><label>URL do site SharePoint</label><input type="text" id="spSiteUrl" placeholder="https://empresa.sharepoint.com/sites/seu-site"></div>
+        <div class="form-field"><label>Lista Colaboradores</label><input type="text" id="spListColab" value="Colaboradores"></div>
+        <div class="form-field"><label>Lista IOPs</label><input type="text" id="spListIops" value="IOPs"></div>
+        <div class="form-field"><label>Lista Treinamentos</label><input type="text" id="spListTrein" value="Treinamentos"></div>
+        <div class="form-field"><label>Lista TreinamentosCatalogo</label><input type="text" id="spListCatalog" value="TreinamentosCatalogo"></div>
+        <div class="form-field full"><label>Lista RegistrosGerais</label><input type="text" id="spListReg" value="RegistrosGerais"></div>
+      </div>
+      <div class="help-text" style="margin-top:.8rem">
+        <strong>Colunas esperadas (nomes internos sem espaço/acento):</strong><br>
+        • Colaboradores: <code>Title</code> (nome), <code>Folga</code>, <code>Funcao</code>, <code>Habilitado</code>, <code>IdColab</code><br>
+        • IOPs: <code>Title</code>, <code>Codigo</code>, <code>Descricao</code>, <code>REV</code>, <code>DataRevisao</code><br>
+        • Treinamentos (IOPs críticas): <code>Title</code>, <code>ColaboradorId</code>, <code>IopCodigo</code>, <code>Realizado</code>, <code>DataRealizacao</code>, <code>DataValidade</code>, <code>ValidadePersonalizada</code><br>
+        • TreinamentosCatalogo: <code>Title</code> (nome), <code>Tipo</code> (NR / IOP / INTERNO), <code>CargaHoraria</code>, <code>ValidadeMeses</code>, <code>ObrigatorioPara</code>, <code>IdTrein</code><br>
+        • RegistrosGerais: <code>Title</code>, <code>ColaboradorId</code>, <code>TreinamentoId</code>, <code>DataRealizacao</code>, <code>DataValidade</code><br><br>
         O SharePoint é a fonte principal: ao abrir, o dashboard carrega das listas; o cache local serve para consulta offline e preserva edições ainda não enviadas.
-      
-
-
-    
-
-
-    
+      </div>
+    </div>
+    <div class="modal-footer">
       <button class="btn-warn-action" onclick="deactivateSync()" style="margin-right:auto">🚫 Desativar sincronização</button>
       <button class="btn-secondary-action" onclick="testConnection()">🔌 Testar conexão</button>
       <button class="btn-secondary-action" onclick="closeModal('modalSyncConfig')">Cancelar</button>
       <button class="btn-primary" onclick="saveSyncConfig()">Salvar</button>
-    
+    </div>
+  </div>
+</div>
 
-
-  
-
-
-
-
-
-
-
-
-
+<div class="toast-container" id="toastContainer"></div>
 
 <script>
 'use strict';
@@ -856,52 +854,11 @@ function renderKPIs(){
   const trPct = trSlots ? Math.round(trEmDia/trSlots*100)+'%' : '—';
   const trSub = state.catalog.length ? `${trEmDia} em dia • ${trVenc} vencidos • catálogo: ${state.catalog.length}` : 'Nenhum treinamento no catálogo';
   document.getElementById('kpisContainer').innerHTML = `
-    Colaboradores Monitorados
-
-${enabled.length}
-
-1º Turno Operacional (Letras A, B, C, D) • ${afastados} afastado(s)
-
-
-
-
-    IOPS Críticas Mapeadas
-
-${defs.length}
-
-Instruções Operacionais Padronizadas
-
-
-
-
-    Total de Pendências
-
-${pend}
-
-🟠 Faltando treinamento: ${missing}
-🔴 Vencidos: ${expired}
-
-
-
-
-    Treinamentos Realizados
-
-${done}
-
-${pct}% de conclusão (${done} de ${totalSlots})
-
-
-
-
-    Panorama Geral
-
-${trPct}
-
-Outros treinamentos: ${trSub}
-
-
-
-`;
+    <div class="kpi-card"><div class="kpi-card-label">Colaboradores Monitorados</div><div class="kpi-card-val">${enabled.length}</div><div class="kpi-card-sub">1º Turno Operacional (Letras A, B, C, D) • ${afastados} afastado(s)</div></div>
+    <div class="kpi-card"><div class="kpi-card-label">IOPS Críticas Mapeadas</div><div class="kpi-card-val">${defs.length}</div><div class="kpi-card-sub">Instruções Operacionais Padronizadas</div></div>
+    <div class="kpi-card"><div class="kpi-card-label">Total de Pendências</div><div class="kpi-card-val">${pend}</div><div class="kpi-legend">🟠 Faltando treinamento: ${missing}<br>🔴 Vencidos: ${expired}</div></div>
+    <div class="kpi-card"><div class="kpi-card-label">Treinamentos Realizados</div><div class="kpi-card-val">${done}</div><div class="kpi-card-sub">${pct}% de conclusão (${done} de ${totalSlots})</div></div>
+    <div class="kpi-card"><div class="kpi-card-label">Panorama Geral</div><div class="kpi-card-val">${trPct}</div><div class="kpi-card-sub">Outros treinamentos: ${trSub}</div></div>`;
 }
 
 function renderAlertBanner(){
@@ -925,28 +882,17 @@ function renderAlertBanner(){
     : (trExpiredTotal||trExpiring) ? `${trExpiredTotal} vencido(s), ${trExpiring} vencendo em 30 dias`
     : 'Nenhum vencido no momento';
   document.getElementById('alertBanner').innerHTML = `
-    ⚠️
-
-
-    
-      Alertas Prioritários do 1º Turno
-
-
-      
-        - **Gargalo Crítico:** ${escapeHtml(gargaloText)}
-
-        - **Destaque Positivo:** ${escapeHtml(destaqueText)}
-
-        - **IOPs com maior pendência:** ${escapeHtml(top3Str)}
-
-        - **Colaboradores com IOPS vencidas:** ${escapeHtml(vencidasText)}
-
-        - **Outros treinamentos:** ${escapeHtml(trText)}
-
-      
-    
-
-`;
+    <div class="alert-icon">⚠️</div>
+    <div class="alert-content">
+      <div class="alert-title">Alertas Prioritários do 1º Turno</div>
+      <ul>
+        <li><strong>Gargalo Crítico:</strong> ${escapeHtml(gargaloText)}</li>
+        <li><strong>Destaque Positivo:</strong> ${escapeHtml(destaqueText)}</li>
+        <li><strong>IOPs com maior pendência:</strong> ${escapeHtml(top3Str)}</li>
+        <li><strong>Colaboradores com IOPS vencidas:</strong> ${escapeHtml(vencidasText)}</li>
+        <li><strong>Outros treinamentos:</strong> ${escapeHtml(trText)}</li>
+      </ul>
+    </div>`;
 }
 
 function renderFilterCounts(){
@@ -969,51 +915,29 @@ function getFilteredCollaborators(){
 }
 
 function addCardHtml(icon, title, sub, fn){
-  return `${icon}**${title}**${sub}
-
-`;
+  return `<div class="card-item add-card" onclick="${fn}"><span class="plus">${icon}</span><b>${title}</b><span class="card-count">${sub}</span></div>`;
 }
 
 function renderColabView(){
   const container = document.getElementById('viewColab');
   const defs = getIops();
   const list = getFilteredCollaborators();
-  if(!list.length){ container.innerHTML = 'Nenhum colaborador encontrado.
-
-'; return; }
+  if(!list.length){ container.innerHTML = '<div class="help-text">Nenhum colaborador encontrado.</div>'; return; }
   container.innerHTML = list.map(c=>{
     const s = getCollaboratorStats(c);
     const pct = Math.round(s.done/defs.length*100);
     if(!c.enabled){
-      return `
-        Folga ${c.folga}${c.funcao?`${escapeHtml(c.funcao)}`:''}Afastado
-
-
-        ${escapeHtml(c.name)}
-
-
-      
-
-`;
+      return `<div class="card-item afastado">
+        <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">Folga ${c.folga}</span>${c.funcao?`<span class="badge-funcao">${escapeHtml(c.funcao)}</span>`:''}</span><span class="badge-afastado">Afastado</span></div>
+        <div class="card-name">${escapeHtml(c.name)}</div>
+      </div>`;
     }
-    return `
-      Folga ${c.folga}${c.funcao?`${escapeHtml(c.funcao)}`:''}${s.done}/${defs.length} Concluídas
-
-
-      ${escapeHtml(c.name)}
-
-
-      ✓ ${s.done} Realizadas✗ ${s.pend} Pendentes${s.expired?`🔴 ${s.expired} Vencida(s)`:''}
-
-
-      
-
-
-
-
-    
-
-`;
+    return `<div class="card-item clickable" onclick="openViewColab('${c.id}')">
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">Folga ${c.folga}</span>${c.funcao?`<span class="badge-funcao">${escapeHtml(c.funcao)}</span>`:''}</span><span class="card-count">${s.done}/${defs.length} Concluídas</span></div>
+      <div class="card-name">${escapeHtml(c.name)}</div>
+      <div class="chip-row"><span class="chip-ok">✓ ${s.done} Realizadas</span><span class="chip-pend">✗ ${s.pend} Pendentes</span>${s.expired?`<span class="chip-exp">🔴 ${s.expired} Vencida(s)</span>`:''}</div>
+      <div class="progress-bar"><div class="progress-bar-fill ${pct<50?'critical':''}" style="width:${pct}%"></div></div>
+    </div>`;
   }).join('') + addCardHtml('➕','Adicionar Colaborador','Cadastrar novo membro do turno','openAddModal()');
 }
 
@@ -1023,36 +947,20 @@ function renderIopsView(){
   const q = state.searchQuery.trim().toLowerCase();
   let stats = getIopStats();
   if(q) stats = stats.filter(i=>i.code.includes(q)||i.desc.toLowerCase().includes(q));
-  if(!stats.length){ container.innerHTML = 'Nenhuma IOP encontrada.
-
-' + addCardHtml('➕','Adicionar IOP','Nova IOP para a matriz do turno','openAddIopModal()'); return; }
+  if(!stats.length){ container.innerHTML = '<div class="help-text">Nenhuma IOP encontrada.</div>' + addCardHtml('➕','Adicionar IOP','Nova IOP para a matriz do turno','openAddIopModal()'); return; }
   container.innerHTML = stats.map(i=>{
     const rev = state.iops[i.code]||{};
     const revInfo = getRevValidityInfo(rev.revDate);
     const revExpired = revInfo && revInfo.valDateStr < todayStr();
-    const revBadge = rev.rev ? `REV ${escapeHtml(rev.rev)}${rev.revDate?' • val. '+formatDateBR(revInfo.valDateStr):''}` : '';
+    const revBadge = rev.rev ? `<span class="badge-rev ${revExpired?'badge-rev-exp':''}" title="${revExpired?'Revisão vencida':'Validade da revisão: '+formatDateBR(revInfo.valDateStr)}">REV ${escapeHtml(rev.rev)}${rev.revDate?' • val. '+formatDateBR(revInfo.valDateStr):''}</span>` : '';
     const doneClass = total>0 && i.emDia===total ? 'iop-100' : (i.emDia===0?'iop-zero':'');
-    return `
-      IOP ${i.code}${revBadge}
-
-
-      ${i.code} – ${escapeHtml(i.desc)}
-
-
-      ${i.emDia}/${total} em dia
-
-
-      ✔ ${i.emDia} em dia (${i.pct}%)✗ ${i.pend} pendentes
-
-
-      
-
-
-
-
-    
-
-`;
+    return `<div class="card-item clickable ${doneClass}" onclick="openViewIop('${i.code}')">
+      <div class="card-top-row"><span class="badge-iop">IOP ${i.code}</span>${revBadge}</div>
+      <div class="card-desc">${i.code} – ${escapeHtml(i.desc)}</div>
+      <div class="card-count">${i.emDia}/${total} em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ ${i.emDia} em dia (${i.pct}%)</span><span class="chip-pend">✗ ${i.pend} pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill ${i.pct<50?'critical':''}" style="width:${i.pct}%"></div></div>
+    </div>`;
   }).join('') + addCardHtml('➕','Adicionar IOP','Nova IOP para a matriz do turno','openAddIopModal()');
 }
 
@@ -1061,33 +969,19 @@ function renderTreinamentosView(){
   const q = state.searchQuery.trim().toLowerCase();
   const list = state.catalog.filter(t=>!q || t.name.toLowerCase().includes(q));
   if(!list.length){
-    container.innerHTML = 'Nenhum treinamento no catálogo. Cadastre NRs, IOPs complementares ou treinamentos internos para começar o controle.
-
-' + addCardHtml('➕','Adicionar Treinamento','Registrar realização ou cadastrar no catálogo','openAddTrainingModal()');
+    container.innerHTML = '<div class="help-text">Nenhum treinamento no catálogo. Cadastre NRs, IOPs complementares ou treinamentos internos para começar o controle.</div>' + addCardHtml('➕','Adicionar Treinamento','Registrar realização ou cadastrar no catálogo','openAddTrainingModal()');
     return;
   }
   container.innerHTML = list.map(t=>{
     const s = getTrainingStats(t);
     const meta = TYPE_META[t.type]||TYPE_META['INTERNO'];
     const doneClass = s.total>0 && s.emDia===s.total ? 'iop-100' : '';
-    return `
-      ${meta.label}${s.emDia}/${s.total} em dia
-
-
-      ${escapeHtml(t.name)}
-
-
-      ✔ ${s.emDia} em dia (${s.pct}%)✗ ${s.pend} pendentes${s.vencidos?`🔴 ${s.vencidos} vencidos`:''}
-
-
-      
-
-
-
-
-    
-
-`;
+    return `<div class="card-item clickable ${doneClass}" onclick="openViewTraining('${t.id}')">
+      <div class="card-top-row"><span class="train-tag ${meta.cls}">${meta.label}</span><span class="card-count">${s.emDia}/${s.total} em dia</span></div>
+      <div class="card-desc">${escapeHtml(t.name)}</div>
+      <div class="chip-row"><span class="chip-ok">✔ ${s.emDia} em dia (${s.pct}%)</span><span class="chip-pend">✗ ${s.pend} pendentes</span>${s.vencidos?`<span class="chip-exp">🔴 ${s.vencidos} vencidos</span>`:''}</div>
+      <div class="progress-bar"><div class="progress-bar-fill ${s.pct<50?'critical':''}" style="width:${s.pct}%"></div></div>
+    </div>`;
   }).join('') + addCardHtml('➕','Adicionar Treinamento','Registrar realização ou cadastrar no catálogo','openAddTrainingModal()');
 }
 
@@ -1107,8 +1001,8 @@ function renderMatrizGeral(){
       return isExpired(r) ? '<td class="matrix-no">🔴</td>' : '<td class="matrix-ok">✓</td>';
     }).join('');
     return `<tr class="${c.enabled?'':'row-afastado'}">
-      <td>${c.folga}</td>
-      <td class="name-cell">${escapeHtml(c.name)}${c.funcao?` (${escapeHtml(c.funcao)})`:''}${c.enabled?'':' Afastado'}</td>
+      <td><span class="badge-folga-pill badge-folga-pill-${c.folga}">${c.folga}</span></td>
+      <td class="name-cell">${escapeHtml(c.name)}${c.funcao?` <span class="funcao-mini">(${escapeHtml(c.funcao)})</span>`:''}${c.enabled?'':' <span class="badge-afastado">Afastado</span>'}</td>
       ${cells}
       <td class="matrix-pend">${c.enabled?s.pend:'–'}</td>
       <td><button class="btn-edit-mini" onclick="openEditModal('${c.id}')">✏️ Editar</button></td>
@@ -1162,71 +1056,43 @@ function openViewColab(id){
     else pendentes.push({iop, r});
   });
   let html = `
-    
-      Folga ${c.folga}
-      ${c.funcao?`${escapeHtml(c.funcao)}`:''}
-      ${c.enabled?'Habilitado':'Afastado'}
-    
-
-
-    
-      ✅ ${s.done} / ${defs.length} Realizadas
-
-
-      ❌ ${s.pend} / ${defs.length} Pendências
-
-
-    
-
-`;
+    <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
+      <span class="badge-folga-pill badge-folga-pill-${c.folga}">Folga ${c.folga}</span>
+      ${c.funcao?`<span class="badge-funcao">${escapeHtml(c.funcao)}</span>`:''}
+      ${c.enabled?'<span class="badge-status-chip">Habilitado</span>':'<span class="badge-afastado">Afastado</span>'}
+    </div>
+    <div class="summary-row">
+      <div class="summary-box summary-ok">✅ ${s.done} / ${defs.length} Realizadas</div>
+      <div class="summary-box summary-pend">❌ ${s.pend} / ${defs.length} Pendências</div>
+    </div>`;
   if(c.enabled){
-    html += 'Realizadas
-
-';
+    html += '<div class="view-section-title">Realizadas</div>';
     html += realizadas.length ? realizadas.map(({iop,r})=>{
       const v = getValidity(r);
-      const chip = isExpired(r) ? '🔴 Vencida'
-        : isExpiring(r) ? `Válido até ${formatDateBR(v)}`
-        : `Válido até ${formatDateBR(v)||'—'}`;
-      return `${iop.code} – ${escapeHtml(iop.desc)}Realizado em ${formatDateBR(r.realizationDate)||'—'}${r.userCustomValidity?' (val. personalizada)':''}${chip}
-
-`;
-    }).join('') : 'Nenhuma IOP realizada.
-
-';
-    html += 'Pendentes
-
-';
-    html += pendentes.length ? pendentes.map(({iop})=>`${iop.code} – ${escapeHtml(iop.desc)}Faltando Treinamento
-
-`).join('') : 'Nenhuma pendência. 🎉
-
-';
+      const chip = isExpired(r) ? '<span class="chip-exp">🔴 Vencida</span>'
+        : isExpiring(r) ? `<span class="chip-warn">Válido até ${formatDateBR(v)}</span>`
+        : `<span class="chip-ok">Válido até ${formatDateBR(v)||'—'}</span>`;
+      return `<div class="detail-card"><span class="dc-title">${iop.code} – ${escapeHtml(iop.desc)}</span><span style="display:flex;gap:.4rem;align-items:center"><span class="card-dates">Realizado em ${formatDateBR(r.realizationDate)||'—'}${r.userCustomValidity?' (val. personalizada)':''}</span>${chip}</span></div>`;
+    }).join('') : '<div class="help-text">Nenhuma IOP realizada.</div>';
+    html += '<div class="view-section-title">Pendentes</div>';
+    html += pendentes.length ? pendentes.map(({iop})=>`<div class="detail-card"><span class="dc-title">${iop.code} – ${escapeHtml(iop.desc)}</span><span class="chip-pend">Faltando Treinamento</span></div>`).join('') : '<div class="help-text">Nenhuma pendência. 🎉</div>';
     if(state.catalog.length){
-      html += 'Outros treinamentos
-
-';
+      html += '<div class="view-section-title">Outros treinamentos</div>';
       html += state.catalog.map(t=>{
         const meta = TYPE_META[t.type]||TYPE_META['INTERNO'];
         if(!isTrainingRequiredFor(c,t)){
-          return `${meta.label} ${escapeHtml(t.name)}Não se aplica (${escapeHtml(c.funcao||'sem função')})
-
-`;
+          return `<div class="detail-card"><span class="dc-title"><span class="train-tag ${meta.cls}">${meta.label}</span> ${escapeHtml(t.name)}</span><span class="chip-na">Não se aplica (${escapeHtml(c.funcao||'sem função')})</span></div>`;
         }
         const r = getTrainingRecord(c.id, t.id);
         let chip;
-        if(!r) chip = 'Faltando';
-        else if(isTrainingExpired(r,t)) chip = '🔴 Vencido';
-        else chip = `Válido até ${formatDateBR(trainingValidity(r,t))}`;
-        return `${meta.label} ${escapeHtml(t.name)}${chip}
-
-`;
+        if(!r) chip = '<span class="chip-pend">Faltando</span>';
+        else if(isTrainingExpired(r,t)) chip = '<span class="chip-exp">🔴 Vencido</span>';
+        else chip = `<span class="chip-ok">Válido até ${formatDateBR(trainingValidity(r,t))}</span>`;
+        return `<div class="detail-card"><span class="dc-title"><span class="train-tag ${meta.cls}">${meta.label}</span> ${escapeHtml(t.name)}</span>${chip}</div>`;
       }).join('');
     }
   } else {
-    html += 'Colaborador afastado — fora dos indicadores do turno.
-
-';
+    html += '<div class="help-text" style="margin-top:.8rem">Colaborador afastado — fora dos indicadores do turno.</div>';
   }
   document.getElementById('viewColabBody').innerHTML = html;
   openModal('modalViewColab');
@@ -1240,28 +1106,22 @@ function openViewIop(code){
   const rev = state.iops[code]||{};
   const revInfo = getRevValidityInfo(rev.revDate);
   const stats = getIopStats().find(i=>i.code===code);
-  document.getElementById('viewIopTitle').innerHTML = `IOP ${iop.code} – ${escapeHtml(iop.desc)} ${rev.rev?`REV ${escapeHtml(rev.rev)}${rev.revDate?' • val. '+formatDateBR(revInfo.valDateStr):''}`:''}`;
+  document.getElementById('viewIopTitle').innerHTML = `IOP ${iop.code} – ${escapeHtml(iop.desc)} ${rev.rev?`<span class="badge-rev">REV ${escapeHtml(rev.rev)}${rev.revDate?' • val. '+formatDateBR(revInfo.valDateStr):''}</span>`:''}`;
   const sorted = [...state.collaborators].sort((a,b)=>{
     if(a.enabled!==b.enabled) return a.enabled?-1:1;
     if(a.folga!==b.folga) return a.folga.localeCompare(b.folga,'pt-BR');
     return a.name.localeCompare(b.name,'pt-BR');
   });
-  let html = `${stats.emDia}/${stats.total} em dia • ${stats.pend} pendentes
-
-`;
+  let html = `<div class="card-count" style="margin-bottom:.6rem">${stats.emDia}/${stats.total} em dia • ${stats.pend} pendentes</div>`;
   html += sorted.map(c=>{
     const r = c.records[code];
     let chip;
-    if(!c.enabled) chip = 'Afastado';
-    else if(!r||!r.done) chip = 'Faltando Treinamento';
-    else if(isExpired(r)) chip = '🔴 Vencida';
-    else chip = `Válido até ${formatDateBR(getValidity(r))||'—'}`;
-    const dates = r && r.done && c.enabled ? `Realizado em ${formatDateBR(r.realizationDate)||'—'}${r.userCustomValidity?' (val. personalizada)':''}
-
-` : '';
-    return `${c.folga}${escapeHtml(c.name)}${dates}${chip}
-
-`;
+    if(!c.enabled) chip = '<span class="badge-afastado">Afastado</span>';
+    else if(!r||!r.done) chip = '<span class="chip-pend">Faltando Treinamento</span>';
+    else if(isExpired(r)) chip = '<span class="chip-exp">🔴 Vencida</span>';
+    else chip = `<span class="chip-ok">Válido até ${formatDateBR(getValidity(r))||'—'}</span>`;
+    const dates = r && r.done && c.enabled ? `<div class="card-dates">Realizado em ${formatDateBR(r.realizationDate)||'—'}${r.userCustomValidity?' (val. personalizada)':''}</div>` : '';
+    return `<div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">${c.folga}</span><span class="dc-title">${escapeHtml(c.name)}</span>${dates}</span>${chip}</div>`;
   }).join('');
   document.getElementById('viewIopBody').innerHTML = html;
   openModal('modalViewIop');
@@ -1274,10 +1134,8 @@ function openViewTraining(id){
   state.viewTrainingId = id;
   const meta = TYPE_META[t.type]||TYPE_META['INTERNO'];
   const s = getTrainingStats(t);
-  document.getElementById('viewTrainingTitle').innerHTML = `${escapeHtml(t.name)} ${meta.label}`;
-  let html = `Validade padrão: ${t.validadeMeses} ${t.validadeMeses==1?'mês':'meses'}${t.cargaHoraria?` • ${escapeHtml(t.cargaHoraria)}h`:''}${t.obrigatorioPara?` • Obrigatório para: ${escapeHtml(t.obrigatorioPara)}`:' • Obrigatório para: Todos'} • ${s.emDia}/${s.total} em dia (apenas funções obrigatórias)
-
-`;
+  document.getElementById('viewTrainingTitle').innerHTML = `${escapeHtml(t.name)} <span class="train-tag ${meta.cls}">${meta.label}</span>`;
+  let html = `<div class="card-count" style="margin-bottom:.6rem">Validade padrão: ${t.validadeMeses} ${t.validadeMeses==1?'mês':'meses'}${t.cargaHoraria?` • ${escapeHtml(t.cargaHoraria)}h`:''}${t.obrigatorioPara?` • Obrigatório para: ${escapeHtml(t.obrigatorioPara)}`:' • Obrigatório para: Todos'} • ${s.emDia}/${s.total} em dia (apenas funções obrigatórias)</div>`;
   const sorted = [...state.collaborators].sort((a,b)=>{
     if(a.enabled!==b.enabled) return a.enabled?-1:1;
     if(a.folga!==b.folga) return a.folga.localeCompare(b.folga,'pt-BR');
@@ -1289,31 +1147,19 @@ function openViewTraining(id){
   html += reqList.map(c=>{
     const r = getTrainingRecord(c.id, id);
     let chip;
-    if(!r) chip = 'Faltando Treinamento';
-    else if(isTrainingExpired(r,t)) chip = '🔴 Vencido';
-    else chip = `Válido até ${formatDateBR(trainingValidity(r,t))}`;
-    const dates = r ? `Realizado em ${formatDateBR(r.realizationDate)||'—'}
-
-` : '';
-    return `${c.folga}${escapeHtml(c.name)}${c.funcao?` (${escapeHtml(c.funcao)})`:''}${dates}${chip}
-
-`;
+    if(!r) chip = '<span class="chip-pend">Faltando Treinamento</span>';
+    else if(isTrainingExpired(r,t)) chip = '<span class="chip-exp">🔴 Vencido</span>';
+    else chip = `<span class="chip-ok">Válido até ${formatDateBR(trainingValidity(r,t))}</span>`;
+    const dates = r ? `<div class="card-dates">Realizado em ${formatDateBR(r.realizationDate)||'—'}</div>` : '';
+    return `<div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">${c.folga}</span><span class="dc-title">${escapeHtml(c.name)}${c.funcao?` <span class="funcao-mini">(${escapeHtml(c.funcao)})</span>`:''}</span>${dates}</span>${chip}</div>`;
   }).join('');
   if(naList.length){
-    html += `Não se aplica (função fora do escopo)
-
-`;
-    html += naList.map(c=>`${c.folga}${escapeHtml(c.name)}${c.funcao?` (${escapeHtml(c.funcao)})`:''}Não se aplica
-
-`).join('');
+    html += `<div class="view-section-title">Não se aplica (função fora do escopo)</div>`;
+    html += naList.map(c=>`<div class="detail-card" style="opacity:.6"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">${c.folga}</span><span class="dc-title">${escapeHtml(c.name)}${c.funcao?` <span class="funcao-mini">(${escapeHtml(c.funcao)})</span>`:''}</span></span><span class="chip-na">Não se aplica</span></div>`).join('');
   }
   if(afastados.length){
-    html += `Afastados
-
-`;
-    html += afastados.map(c=>`${c.folga}${escapeHtml(c.name)}Afastado
-
-`).join('');
+    html += `<div class="view-section-title">Afastados</div>`;
+    html += afastados.map(c=>`<div class="detail-card" style="opacity:.6"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">${c.folga}</span><span class="dc-title" style="text-decoration:line-through">${escapeHtml(c.name)}</span></span><span class="badge-afastado">Afastado</span></div>`).join('');
   }
   document.getElementById('viewTrainingBody').innerHTML = html;
   openModal('modalViewTraining');
@@ -1440,20 +1286,16 @@ function buildFuncaoDatalist(){
 function buildIopEditRows(c){
   return getIops().map(iop=>{
     const r = c.records[iop.code] || {done:false,realizationDate:'',validityDate:'',userCustomValidity:false};
-    return `
-      IOP ${iop.code}
-      ${escapeHtml(iop.desc)}
+    return `<div class="iop-edit-row">
+      <span class="iop-code">IOP ${iop.code}</span>
+      <span>${escapeHtml(iop.desc)}</span>
       <label style="display:flex;align-items:center;gap:.3rem;font-size:.78rem"><input type="checkbox" id="ck_${iop.code}" ${r.done?'checked':''}> Feito</label>
       <label class="custom-lbl"><input type="checkbox" id="cv_${iop.code}" ${r.userCustomValidity?'checked':''}> Val. personalizada</label>
-      
+      <div class="row-dates">
         <label class="custom-lbl">Realização: <input type="date" id="dt_${iop.code}" value="${r.realizationDate}"></label>
         <label class="custom-lbl">Validade: <input type="date" id="dv_${iop.code}" value="${r.validityDate}"></label>
-      
-
-
-    
-
-`;
+      </div>
+    </div>`;
   }).join('');
 }
 function toggleSituation(){ state.editingSituation = !state.editingSituation; updateSituationToggle(); }
@@ -1594,17 +1436,32 @@ function handleImportBackup(e){
 function exportExcel(){
   const defs = getIops();
   let html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"></head><body>
-  | Folga | Colaborador | Função | Código IOP | Descrição IOP | Status | Data de Realização | Validade |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| ${c.folga} | ${escapeHtml(c.name)} | ${escapeHtml(c.funcao\|\|'')} | ${iop.code} | ${escapeHtml(iop.desc)} | ${status} | ${formatDateBR(r.realizationDate)} | ${formatDateBR(getValidity(r))} |
-| Revisões das IOPs |  |  |  |  |
-| --- | --- | --- | --- | --- |
-| Código | Descrição | REV | Data da Revisão | Validade da Revisão |
-| ${iop.code} | ${escapeHtml(iop.desc)} | ${escapeHtml(rev.rev\|\|'')} | ${formatDateBR(rev.revDate)} | ${v?formatDateBR(v.valDateStr):''} |
-| Outros Treinamentos |  |  |  |  |  |
-| --- | --- | --- | --- | --- | --- |
-| Colaborador | Função | Treinamento | Tipo | Data de Realização | Validade |
-| ${escapeHtml(c.name)} | ${escapeHtml(c.funcao\|\|'')} | ${escapeHtml(t.name)} | ${meta.label} | ${formatDateBR(r.realizationDate)} | ${formatDateBR(trainingValidity(r,t))} |</body></html>';
+  <table border="1" style="border-collapse:collapse;font-family:sans-serif;font-size:11pt">
+  <thead><tr style="font-weight:bold"><th>Folga</th><th>Colaborador</th><th>Função</th><th>Código IOP</th><th>Descrição IOP</th><th>Status</th><th>Data de Realização</th><th>Validade</th></tr></thead><tbody>`;
+  getFilteredCollaborators().forEach(c=>{
+    defs.forEach(iop=>{
+      const r = c.records[iop.code]||{done:false,realizationDate:'',validityDate:'',userCustomValidity:false};
+      const status = !c.enabled ? 'Afastado' : (!r.done ? 'Pendente' : (isExpired(r)?'Vencido':'Realizado'));
+      html += `<tr><td>${c.folga}</td><td>${escapeHtml(c.name)}</td><td>${escapeHtml(c.funcao||'')}</td><td style="text-align:center">${iop.code}</td><td>${escapeHtml(iop.desc)}</td><td>${status}</td><td>${formatDateBR(r.realizationDate)}</td><td>${formatDateBR(getValidity(r))}</td></tr>`;
+    });
+  });
+  html += `</tbody></table><br><table border="1" style="border-collapse:collapse;font-family:sans-serif;font-size:11pt">
+  <thead><tr style="font-weight:bold"><th colspan="5">Revisões das IOPs</th></tr><tr style="font-weight:bold"><th>Código</th><th>Descrição</th><th>REV</th><th>Data da Revisão</th><th>Validade da Revisão</th></tr></thead><tbody>`;
+  defs.forEach(iop=>{
+    const rev = state.iops[iop.code]||{};
+    const v = getRevValidityInfo(rev.revDate);
+    html += `<tr><td style="text-align:center">${iop.code}</td><td>${escapeHtml(iop.desc)}</td><td style="text-align:center">${escapeHtml(rev.rev||'')}</td><td style="text-align:center">${formatDateBR(rev.revDate)}</td><td style="text-align:center">${v?formatDateBR(v.valDateStr):''}</td></tr>`;
+  });
+  html += `</tbody></table><br><table border="1" style="border-collapse:collapse;font-family:sans-serif;font-size:11pt">
+  <thead><tr style="font-weight:bold"><th colspan="6">Outros Treinamentos</th></tr><tr style="font-weight:bold"><th>Colaborador</th><th>Função</th><th>Treinamento</th><th>Tipo</th><th>Data de Realização</th><th>Validade</th></tr></thead><tbody>`;
+  state.registros.forEach(r=>{
+    const c = state.collaborators.find(x=>x.id===r.colabId);
+    const t = getTrainingById(r.treinamentoId);
+    if(!c || !t) return;
+    const meta = TYPE_META[t.type]||TYPE_META['INTERNO'];
+    html += `<tr><td>${escapeHtml(c.name)}</td><td>${escapeHtml(c.funcao||'')}</td><td>${escapeHtml(t.name)}</td><td>${meta.label}</td><td>${formatDateBR(r.realizationDate)}</td><td>${formatDateBR(trainingValidity(r,t))}</td></tr>`;
+  });
+  html += '</tbody></table></body></html>';
   downloadFile(html, 'controle-treinamentos-iops.xls', 'application/vnd.ms-excel;charset=utf-8;');
   showToast('Excel exportado.');
 }
@@ -1846,7 +1703,7 @@ async function triggerRemotePush(){
 }
 
 // ==================== UTIL ====================
-function escapeHtml(s){ return String(s??'').replace(/&/g,'&').replace(/</g,'<').replace(/>/g,'>').replace(/"/g,'"').replace(/'/g,'''); }
+function escapeHtml(s){ return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 function showToast(message, isError=false){
   const container = document.getElementById('toastContainer');
   const item = document.createElement('div');
@@ -1876,5 +1733,5 @@ function showToast(message, isError=false){
   }
 })();
 </script>
-</body>
-  </html>
+
+</body></html>

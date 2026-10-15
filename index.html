@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- saved from url=(0105)file:///C:/Users/c2597705/OneDrive%20-%20BUNGE/Documentos/dashboard%20panorama%20geral/panoramageral.html -->
 <html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -210,19 +209,19 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
 
 <main class="app-main">
   <section class="kpi-grid" id="kpisContainer">
-    <div class="kpi-card"><div class="kpi-card-label">Colaboradores Monitorados</div><div class="kpi-card-val">26</div><div class="kpi-card-sub">1º Turno Operacional (Letras A, B, C, D) • 0 afastado(s)</div></div>
+    <div class="kpi-card"><div class="kpi-card-label">Colaboradores Monitorados</div><div class="kpi-card-val">25</div><div class="kpi-card-sub">1º Turno Operacional (Letras A, B, C, D) • 1 afastado(s)</div></div>
     <div class="kpi-card"><div class="kpi-card-label">IOPS Críticas Mapeadas</div><div class="kpi-card-val">12</div><div class="kpi-card-sub">Instruções Operacionais Padronizadas</div></div>
-    <div class="kpi-card"><div class="kpi-card-label">Total de Pendências</div><div class="kpi-card-val">312</div><div class="kpi-legend">🟠 Faltando treinamento: 312<br>🔴 Vencidos: 0</div></div>
-    <div class="kpi-card"><div class="kpi-card-label">Treinamentos Realizados</div><div class="kpi-card-val">0</div><div class="kpi-card-sub">0,0% de conclusão (0 de 312)</div></div>
+    <div class="kpi-card"><div class="kpi-card-label">Total de Pendências</div><div class="kpi-card-val">50</div><div class="kpi-legend">🟠 Faltando treinamento: 50<br>🔴 Vencidos: 0</div></div>
+    <div class="kpi-card"><div class="kpi-card-label">Treinamentos Realizados</div><div class="kpi-card-val">250</div><div class="kpi-card-sub">83,3% de conclusão (250 de 300)</div></div>
     <div class="kpi-card"><div class="kpi-card-label">Panorama Geral</div><div class="kpi-card-val">—</div><div class="kpi-card-sub">Outros treinamentos: Nenhum treinamento no catálogo</div></div></section>
   <section class="alert-banner" id="alertBanner">
     <div class="alert-icon">⚠️</div>
     <div class="alert-content">
       <div class="alert-title">Alertas Prioritários do 1º Turno</div>
       <ul>
-        <li><strong>Gargalo Crítico:</strong> IOP 006 (Tripper AG 255) com 0 de 26 treinados (0%), IOP 008 (Operar TB 015) com 0 de 26 treinados (0%), IOP 009 (Operar TB 1720) com 0 de 26 treinados (0%), IOP 011 (Descarregar Vagões) com 0 de 26 treinados (0%), IOP 012 (Descarregar Óleo) com 0 de 26 treinados (0%), IOP 027 (Rechegar Produto) com 0 de 26 treinados (0%), IOP 034 (Expedir Óleo) com 0 de 26 treinados (0%), IOP 040 (Coletar Grãos na Triagem) com 0 de 26 treinados (0%), IOP 046 (Coletar Grãos no Terminal) com 0 de 26 treinados (0%), IOP 057 (Tripper AG 1780) com 0 de 26 treinados (0%), IOP 064 (Operar Carpuller) com 0 de 26 treinados (0%), IOP 112 (Operar BF) com 0 de 26 treinados (0%)</li>
-        <li><strong>Destaque Positivo:</strong> Nenhuma IOP 100% concluída no momento</li>
-        <li><strong>IOPs com maior pendência:</strong> IOP 006 (26 • 100%), IOP 008 (26 • 100%), IOP 009 (26 • 100%)</li>
+        <li><strong>Gargalo Crítico:</strong> IOP 034 (Expedir Óleo) com 8 de 25 treinados (32%)</li>
+        <li><strong>Destaque Positivo:</strong> IOP 009 (Operar TB 1720) com 25 de 25 treinados (100%)</li>
+        <li><strong>IOPs com maior pendência:</strong> IOP 034 (17 • 68%), IOP 040 (12 • 48%), IOP 046 (7 • 28%)</li>
         <li><strong>Colaboradores com IOPS vencidas:</strong> Nenhum colaborador com IOPS vencida no momento</li>
         <li><strong>Outros treinamentos:</strong> Nenhum treinamento complementar no catálogo</li>
       </ul>
@@ -230,7 +229,7 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
 
   <section class="control-panel">
     <nav class="view-tabs" role="tablist">
-      <button class="tab-btn active" id="tabColabBtn" onclick="switchTab('colab')">👤 Por Colaborador (26)</button>
+      <button class="tab-btn active" id="tabColabBtn" onclick="switchTab('colab')">👤 Por Colaborador (25)</button>
       <button class="tab-btn" id="tabIopsBtn" onclick="switchTab('iops')">📋 Por IOPS (12)</button>
       <button class="tab-btn" id="tabTreinBtn" onclick="switchTab('trein')">🎓 Outros Treinamentos (0)</button>
       <button class="tab-btn" id="tabMatrizBtn" onclick="switchTab('matriz')">▦ Matriz Geral</button>
@@ -249,215 +248,369 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
   </section>
 
   <section id="viewColab" class="cards-grid" style="display: grid;"><div class="card-item clickable" onclick="openViewColab('colab_1')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">Folga A</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">Folga A</span><span class="badge-funcao">OP III</span></span><span class="card-count">10/12 Concluídas</span></div>
       <div class="card-name">ADRIANO DOS SANTOS</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 10 Realizadas</span><span class="chip-pend">✗ 2 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:83%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_2')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">Folga A</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">Folga A</span><span class="badge-funcao">OP IV</span></span><span class="card-count">12/12 Concluídas</span></div>
       <div class="card-name">ALISON LUIZ LOPES</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 12 Realizadas</span><span class="chip-pend">✗ 0 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:100%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_3')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">Folga A</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">Folga A</span><span class="badge-funcao">OP III</span></span><span class="card-count">12/12 Concluídas</span></div>
       <div class="card-name">DIOGO MAIA</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 12 Realizadas</span><span class="chip-pend">✗ 0 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:100%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_4')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">Folga A</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">Folga A</span><span class="badge-funcao">CONFERENTE</span></span><span class="card-count">12/12 Concluídas</span></div>
       <div class="card-name">JESSÉ DA SILVA</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 12 Realizadas</span><span class="chip-pend">✗ 0 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:100%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_5')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">Folga A</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">Folga A</span><span class="badge-funcao">OP II</span></span><span class="card-count">10/12 Concluídas</span></div>
       <div class="card-name">MARCIO DA SILVA</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 10 Realizadas</span><span class="chip-pend">✗ 2 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:83%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_6')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">Folga A</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">Folga A</span><span class="badge-funcao">OP II</span></span><span class="card-count">10/12 Concluídas</span></div>
       <div class="card-name">NILSON DE OLIVEIRA BITTENCOURT</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 10 Realizadas</span><span class="chip-pend">✗ 2 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:83%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_7')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">Folga A</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">Folga A</span><span class="badge-funcao">OP II</span></span><span class="card-count">9/12 Concluídas</span></div>
       <div class="card-name">WELLISON F. S. DA SILVA</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 9 Realizadas</span><span class="chip-pend">✗ 3 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:75%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_8')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">Folga B</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">Folga B</span><span class="badge-funcao">OP II</span></span><span class="card-count">11/12 Concluídas</span></div>
       <div class="card-name">GABRIEL COSTA NOVAES DE OLIVEIRA</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 11 Realizadas</span><span class="chip-pend">✗ 1 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:92%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_9')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">Folga B</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">Folga B</span><span class="badge-funcao">OP II</span></span><span class="card-count">12/12 Concluídas</span></div>
       <div class="card-name">GUILHERME BRYAN DA ROSA</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 12 Realizadas</span><span class="chip-pend">✗ 0 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:100%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_10')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">Folga B</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">Folga B</span><span class="badge-funcao">OP III</span></span><span class="card-count">4/12 Concluídas</span></div>
       <div class="card-name">JORGE L. ROMÃO</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 4 Realizadas</span><span class="chip-pend">✗ 8 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:33%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_11')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">Folga B</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">Folga B</span><span class="badge-funcao">OP IV</span></span><span class="card-count">9/12 Concluídas</span></div>
       <div class="card-name">JULIO COSTA JUNIOR</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 9 Realizadas</span><span class="chip-pend">✗ 3 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:75%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_12')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">Folga B</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">Folga B</span><span class="badge-funcao">OP III</span></span><span class="card-count">9/12 Concluídas</span></div>
       <div class="card-name">PAULO CESAR GREGÓRIO JUNIOR</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
-    </div><div class="card-item clickable" onclick="openViewColab('colab_13')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">Folga B</span></span><span class="card-count">0/12 Concluídas</span></div>
-      <div class="card-name">VINICIUS H. DE LIMA</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 9 Realizadas</span><span class="chip-pend">✗ 3 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:75%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_14')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">Folga B</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">Folga B</span><span class="badge-funcao">SUPERVISOR</span></span><span class="card-count">9/12 Concluídas</span></div>
       <div class="card-name">VITOR HUGO MARTINS</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 9 Realizadas</span><span class="chip-pend">✗ 3 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:75%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_15')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">Folga C</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">Folga C</span><span class="badge-funcao">OP II</span></span><span class="card-count">10/12 Concluídas</span></div>
       <div class="card-name">CARLOS ROBERTO DE O. GUIMARÃES</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 10 Realizadas</span><span class="chip-pend">✗ 2 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:83%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_16')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">Folga C</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">Folga C</span><span class="badge-funcao">OP III</span></span><span class="card-count">10/12 Concluídas</span></div>
       <div class="card-name">EDILSON SIQUEIRA</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 10 Realizadas</span><span class="chip-pend">✗ 2 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:83%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_17')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">Folga C</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">Folga C</span><span class="badge-funcao">OP III</span></span><span class="card-count">11/12 Concluídas</span></div>
       <div class="card-name">EDNILSON LIMA DE OLIVEIRA</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 11 Realizadas</span><span class="chip-pend">✗ 1 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:92%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_18')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">Folga C</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">Folga C</span><span class="badge-funcao">OP II</span></span><span class="card-count">9/12 Concluídas</span></div>
       <div class="card-name">HENRIQUE CORGONI DE SOUZA</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 9 Realizadas</span><span class="chip-pend">✗ 3 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:75%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_19')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">Folga C</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">Folga C</span><span class="badge-funcao">SUPERVISOR</span></span><span class="card-count">8/12 Concluídas</span></div>
       <div class="card-name">LARRY PAIVA DA COSTA</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 8 Realizadas</span><span class="chip-pend">✗ 4 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:67%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_20')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">Folga C</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">Folga C</span><span class="badge-funcao">OP II</span></span><span class="card-count">7/12 Concluídas</span></div>
       <div class="card-name">ODAIR JOSÉ CUNHA</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 7 Realizadas</span><span class="chip-pend">✗ 5 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:58%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_21')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">Folga D</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">Folga D</span><span class="badge-funcao">OP II</span></span><span class="card-count">11/12 Concluídas</span></div>
       <div class="card-name">ARTHUR FONSECA DA SILVA</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 11 Realizadas</span><span class="chip-pend">✗ 1 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:92%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_22')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">Folga D</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">Folga D</span><span class="badge-funcao">OP II</span></span><span class="card-count">11/12 Concluídas</span></div>
       <div class="card-name">FELIPE ALVES DIAS</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 11 Realizadas</span><span class="chip-pend">✗ 1 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:92%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_23')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">Folga D</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">Folga D</span><span class="badge-funcao">CONFERENTE</span></span><span class="card-count">12/12 Concluídas</span></div>
       <div class="card-name">GIULEANO JOSE DOS SANTOS</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 12 Realizadas</span><span class="chip-pend">✗ 0 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:100%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_24')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">Folga D</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">Folga D</span><span class="badge-funcao">OP II</span></span><span class="card-count">10/12 Concluídas</span></div>
       <div class="card-name">MARLON VIEIRA MENDES</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 10 Realizadas</span><span class="chip-pend">✗ 2 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:83%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_25')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">Folga D</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">Folga D</span><span class="badge-funcao">OP III</span></span><span class="card-count">11/12 Concluídas</span></div>
       <div class="card-name">ROBERTO BRAULOS DE MELLO</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="chip-row"><span class="chip-ok">✓ 11 Realizadas</span><span class="chip-pend">✗ 1 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:92%"></div></div>
     </div><div class="card-item clickable" onclick="openViewColab('colab_26')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">Folga D</span></span><span class="card-count">0/12 Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">Folga D</span><span class="badge-funcao">OP III</span></span><span class="card-count">11/12 Concluídas</span></div>
       <div class="card-name">SAMARA LUCIA DOS SANTOS</div>
-      <div class="chip-row"><span class="chip-ok">✓ 0 Realizadas</span><span class="chip-pend">✗ 12 Pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
-    </div><div class="card-item add-card" onclick="openAddModal()"><span class="plus">➕</span><b>Adicionar Colaborador</b><span class="card-count">Cadastrar novo membro do turno</span></div></section>
-  <section id="viewIops" class="cards-grid" style="display: none;"><div class="card-item clickable iop-zero" onclick="openViewIop('006')">
-      <div class="card-top-row"><span class="badge-iop">IOP 006</span></div>
+      <div class="chip-row"><span class="chip-ok">✓ 11 Realizadas</span><span class="chip-pend">✗ 1 Pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:92%"></div></div>
+    </div><div class="card-item afastado">
+        <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">Folga B</span><span class="badge-funcao">OP II</span></span><span class="badge-afastado">Afastado</span></div>
+        <div class="card-name">VINICIUS H. DE LIMA</div>
+      </div><div class="card-item add-card" onclick="openAddModal()"><span class="plus">➕</span><b>Adicionar Colaborador</b><span class="card-count">Cadastrar novo membro do turno</span></div></section>
+  <section id="viewIops" class="cards-grid" style="display: none;"><div class="card-item clickable " onclick="openViewIop('006')">
+      <div class="card-top-row"><span class="badge-iop">IOP 006</span><span class="badge-rev " title="Validade da revisão: 29/06/2027">REV 13 • val. 29/06/2027</span></div>
       <div class="card-desc">006 – Tripper AG 255</div>
-      <div class="card-count">0/26 em dia</div>
-      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
-    </div><div class="card-item clickable iop-zero" onclick="openViewIop('008')">
-      <div class="card-top-row"><span class="badge-iop">IOP 008</span></div>
+      <div class="card-count">23/25 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 23 em dia (92%)</span><span class="chip-pend">✗ 2 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:92%"></div></div>
+    </div><div class="card-item clickable " onclick="openViewIop('008')">
+      <div class="card-top-row"><span class="badge-iop">IOP 008</span><span class="badge-rev " title="Validade da revisão: 13/08/2027">REV 12 • val. 13/08/2027</span></div>
       <div class="card-desc">008 – Operar TB 015</div>
-      <div class="card-count">0/26 em dia</div>
-      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
-    </div><div class="card-item clickable iop-zero" onclick="openViewIop('009')">
-      <div class="card-top-row"><span class="badge-iop">IOP 009</span></div>
+      <div class="card-count">23/25 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 23 em dia (92%)</span><span class="chip-pend">✗ 2 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:92%"></div></div>
+    </div><div class="card-item clickable iop-100" onclick="openViewIop('009')">
+      <div class="card-top-row"><span class="badge-iop">IOP 009</span><span class="badge-rev " title="Validade da revisão: 05/06/2027">REV 13 • val. 05/06/2027</span></div>
       <div class="card-desc">009 – Operar TB 1720</div>
-      <div class="card-count">0/26 em dia</div>
-      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
-    </div><div class="card-item clickable iop-zero" onclick="openViewIop('011')">
-      <div class="card-top-row"><span class="badge-iop">IOP 011</span></div>
+      <div class="card-count">25/25 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 25 em dia (100%)</span><span class="chip-pend">✗ 0 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:100%"></div></div>
+    </div><div class="card-item clickable " onclick="openViewIop('011')">
+      <div class="card-top-row"><span class="badge-iop">IOP 011</span><span class="badge-rev " title="Validade da revisão: 07/01/2027">REV 13 • val. 07/01/2027</span></div>
       <div class="card-desc">011 – Descarregar Vagões</div>
-      <div class="card-count">0/26 em dia</div>
-      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
-    </div><div class="card-item clickable iop-zero" onclick="openViewIop('012')">
-      <div class="card-top-row"><span class="badge-iop">IOP 012</span></div>
+      <div class="card-count">24/25 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 24 em dia (96%)</span><span class="chip-pend">✗ 1 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:96%"></div></div>
+    </div><div class="card-item clickable " onclick="openViewIop('012')">
+      <div class="card-top-row"><span class="badge-iop">IOP 012</span><span class="badge-rev " title="Validade da revisão: 17/03/2027">REV 09 • val. 17/03/2027</span></div>
       <div class="card-desc">012 – Descarregar Óleo</div>
-      <div class="card-count">0/26 em dia</div>
-      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
-    </div><div class="card-item clickable iop-zero" onclick="openViewIop('027')">
-      <div class="card-top-row"><span class="badge-iop">IOP 027</span></div>
+      <div class="card-count">24/25 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 24 em dia (96%)</span><span class="chip-pend">✗ 1 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:96%"></div></div>
+    </div><div class="card-item clickable " onclick="openViewIop('027')">
+      <div class="card-top-row"><span class="badge-iop">IOP 027</span><span class="badge-rev " title="Validade da revisão: 21/08/2027">REV 09 • val. 21/08/2027</span></div>
       <div class="card-desc">027 – Rechegar Produto</div>
-      <div class="card-count">0/26 em dia</div>
-      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
-    </div><div class="card-item clickable iop-zero" onclick="openViewIop('034')">
-      <div class="card-top-row"><span class="badge-iop">IOP 034</span></div>
+      <div class="card-count">22/25 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 22 em dia (88%)</span><span class="chip-pend">✗ 3 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:88%"></div></div>
+    </div><div class="card-item clickable " onclick="openViewIop('034')">
+      <div class="card-top-row"><span class="badge-iop">IOP 034</span><span class="badge-rev " title="Validade da revisão: 28/08/2027">REV 08 • val. 28/08/2027</span></div>
       <div class="card-desc">034 – Expedir Óleo</div>
-      <div class="card-count">0/26 em dia</div>
-      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
-    </div><div class="card-item clickable iop-zero" onclick="openViewIop('040')">
-      <div class="card-top-row"><span class="badge-iop">IOP 040</span></div>
+      <div class="card-count">8/25 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 8 em dia (32%)</span><span class="chip-pend">✗ 17 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:32%"></div></div>
+    </div><div class="card-item clickable " onclick="openViewIop('040')">
+      <div class="card-top-row"><span class="badge-iop">IOP 040</span><span class="badge-rev " title="Validade da revisão: 21/08/2027">REV 12 • val. 21/08/2027</span></div>
       <div class="card-desc">040 – Coletar Grãos na Triagem</div>
-      <div class="card-count">0/26 em dia</div>
-      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
-    </div><div class="card-item clickable iop-zero" onclick="openViewIop('046')">
-      <div class="card-top-row"><span class="badge-iop">IOP 046</span></div>
+      <div class="card-count">13/25 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 13 em dia (52%)</span><span class="chip-pend">✗ 12 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:52%"></div></div>
+    </div><div class="card-item clickable " onclick="openViewIop('046')">
+      <div class="card-top-row"><span class="badge-iop">IOP 046</span><span class="badge-rev " title="Validade da revisão: 21/08/2027">REV 11 • val. 21/08/2027</span></div>
       <div class="card-desc">046 – Coletar Grãos no Terminal</div>
-      <div class="card-count">0/26 em dia</div>
-      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
-    </div><div class="card-item clickable iop-zero" onclick="openViewIop('057')">
-      <div class="card-top-row"><span class="badge-iop">IOP 057</span></div>
+      <div class="card-count">18/25 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 18 em dia (72%)</span><span class="chip-pend">✗ 7 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:72%"></div></div>
+    </div><div class="card-item clickable " onclick="openViewIop('057')">
+      <div class="card-top-row"><span class="badge-iop">IOP 057</span><span class="badge-rev " title="Validade da revisão: 29/06/2027">REV 11 • val. 29/06/2027</span></div>
       <div class="card-desc">057 – Tripper AG 1780</div>
-      <div class="card-count">0/26 em dia</div>
-      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
-    </div><div class="card-item clickable iop-zero" onclick="openViewIop('064')">
-      <div class="card-top-row"><span class="badge-iop">IOP 064</span></div>
+      <div class="card-count">24/25 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 24 em dia (96%)</span><span class="chip-pend">✗ 1 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:96%"></div></div>
+    </div><div class="card-item clickable " onclick="openViewIop('064')">
+      <div class="card-top-row"><span class="badge-iop">IOP 064</span><span class="badge-rev " title="Validade da revisão: 28/08/2027">REV 12 • val. 28/08/2027</span></div>
       <div class="card-desc">064 – Operar Carpuller</div>
-      <div class="card-count">0/26 em dia</div>
-      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
-    </div><div class="card-item clickable iop-zero" onclick="openViewIop('112')">
-      <div class="card-top-row"><span class="badge-iop">IOP 112</span></div>
+      <div class="card-count">24/25 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 24 em dia (96%)</span><span class="chip-pend">✗ 1 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:96%"></div></div>
+    </div><div class="card-item clickable " onclick="openViewIop('112')">
+      <div class="card-top-row"><span class="badge-iop">IOP 112</span><span class="badge-rev " title="Validade da revisão: 30/03/2027">REV 01 • val. 30/03/2027</span></div>
       <div class="card-desc">112 – Operar BF</div>
-      <div class="card-count">0/26 em dia</div>
-      <div class="chip-row"><span class="chip-ok">✔ 0 em dia (0%)</span><span class="chip-pend">✗ 26 pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill critical" style="width:0%"></div></div>
+      <div class="card-count">22/25 em dia</div>
+      <div class="chip-row"><span class="chip-ok">✔ 22 em dia (88%)</span><span class="chip-pend">✗ 3 pendentes</span></div>
+      <div class="progress-bar"><div class="progress-bar-fill " style="width:88%"></div></div>
     </div><div class="card-item add-card" onclick="openAddIopModal()"><span class="plus">➕</span><b>Adicionar IOP</b><span class="card-count">Nova IOP para a matriz do turno</span></div></section>
   <section id="viewTrein" class="cards-grid" style="display: none;"><div class="help-text">Nenhum treinamento no catálogo. Cadastre NRs, IOPs complementares ou treinamentos internos para começar o controle.</div><div class="card-item add-card" onclick="openAddTrainingModal()"><span class="plus">➕</span><b>Adicionar Treinamento</b><span class="card-count">Registrar realização ou cadastrar no catálogo</span></div></section>
-  <section id="viewMatriz" style="display:none">
+  <section id="viewMatriz" style="display: none;">
     <div class="matrix-wrap">
       <table class="matrix-table" id="matrixTable">
-        <thead id="matrixHead"></thead>
-        <tbody id="matrixBody"></tbody>
+        <thead id="matrixHead"><tr><th>Folga</th><th style="text-align:left">Colaborador</th><th>006</th><th>008</th><th>009</th><th>011</th><th>012</th><th>027</th><th>034</th><th>040</th><th>046</th><th>057</th><th>064</th><th>112</th><th>Pendências</th><th>Ações</th></tr></thead>
+        <tbody id="matrixBody"><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-A">A</span></td>
+      <td class="name-cell">ADRIANO DOS SANTOS <span class="funcao-mini">(OP III)</span></td>
+      <td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td>
+      <td class="matrix-pend">2</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_1')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-A">A</span></td>
+      <td class="name-cell">ALISON LUIZ LOPES</td>
+      <td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td>
+      <td class="matrix-pend">0</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_2')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-A">A</span></td>
+      <td class="name-cell">DIOGO MAIA</td>
+      <td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td>
+      <td class="matrix-pend">0</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_3')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-A">A</span></td>
+      <td class="name-cell">JESSÉ DA SILVA</td>
+      <td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td>
+      <td class="matrix-pend">0</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_4')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-A">A</span></td>
+      <td class="name-cell">MARCIO DA SILVA</td>
+      <td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td>
+      <td class="matrix-pend">2</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_5')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-A">A</span></td>
+      <td class="name-cell">NILSON DE OLIVEIRA BITTENCOURT</td>
+      <td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td>
+      <td class="matrix-pend">2</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_6')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-A">A</span></td>
+      <td class="name-cell">WELLISON F. S. DA SILVA</td>
+      <td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-no">✗</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td>
+      <td class="matrix-pend">3</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_7')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-B">B</span></td>
+      <td class="name-cell">GABRIEL COSTA NOVAES DE OLIVEIRA</td>
+      <td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td>
+      <td class="matrix-pend">1</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_8')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-B">B</span></td>
+      <td class="name-cell">GUILHERME BRYAN DA ROSA <span class="funcao-mini">(OP II)</span></td>
+      <td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td>
+      <td class="matrix-pend">0</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_9')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-B">B</span></td>
+      <td class="name-cell">JORGE L. ROMÃO</td>
+      <td class="matrix-no">✗</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-no">✗</td><td class="matrix-no">✗</td><td class="matrix-no">✗</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td>
+      <td class="matrix-pend">8</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_10')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-B">B</span></td>
+      <td class="name-cell">JULIO COSTA JUNIOR</td>
+      <td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td>
+      <td class="matrix-pend">3</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_11')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-B">B</span></td>
+      <td class="name-cell">PAULO CESAR GREGÓRIO JUNIOR</td>
+      <td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td>
+      <td class="matrix-pend">3</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_12')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-B">B</span></td>
+      <td class="name-cell">VITOR HUGO MARTINS</td>
+      <td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td>
+      <td class="matrix-pend">3</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_14')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-C">C</span></td>
+      <td class="name-cell">CARLOS ROBERTO DE O. GUIMARÃES</td>
+      <td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td>
+      <td class="matrix-pend">2</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_15')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-C">C</span></td>
+      <td class="name-cell">EDILSON SIQUEIRA</td>
+      <td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td>
+      <td class="matrix-pend">2</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_16')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-C">C</span></td>
+      <td class="name-cell">EDNILSON LIMA DE OLIVEIRA</td>
+      <td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td>
+      <td class="matrix-pend">1</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_17')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-C">C</span></td>
+      <td class="name-cell">HENRIQUE CORGONI DE SOUZA</td>
+      <td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-no">✗</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td>
+      <td class="matrix-pend">3</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_18')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-C">C</span></td>
+      <td class="name-cell">LARRY PAIVA DA COSTA</td>
+      <td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td>
+      <td class="matrix-pend">4</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_19')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-C">C</span></td>
+      <td class="name-cell">ODAIR JOSÉ CUNHA <span class="funcao-mini">(OP II)</span></td>
+      <td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-no">✗</td><td class="matrix-no">✗</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td>
+      <td class="matrix-pend">5</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_20')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-D">D</span></td>
+      <td class="name-cell">ARTHUR FONSECA DA SILVA <span class="funcao-mini">(OP II)</span></td>
+      <td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td>
+      <td class="matrix-pend">1</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_21')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-D">D</span></td>
+      <td class="name-cell">FELIPE ALVES DIAS <span class="funcao-mini">(OP II)</span></td>
+      <td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td>
+      <td class="matrix-pend">1</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_22')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-D">D</span></td>
+      <td class="name-cell">GIULEANO JOSE DOS SANTOS <span class="funcao-mini">(CONFERENTE)</span></td>
+      <td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td>
+      <td class="matrix-pend">0</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_23')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-D">D</span></td>
+      <td class="name-cell">MARLON VIEIRA MENDES <span class="funcao-mini">(OP II)</span></td>
+      <td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td>
+      <td class="matrix-pend">2</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_24')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-D">D</span></td>
+      <td class="name-cell">ROBERTO BRAULOS DE MELLO <span class="funcao-mini">(OP III)</span></td>
+      <td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td>
+      <td class="matrix-pend">1</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_25')">✏️ Editar</button></td>
+    </tr><tr class="">
+      <td><span class="badge-folga-pill badge-folga-pill-D">D</span></td>
+      <td class="name-cell">SAMARA LUCIA DOS SANTOS <span class="funcao-mini">(OP III)</span></td>
+      <td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-no">✗</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td><td class="matrix-ok">✓</td>
+      <td class="matrix-pend">1</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_26')">✏️ Editar</button></td>
+    </tr><tr class="row-afastado">
+      <td><span class="badge-folga-pill badge-folga-pill-B">B</span></td>
+      <td class="name-cell">VINICIUS H. DE LIMA <span class="badge-afastado">Afastado</span></td>
+      <td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td><td>–</td>
+      <td class="matrix-pend">–</td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('colab_13')">✏️ Editar</button></td>
+    </tr></tbody>
       </table>
     </div>
   </section>
@@ -497,10 +650,10 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
 <div class="modal-overlay" id="modalViewTraining">
   <div class="modal-box">
     <div class="modal-header">
-      <h2 class="modal-title" id="viewTrainingTitle">Treinamento</h2>
+      <h2 class="modal-title" id="viewTrainingTitle">NR 11 - OPERADOR DE PÁ CARREGADEIRA <span class="train-tag tag-nr">NR's</span></h2>
       <button class="btn-close-modal" onclick="closeModal('modalViewTraining')">×</button>
     </div>
-    <div class="modal-body" id="viewTrainingBody"></div>
+    <div class="modal-body" id="viewTrainingBody"><div class="card-count" style="margin-bottom:.6rem">Validade padrão: 12 meses • 8h • Obrigatório para: Todos • 1/25 em dia (apenas funções obrigatórias)</div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">A</span><span class="dc-title">ADRIANO DOS SANTOS <span class="funcao-mini">(OP III)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">A</span><span class="dc-title">ALISON LUIZ LOPES <span class="funcao-mini">(OP IV)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">A</span><span class="dc-title">DIOGO MAIA <span class="funcao-mini">(OP III)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">A</span><span class="dc-title">JESSÉ DA SILVA <span class="funcao-mini">(CONFERENTE)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">A</span><span class="dc-title">MARCIO DA SILVA <span class="funcao-mini">(OP II)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">A</span><span class="dc-title">NILSON DE OLIVEIRA BITTENCOURT <span class="funcao-mini">(OP II)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-A">A</span><span class="dc-title">WELLISON F. S. DA SILVA <span class="funcao-mini">(OP II)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">B</span><span class="dc-title">GABRIEL COSTA NOVAES DE OLIVEIRA <span class="funcao-mini">(OP II)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">B</span><span class="dc-title">GUILHERME BRYAN DA ROSA <span class="funcao-mini">(OP II)</span></span><div class="card-dates">Realizado em 22/05/2026</div></span><span class="chip-ok">Válido até 22/05/2027</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">B</span><span class="dc-title">JORGE L. ROMÃO <span class="funcao-mini">(OP III)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">B</span><span class="dc-title">JULIO COSTA JUNIOR <span class="funcao-mini">(OP IV)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">B</span><span class="dc-title">PAULO CESAR GREGÓRIO JUNIOR <span class="funcao-mini">(OP III)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">B</span><span class="dc-title">VITOR HUGO MARTINS <span class="funcao-mini">(SUPERVISOR)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">C</span><span class="dc-title">CARLOS ROBERTO DE O. GUIMARÃES <span class="funcao-mini">(OP II)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">C</span><span class="dc-title">EDILSON SIQUEIRA <span class="funcao-mini">(OP III)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">C</span><span class="dc-title">EDNILSON LIMA DE OLIVEIRA <span class="funcao-mini">(OP III)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">C</span><span class="dc-title">HENRIQUE CORGONI DE SOUZA <span class="funcao-mini">(OP II)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">C</span><span class="dc-title">LARRY PAIVA DA COSTA <span class="funcao-mini">(SUPERVISOR)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-C">C</span><span class="dc-title">ODAIR JOSÉ CUNHA <span class="funcao-mini">(OP II)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">D</span><span class="dc-title">ARTHUR FONSECA DA SILVA <span class="funcao-mini">(OP II)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">D</span><span class="dc-title">FELIPE ALVES DIAS <span class="funcao-mini">(OP II)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">D</span><span class="dc-title">GIULEANO JOSE DOS SANTOS <span class="funcao-mini">(CONFERENTE)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">D</span><span class="dc-title">MARLON VIEIRA MENDES <span class="funcao-mini">(OP II)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">D</span><span class="dc-title">ROBERTO BRAULOS DE MELLO <span class="funcao-mini">(OP III)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-D">D</span><span class="dc-title">SAMARA LUCIA DOS SANTOS <span class="funcao-mini">(OP III)</span></span></span><span class="chip-pend">Faltando Treinamento</span></div><div class="view-section-title">Afastados</div><div class="detail-card" style="opacity:.6"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-B">B</span><span class="dc-title" style="text-decoration:line-through">VINICIUS H. DE LIMA</span></span><span class="badge-afastado">Afastado</span></div></div>
     <div class="modal-footer">
       <button class="btn-warn-action" onclick="deleteTraining()" style="margin-right:auto">🗑️ Excluir treinamento</button>
       <button class="btn-secondary-action" onclick="closeModal('modalViewTraining')">Fechar</button>

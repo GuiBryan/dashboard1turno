@@ -9,8 +9,6 @@
   --bps-navy:#243F5E; --bps-navy-dark:#192d44; --bps-light-blue:#8DB4E2; --bps-green:#92D050;
   --status-danger:#dc2626; --status-success:#0a8f3c; --status-amber:#f59e0b;
   --border:#e2e8f0; --radius:10px; --bg:#f4f6f9; --text:#1e293b; --text-muted:#64748b; --surface:#ffffff;
-  --grad-green:linear-gradient(135deg,#b7e087,#7fb63c);
-  --soft-green-bg:#eaf4dd; --soft-green-tx:#4f7928;
 }
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;margin:0;padding:0 0 2.5rem;-webkit-font-smoothing:antialiased}
@@ -56,10 +54,11 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .tab-btn.active{background:var(--bps-navy);color:#fff;border-color:var(--bps-navy)}
 .filter-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem}
 .folga-chips{display:flex;align-items:center;gap:.45rem;font-size:.85rem;color:var(--text-muted)}
-.chip-folga{background:#fff;border:2px solid var(--bps-green);border-radius:999px;padding:4px 14px;font-weight:500;cursor:pointer;font-size:.85rem;color:var(--bps-navy)}
-.chip-folga-todas{border-color:var(--border)}
+.chip-folga{background:#fff;border:2px solid var(--border);border-radius:999px;padding:4px 14px;font-weight:500;cursor:pointer;font-size:.85rem;color:var(--text)}
 .chip-folga-todas.active{background:var(--bps-navy);border-color:var(--bps-navy);color:#fff}
-.chip-folga.active{background:var(--grad-green);color:var(--bps-navy)}
+.chip-folga-a{border-color:#2E75B6}.chip-folga-b{border-color:#548235}.chip-folga-c{border-color:#ED7D31}.chip-folga-d{border-color:#7030A0}
+.chip-folga-a.active{background:#2E75B6;color:#fff}.chip-folga-b.active{background:#548235;color:#fff}
+.chip-folga-c.active{background:#ED7D31;color:#fff}.chip-folga-d.active{background:#7030A0;color:#fff}
 .search-box{display:flex;align-items:center;gap:.5rem;background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:7px 12px;min-width:260px}
 .search-box input{border:none;background:none;outline:none;font-size:.88rem;width:100%;color:var(--text)}
 /* ===== CARDS ===== */
@@ -68,41 +67,41 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .card-item.clickable{cursor:pointer;transition:transform .12s ease,box-shadow .12s ease}
 .card-item.clickable:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(20,23,31,.14)}
 .card-top-row{display:flex;justify-content:space-between;align-items:center;gap:8px}
-/* Tags de folga: gradiente do verde padrão */
-.badge-folga-pill{background:var(--grad-green);color:var(--bps-navy);font-size:.76rem;font-weight:600;padding:3px 9px;border-radius:6px;display:inline-flex;align-items:center}
-.badge-funcao{background:var(--soft-green-bg);color:var(--soft-green-tx);font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:6px;display:inline-flex;align-items:center}
-.badge-status-chip{background:#e8f0f8;color:var(--bps-navy);font-size:.75rem;font-weight:500;padding:3px 9px;border-radius:6px}
-.badge-afastado{background:#e2e8f0;color:#64748b;font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:6px}
-.badge-iop{background:var(--grad-green);color:var(--bps-navy);font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:6px;letter-spacing:.03em}
-.badge-rev{background:var(--soft-green-bg);color:var(--soft-green-tx);font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:6px}
-.badge-rev-exp{background:#fde8e8;color:#b91c1c}
+.badge-folga-pill{color:#fff;font-size:.76rem;font-weight:500;padding:3px 9px;border-radius:6px;display:inline-flex;align-items:center}
+.badge-folga-pill-A{background:#2E75B6}.badge-folga-pill-B{background:#548235}.badge-folga-pill-C{background:#ED7D31}.badge-folga-pill-D{background:#7030A0}
+.badge-funcao{background:#eef2ff;color:#4338ca;font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:6px;display:inline-flex;align-items:center}
+.badge-status-chip{background:var(--bps-navy);color:#fff;font-size:.75rem;font-weight:500;padding:3px 9px;border-radius:6px}
+.badge-afastado{background:#94a3b8;color:#fff;font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:6px}
+.badge-iop{background:var(--bps-navy);color:#fff;font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:6px;letter-spacing:.03em}
+.badge-rev{background:var(--bps-light-blue);color:var(--bps-navy);font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:6px}
+.badge-rev-exp{background:#fecaca;color:#991b1b}
 .card-name{font-weight:600;letter-spacing:.03em;text-transform:uppercase;font-size:.95rem;color:var(--bps-navy)}
 .card-desc{font-weight:600;font-size:.95rem}
 .card-count{font-size:.8rem;color:var(--text-muted)}
 .chip-row{display:flex;gap:.5rem;flex-wrap:wrap}
-.chip-ok{background:var(--soft-green-bg);color:var(--soft-green-tx);font-size:.78rem;font-weight:500;padding:3px 10px;border-radius:999px}
-.chip-pend{background:#fdecec;color:#b4551d;font-size:.78rem;font-weight:500;padding:3px 10px;border-radius:999px}
-.chip-exp{background:#fde8e8;color:#b91c1c;font-size:.78rem;font-weight:500;padding:3px 10px;border-radius:999px}
-.chip-warn{background:#fdf6e3;color:#946a1d;font-size:.78rem;font-weight:500;padding:3px 10px;border-radius:999px}
+.chip-ok{background:#e7f6d8;color:#3f6212;font-size:.78rem;font-weight:500;padding:3px 10px;border-radius:999px}
+.chip-pend{background:#fee2e2;color:#991b1b;font-size:.78rem;font-weight:500;padding:3px 10px;border-radius:999px}
+.chip-exp{background:#dc2626;color:#fff;font-size:.78rem;font-weight:500;padding:3px 10px;border-radius:999px}
+.chip-warn{background:#fef3c7;color:#92400e;font-size:.78rem;font-weight:500;padding:3px 10px;border-radius:999px}
 .chip-na{background:#f1f5f9;color:#94a3b8;font-size:.78rem;font-weight:500;padding:3px 10px;border-radius:999px}
 .progress-bar{height:5px;background:#eef2f7;border-radius:999px;overflow:hidden;margin-top:auto}
 .progress-bar-fill{height:100%;background:var(--bps-green);border-radius:999px}
 .progress-bar-fill.critical{background:var(--status-danger)}
 .card-item.iop-100{background:#f2f9e6;outline:2px solid var(--bps-green)}
-.card-item.iop-zero{border:1px solid #f3d3d3;background-color:#fffafa}
+.card-item.iop-zero{border:1px solid #fca5a5;background-color:#fffafb}
 .card-item.afastado{opacity:.55}
 .card-item.afastado .card-name{text-decoration:line-through}
 .card-dates{font-size:.74rem;color:var(--text-muted);line-height:1.5}
-/* Balão de adicionar */
+/* Balão de adicionar (último card da grade, mesma formatação dos retângulos) */
 .add-card{border:2px dashed #b6c6e0;background:#f8fafc;box-shadow:none;align-items:center;justify-content:center;min-height:150px;text-align:center;color:var(--bps-navy)}
 .add-card:hover{transform:translateY(-2px);background:#eef2ff;border-color:var(--bps-light-blue);box-shadow:0 6px 16px rgba(20,23,31,.1)}
 .add-card .plus{font-size:1.7rem;line-height:1}
 .add-card b{font-size:.92rem;font-weight:600}
-/* ===== TAGS DE TREINAMENTO (tons suaves) ===== */
+/* ===== TAGS DE TREINAMENTO ===== */
 .train-tag{font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:6px;display:inline-block}
-.tag-nr{background:#fdf3e3;color:#9a6a1f}
-.tag-iop{background:#e3f2d4;color:#4f7928}
-.tag-int{background:#eef7e2;color:#5b8534}
+.tag-nr{background:#fff0df;color:#a85e11}
+.tag-iop{background:#e4effa;color:#345e88}
+.tag-int{background:#eaf4dd;color:#4f7928}
 /* ===== MATRIZ ===== */
 .matrix-wrap{background:var(--surface);border-radius:var(--radius);box-shadow:0 1px 3px rgba(20,23,31,.08);overflow:auto}
 .matrix-table{width:100%;border-collapse:collapse;font-size:.82rem;min-width:900px}
@@ -250,10 +249,10 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
       
         Folga:
         <button class="chip-folga chip-folga-todas active" id="chipFolgaTodas" onclick="setFolgaFilter('TODAS', this)">Todas</button>
-        <button class="chip-folga chip-folga" id="chipFolgaA" onclick="setFolgaFilter('A', this)">A</button>
-        <button class="chip-folga chip-folga" id="chipFolgaB" onclick="setFolgaFilter('B', this)">B</button>
-        <button class="chip-folga chip-folga" id="chipFolgaC" onclick="setFolgaFilter('C', this)">C</button>
-        <button class="chip-folga chip-folga" id="chipFolgaD" onclick="setFolgaFilter('D', this)">D</button>
+        <button class="chip-folga chip-folga-a" id="chipFolgaA" onclick="setFolgaFilter('A', this)">A</button>
+        <button class="chip-folga chip-folga-b" id="chipFolgaB" onclick="setFolgaFilter('B', this)">B</button>
+        <button class="chip-folga chip-folga-c" id="chipFolgaC" onclick="setFolgaFilter('C', this)">C</button>
+        <button class="chip-folga chip-folga-d" id="chipFolgaD" onclick="setFolgaFilter('D', this)">D</button>
       
 
 
@@ -380,7 +379,7 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
         </button>
         <button type="button" class="choice-card" id="choiceCat" onclick="setTrainingMode('cat')">
           **📚 Cadastrar treinamento**
-          Nome • tipo (NR / IOP / Interno) • validade • Todos / funções / Ninguém
+          Nome • tipo (NR / IOP / Interno) • validade padrão • obrigatório para
         </button>
       
 
@@ -420,13 +419,13 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
           <label>Carga horária (h)</label><input type="number" id="catHours" placeholder="Ex.: 8">
 
 
-          <label>Obrigatório para</label><input type="text" id="catFor" list="obrigList" placeholder="Ex.: OP I, OP II — Todos ou Ninguém" autocomplete="off"><datalist id="obrigList"></datalist>
+          <label>Obrigatório para</label><input type="text" id="catFor" list="obrigList" placeholder="Ex.: OP I, OP II — ou Todos" autocomplete="off"><datalist id="obrigList"></datalist>
 
 
         
 
 
-        "Todos" = equipe inteira entra no indicador. "Ninguém" = registro individual, fora dos indicadores (o drill-down mostra quem tem e quem está vencendo). Funções separadas por vírgula contam só quem pertence a elas.
+        Deixe vazio ou escreva "Todos" para valer para toda a equipe. Separe funções por vírgula — só quem pertence a essas funções entra no indicador deste treinamento.
 
 
       
@@ -650,7 +649,7 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
 
         • Treinamentos (IOPs críticas): `Title`, `ColaboradorId`, `IopCodigo`, `Realizado`, `DataRealizacao`, `DataValidade`, `ValidadePersonalizada`
 
-        • TreinamentosCatalogo: `Title` (nome), `Tipo` (NR / IOP / INTERNO), `CargaHoraria`, `ValidadeMeses`, `ObrigatorioPara` (Todos / Ninguém / funções), `IdTrein`
+        • TreinamentosCatalogo: `Title` (nome), `Tipo` (NR / IOP / INTERNO), `CargaHoraria`, `ValidadeMeses`, `ObrigatorioPara`, `IdTrein`
 
         • RegistrosGerais: `Title`, `ColaboradorId`, `TreinamentoId`, `DataRealizacao`, `DataValidade`
 
@@ -713,7 +712,7 @@ function seedIopDefs(){
 }
 function getIops(){ return [...state.iopDefs].sort((a,b)=>a.code.localeCompare(b.code,'pt-BR')); }
 
-// ==================== SEED ====================
+// ==================== SEED (todos habilitados, sem treinamentos concluídos, catálogo vazio) ====================
 function defaultRecords(){ const r={}; getIops().forEach(i=>r[i.code]={done:false,realizationDate:'',validityDate:'',userCustomValidity:false}); return r; }
 function seedCollaborators(){
   const defs = [
@@ -747,13 +746,7 @@ function trainingValidity(rec, cat){ return rec.validityDate || addMonths(rec.re
 function isTrainingExpired(rec, cat){ const v=trainingValidity(rec,cat); return !!v && v < todayStr(); }
 function isTrainingExpiring(rec, cat){ const v=trainingValidity(rec,cat); if(!v||isTrainingExpired(rec,cat)) return false; const lim=new Date(); lim.setDate(lim.getDate()+30); return v <= lim.toISOString().slice(0,10); }
 function getTrainingRecord(colabId, treinamentoId){ return state.registros.find(x=>x.colabId===colabId && x.treinamentoId===treinamentoId); }
-// "Ninguém": registro individual — fora de todos os indicadores
-function isTrainingForNobody(t){
-  const req = (t.obrigatorioPara||'').trim().toUpperCase();
-  return req==='NINGUEM' || req==='NINGUÉM';
-}
 function isTrainingRequiredFor(c, t){
-  if(isTrainingForNobody(t)) return false;
   const req = (t.obrigatorioPara||'').trim();
   if(!req || req.toUpperCase()==='TODOS' || req.toUpperCase()==='TODA EQUIPE') return true;
   if(!c.funcao) return false;
@@ -766,13 +759,6 @@ function getTrainingStats(t){
   req.forEach(c=>{ const r=getTrainingRecord(c.id,t.id); if(r){ if(isTrainingExpired(r,t)) vencidos++; else emDia++; } });
   return { emDia, vencidos, pend: total-emDia-vencidos, total, pct: total?Math.round(emDia/total*100):0 };
 }
-function getNobodyRecords(t){
-  return state.registros
-    .filter(r=>r.treinamentoId===t.id)
-    .map(r=>({ r, c: state.collaborators.find(x=>x.id===r.colabId) }))
-    .filter(x=>x.c && x.c.enabled)
-    .sort((a,b)=> a.c.folga!==b.c.folga ? a.c.folga.localeCompare(b.c.folga,'pt-BR') : a.c.name.localeCompare(b.c.name,'pt-BR'));
-}
 
 // ==================== PERSISTÊNCIA ====================
 function persistCache(){
@@ -783,6 +769,7 @@ function persistCache(){
     pendingPush: !!state.pendingPush
   }));
 }
+// markPending=true em edições do usuário; false para gravações internas (seed/sync) que não devem disparar envio
 function saveState(markPending=true){
   state.pendingPush = markPending ? true : !!state.pendingPush;
   persistCache();
@@ -865,7 +852,7 @@ function renderKPIs(){
   const pend = missing + expired;
   const pct = totalSlots ? (done/totalSlots*100).toFixed(1).replace('.',',') : '0,0';
   let trEmDia=0, trVenc=0, trSlots=0;
-  state.catalog.filter(t=>!isTrainingForNobody(t)).forEach(t=>{ const s=getTrainingStats(t); trEmDia+=s.emDia; trVenc+=s.vencidos; trSlots+=s.total; });
+  state.catalog.forEach(t=>{ const s=getTrainingStats(t); trEmDia+=s.emDia; trVenc+=s.vencidos; trSlots+=s.total; });
   const trPct = trSlots ? Math.round(trEmDia/trSlots*100)+'%' : '—';
   const trSub = state.catalog.length ? `${trEmDia} em dia • ${trVenc} vencidos • catálogo: ${state.catalog.length}` : 'Nenhum treinamento no catálogo';
   document.getElementById('kpisContainer').innerHTML = `
@@ -929,7 +916,7 @@ function renderAlertBanner(){
   const expiredCount = enabledColabs().filter(c=>getCollaboratorStats(c).expired>0).length;
   const vencidasText = expiredCount>0 ? `${expiredCount} colaborador(es)` : 'Nenhum colaborador com IOPS vencida no momento';
   let trExpiredTotal=0, trExpiring=0;
-  state.catalog.filter(t=>!isTrainingForNobody(t)).forEach(t=>{
+  state.catalog.forEach(t=>{
     const s = getTrainingStats(t);
     trExpiredTotal += s.vencidos;
     trExpiring += enabledColabs().filter(c=>isTrainingRequiredFor(c,t) && (()=>{ const r=getTrainingRecord(c.id,t.id); return r && isTrainingExpiring(r,t); })()).length;
@@ -1043,8 +1030,7 @@ function renderIopsView(){
     const rev = state.iops[i.code]||{};
     const revInfo = getRevValidityInfo(rev.revDate);
     const revExpired = revInfo && revInfo.valDateStr < todayStr();
-    // Badge enxuto: só a revisão; validade fica no tooltip
-    const revBadge = rev.rev ? `REV ${escapeHtml(rev.rev)}` : '';
+    const revBadge = rev.rev ? `REV ${escapeHtml(rev.rev)}${rev.revDate?' • val. '+formatDateBR(revInfo.valDateStr):''}` : '';
     const doneClass = total>0 && i.emDia===total ? 'iop-100' : (i.emDia===0?'iop-zero':'');
     return `
       IOP ${i.code}${revBadge}
@@ -1081,30 +1067,8 @@ function renderTreinamentosView(){
     return;
   }
   container.innerHTML = list.map(t=>{
-    const meta = TYPE_META[t.type]||TYPE_META['INTERNO'];
-    if(isTrainingForNobody(t)){
-      // Registro individual: fora dos indicadores — mostra só quem tem e vencimentos
-      const regs = getNobodyRecords(t);
-      const venc = regs.filter(x=>isTrainingExpired(x.r,t)).length;
-      const vencendo = regs.filter(x=>isTrainingExpiring(x.r,t)).length;
-      let chips = `✔ ${regs.length} registro(s)`;
-      if(vencendo) chips += `⏰ ${vencendo} vencendo em 30 dias`;
-      if(venc) chips += `🔴 ${venc} vencidos`;
-      return `
-        ${meta.label}Registro individual
-
-
-        ${escapeHtml(t.name)}
-
-
-        ${chips}
-
-
-      
-
-`;
-    }
     const s = getTrainingStats(t);
+    const meta = TYPE_META[t.type]||TYPE_META['INTERNO'];
     const doneClass = s.total>0 && s.emDia===s.total ? 'iop-100' : '';
     return `
       ${meta.label}${s.emDia}/${s.total} em dia
@@ -1244,23 +1208,12 @@ function openViewColab(id){
 ';
       html += state.catalog.map(t=>{
         const meta = TYPE_META[t.type]||TYPE_META['INTERNO'];
-        const r = getTrainingRecord(c.id, t.id);
-        if(isTrainingForNobody(t)){
-          if(!r) return `${meta.label} ${escapeHtml(t.name)}Sem registro
-
-`;
-          const chip = isTrainingExpired(r,t) ? '🔴 Vencido'
-            : isTrainingExpiring(r,t) ? `Válido até ${formatDateBR(trainingValidity(r,t))}`
-            : `Válido até ${formatDateBR(trainingValidity(r,t))}`;
-          return `${meta.label} ${escapeHtml(t.name)}${chip}
-
-`;
-        }
         if(!isTrainingRequiredFor(c,t)){
           return `${meta.label} ${escapeHtml(t.name)}Não se aplica (${escapeHtml(c.funcao||'sem função')})
 
 `;
         }
+        const r = getTrainingRecord(c.id, t.id);
         let chip;
         if(!r) chip = 'Faltando';
         else if(isTrainingExpired(r,t)) chip = '🔴 Vencido';
@@ -1280,52 +1233,36 @@ function openViewColab(id){
 }
 function viewToEdit(){ const id = state.viewColabId; closeModal('modalViewColab'); openEditModal(id); }
 
-// ==================== MODAL VISUALIZAR IOP (seções separadas, folga + nome) ====================
+// ==================== MODAL VISUALIZAR IOP ====================
 function openViewIop(code){
   const iop = getIops().find(i=>i.code===code); if(!iop) return;
   state.viewIopCode = code;
   const rev = state.iops[code]||{};
   const revInfo = getRevValidityInfo(rev.revDate);
   const stats = getIopStats().find(i=>i.code===code);
-  document.getElementById('viewIopTitle').innerHTML = `IOP ${iop.code} – ${escapeHtml(iop.desc)} ${rev.rev?`REV ${escapeHtml(rev.rev)}`:''}`;
-  // Ordenação: folga A→D e alfabética — base para decidir quem treinar
+  document.getElementById('viewIopTitle').innerHTML = `IOP ${iop.code} – ${escapeHtml(iop.desc)} ${rev.rev?`REV ${escapeHtml(rev.rev)}${rev.revDate?' • val. '+formatDateBR(revInfo.valDateStr):''}`:''}`;
   const sorted = [...state.collaborators].sort((a,b)=>{
+    if(a.enabled!==b.enabled) return a.enabled?-1:1;
     if(a.folga!==b.folga) return a.folga.localeCompare(b.folga,'pt-BR');
     return a.name.localeCompare(b.name,'pt-BR');
   });
-  let html = `${stats.emDia}/${stats.total} em dia • ${stats.pend} pendentes${rev.rev&&revInfo?` • Revisão ${escapeHtml(rev.rev)} válida até ${formatDateBR(revInfo.valDateStr)}`:''}
+  let html = `${stats.emDia}/${stats.total} em dia • ${stats.pend} pendentes
 
 `;
-  const emDia = sorted.filter(c=>c.enabled && c.records[code] && c.records[code].done && !isExpired(c.records[code]));
-  const pend = sorted.filter(c=>!c.enabled || !c.records[code] || !c.records[code].done || isExpired(c.records[code]));
-  html += 'Em dia
-
-';
-  html += emDia.length ? emDia.map(c=>{
-    const r = c.records[code];
-    const v = getValidity(r);
-    const chip = isExpiring(r) ? `Válido até ${formatDateBR(v)}` : `Válido até ${formatDateBR(v)||'—'}`;
-    return `${c.folga}${escapeHtml(c.name)}Realizado em ${formatDateBR(r.realizationDate)||'—'}${r.userCustomValidity?' (val. personalizada)':''}${chip}
-
-`;
-  }).join('') : 'Nenhum colaborador em dia.
-
-';
-  html += 'Pendentes
-
-';
-  html += pend.length ? pend.map(c=>{
+  html += sorted.map(c=>{
     const r = c.records[code];
     let chip;
     if(!c.enabled) chip = 'Afastado';
     else if(!r||!r.done) chip = 'Faltando Treinamento';
-    else chip = '🔴 Vencida';
-    return `${c.folga}${escapeHtml(c.name)}${chip}
+    else if(isExpired(r)) chip = '🔴 Vencida';
+    else chip = `Válido até ${formatDateBR(getValidity(r))||'—'}`;
+    const dates = r && r.done && c.enabled ? `Realizado em ${formatDateBR(r.realizationDate)||'—'}${r.userCustomValidity?' (val. personalizada)':''}
+
+` : '';
+    return `${c.folga}${escapeHtml(c.name)}${dates}${chip}
 
 `;
-  }).join('') : 'Nenhuma pendência. 🎉
-
-';
+  }).join('');
   document.getElementById('viewIopBody').innerHTML = html;
   openModal('modalViewIop');
 }
@@ -1336,47 +1273,19 @@ function openViewTraining(id){
   const t = getTrainingById(id); if(!t) return;
   state.viewTrainingId = id;
   const meta = TYPE_META[t.type]||TYPE_META['INTERNO'];
+  const s = getTrainingStats(t);
   document.getElementById('viewTrainingTitle').innerHTML = `${escapeHtml(t.name)} ${meta.label}`;
+  let html = `Validade padrão: ${t.validadeMeses} ${t.validadeMeses==1?'mês':'meses'}${t.cargaHoraria?` • ${escapeHtml(t.cargaHoraria)}h`:''}${t.obrigatorioPara?` • Obrigatório para: ${escapeHtml(t.obrigatorioPara)}`:' • Obrigatório para: Todos'} • ${s.emDia}/${s.total} em dia (apenas funções obrigatórias)
+
+`;
   const sorted = [...state.collaborators].sort((a,b)=>{
+    if(a.enabled!==b.enabled) return a.enabled?-1:1;
     if(a.folga!==b.folga) return a.folga.localeCompare(b.folga,'pt-BR');
     return a.name.localeCompare(b.name,'pt-BR');
   });
-  if(isTrainingForNobody(t)){
-    // Registro individual: lista só quem tem o treinamento, com alerta de vencimento
-    const regs = getNobodyRecords(t);
-    let html = `Registro individual — não entra nos indicadores • Validade padrão: ${t.validadeMeses} ${t.validadeMeses==1?'mês':'meses'}${t.cargaHoraria?` • ${escapeHtml(t.cargaHoraria)}h`:''}
-
-`;
-    html += 'Com registro
-
-';
-    html += regs.length ? regs.map(({r,c})=>{
-      const v = trainingValidity(r,t);
-      const chip = isTrainingExpired(r,t) ? '🔴 Vencido'
-        : isTrainingExpiring(r,t) ? `⏰ Vence em breve (${formatDateBR(v)})`
-        : `Válido até ${formatDateBR(v)}`;
-      return `${c.folga}${escapeHtml(c.name)}${c.funcao?` (${escapeHtml(c.funcao)})`:''}Realizado em ${formatDateBR(r.realizationDate)||'—'}${chip}
-
-`;
-    }).join('') : 'Nenhum registro ainda. Use "Registrar realização" para lançar individualmente.
-
-';
-    document.getElementById('viewTrainingBody').innerHTML = html;
-    openModal('modalViewTraining');
-    return;
-  }
-  const s = getTrainingStats(t);
-  const req = (t.obrigatorioPara||'').trim();
-  const reqTxt = !req || /^todos$/i.test(req) ? 'Todos' : req;
-  let html = `Obrigatório para: ${escapeHtml(reqTxt)} • Validade padrão: ${t.validadeMeses} ${t.validadeMeses==1?'mês':'meses'}${t.cargaHoraria?` • ${escapeHtml(t.cargaHoraria)}h`:''} • ${s.emDia}/${s.total} em dia (apenas funções obrigatórias)
-
-`;
   const reqList = sorted.filter(c=>c.enabled && isTrainingRequiredFor(c,t));
   const naList = sorted.filter(c=>c.enabled && !isTrainingRequiredFor(c,t));
   const afastados = sorted.filter(c=>!c.enabled);
-  html += 'Obrigatórios
-
-';
   html += reqList.map(c=>{
     const r = getTrainingRecord(c.id, id);
     let chip;
@@ -1423,12 +1332,13 @@ function deleteTraining(){
 let trainingMode = 'reg';
 function buildObrigList(){
   const used = state.collaborators.map(c=>c.funcao).filter(Boolean);
-  const all = [...new Set(['Todos','Ninguém', ...DEFAULT_FUNCOES, ...used])];
+  const all = [...new Set(['Todos', ...DEFAULT_FUNCOES, ...used])];
   const dl = document.getElementById('obrigList');
   if(dl) dl.innerHTML = all.map(f=>`<option value="${escapeHtml(f)}">`).join('');
 }
 function openAddTrainingModal(presetColab, presetTrain, returnToEdit){
   trainingMode = 'reg';
+  // Se veio do editor de colaborador: fecha o editor e guarda o retorno
   state.returnToEditId = returnToEdit ? (presetColab||state.editingId) : null;
   if(state.returnToEditId) closeModal('modalEditColab');
   buildObrigList();
@@ -1450,6 +1360,7 @@ function openAddTrainingModal(presetColab, presetTrain, returnToEdit){
 }
 function closeAddTraining(){
   closeModal('modalAddTraining');
+  // Volta para o editor de colaborador quando a modal foi aberta a partir dele
   if(state.returnToEditId){ const id = state.returnToEditId; state.returnToEditId = null; openEditModal(id); }
 }
 function setTrainingMode(m){
@@ -1770,6 +1681,7 @@ async function testConnection(){
 async function syncNow(silent){
   const cfg = getSpConfig();
   if(!cfg.siteUrl){ showToast('Configure a sincronização primeiro (🔗 Configurar sincronização…).', true); openSyncModal(); return false; }
+  // Se há edições locais pendentes, tenta enviá-las ANTES de puxar (evita perder dados)
   if(state.pendingPush){
     updateSyncIndicator('amber','Enviando alterações pendentes…');
     const sent = await triggerRemotePush();
@@ -1863,12 +1775,14 @@ async function triggerRemotePush(){
     const getAll = async list=>{ const j = await spFetch(listUrl(list)+'/items?$top=5000'); return j.value||[]; };
     const post = (list, body)=>fetch(listUrl(list)+'/items', {method:'POST', credentials:'include', headers:jsonHeaders, body:JSON.stringify(body)});
     const patch = (list, id, body)=>fetch(`${listUrl(list)}/items(${id})`, {method:'POST', credentials:'include', headers:{...jsonHeaders,'X-HTTP-Method':'MERGE','IF-MATCH':'*'}, body:JSON.stringify(body)});
+    // Erro em UM item não aborta os demais
     const send = async (list, found, body)=>{
       try{ if(found) await patch(list, found.Id, body); else await post(list, body); }
       catch(e){ errors++; }
     };
     const d10 = v => v ? String(v).slice(0,10) : '';
 
+    // Colaboradores (chave: IdColab) — envia apenas se mudou
     const spColabs = await getAll(cfg.listColab);
     for(const c of state.collaborators){
       const found = spColabs.find(it=>String(it.IdColab)===String(c.id));
@@ -1876,6 +1790,7 @@ async function triggerRemotePush(){
       if(found && found.Title===body.Title && found.Folga===body.Folga && (found.Funcao||'')===(body.Funcao||'') && !!found.Habilitado===!!body.Habilitado) continue;
       await send(cfg.listColab, found, body);
     }
+    // IOPs: definições + revisões (chave: Codigo)
     const spIops = await getAll(cfg.listIops);
     for(const iop of getIops()){
       const r = state.iops[iop.code]||{rev:'',revDate:''};
@@ -1884,6 +1799,7 @@ async function triggerRemotePush(){
       if(found && found.Title===body.Title && (found.REV||'')===(body.REV||'') && d10(found.DataRevisao)===(body.DataRevisao||'')) continue;
       await send(cfg.listIops, found, body);
     }
+    // Treinamentos IOPs críticas (chave: ColaboradorId + IopCodigo) — apenas realizados
     const spTreins = await getAll(cfg.listTrein);
     for(const c of state.collaborators){
       for(const code of Object.keys(c.records)){
@@ -1895,6 +1811,7 @@ async function triggerRemotePush(){
         await send(cfg.listTrein, found, body);
       }
     }
+    // Catálogo (chave: Title)
     const spCats = await getAll(cfg.listCatalog);
     for(const t of state.catalog){
       const found = spCats.find(it=>String(it.Title)===t.name);
@@ -1902,6 +1819,7 @@ async function triggerRemotePush(){
       if(found && (found.Tipo||'')===body.Tipo && (found.ValidadeMeses||0)===(body.ValidadeMeses||0) && (found.ObrigatorioPara||'')===(body.ObrigatorioPara||'') && String(found.IdTrein||'')===String(body.IdTrein||'')) continue;
       await send(cfg.listCatalog, found, body);
     }
+    // Registros gerais (chave: ColaboradorId + TreinamentoId)
     const spRegs = await getAll(cfg.listReg);
     for(const r of state.registros){
       const found = spRegs.find(it=>String(it.ColaboradorId)===String(r.colabId) && String(it.TreinamentoId)===String(r.treinamentoId));
@@ -1939,17 +1857,17 @@ function showToast(message, isError=false){
   setTimeout(()=>{ item.classList.remove('show'); setTimeout(()=>item.remove(), 300); }, 3500);
 }
 
-// ==================== INIT ====================
+// ==================== INIT: SharePoint como fonte principal, sem perder edições locais ====================
 (async function init(){
   const cfg = getSpConfig();
   if(cfg.siteUrl){
-    loadState(); renderAll();
+    loadState(); renderAll(); // cache primeiro: nada some enquanto o SharePoint responde
     if(state.pendingPush){
       updateSyncIndicator('amber','Enviando alterações pendentes…');
       const sent = await triggerRemotePush();
       if(!sent){
         showToast('Há alterações locais aguardando envio. Elas estão preservadas — resolva o problema (ex.: colunas das listas) e use "Sincronizar agora".', true);
-        return;
+        return; // NÃO puxa: preserva as edições locais
       }
     }
     await syncNow(true);

@@ -1320,18 +1320,23 @@ function handleImportBackup(e){
     try{
       const parsed = JSON.parse(ev.target.result);
       if(Array.isArray(parsed.collaborators)){
-        if(Array.isArray(parsed.iops) && parsed.iops.length){
-          state.iopDefs = parsed.iops.filter(it=>it&&it.code).map(it=>{
-            const code = String(it.code).padStart(3,'0');
-            return {code, desc: it.desc||code, critical: CRITICAL_CODES.includes(code)};
+        // Preserva o padrão atual das IOPs (código + descrição): o backup NÃO substitui os nomes.
+        // Aplica apenas REV e DataRevisao vindas do backup, e somente em IOPs que já existem no app.
+        if(Array.isArray(parsed.iops)){
+          parsed.iops.forEach(it=>{
+            if(it && it.code){
+              const code = String(it.code).padStart(3,'0');
+              if(state.iopDefs.some(i=>i.code===code)){
+                state.iops[code] = { rev: it.rev||'', revDate: it.revDate||'' };
+              }
+            }
           });
         }
         state.collaborators = normalizeCollaborators(parsed.collaborators);
-        applyIopsList(parsed.iops||[]);
         if(Array.isArray(parsed.catalog)) state.catalog = parsed.catalog;
         if(Array.isArray(parsed.registros)) state.registros = parsed.registros;
         saveState(); renderAll();
-        showToast('Backup importado com sucesso.');
+        showToast('Backup importado: revisões e datas atualizadas; nomes das IOPs preservados.');
       } else showToast('Arquivo de backup inválido.', true);
     }catch(err){ showToast('Erro ao ler o arquivo JSON.', true); }
   };

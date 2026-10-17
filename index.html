@@ -279,7 +279,7 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
     <div class="modal-body" id="viewIopBody"></div>
     <div class="modal-footer">
       <button class="btn-secondary-action" onclick="closeModal('modalViewIop')">Fechar</button>
-      <button class="btn-primary" onclick="viewToRev()">✏️ Editar revisão</button>
+      <button class="btn-primary" onclick="viewToRev()">✏️ Editar IOP</button>
     </div>
   </div>
 </div>
@@ -392,7 +392,7 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
   </div>
 </div>
 
-<!-- ===== MODAL: CONFIRMAÇÃO DE EXCLUSÃO ===== -->
+<!-- ===== MODAL: CONFIRMAÇÃO DE EXCLUSÃO (COLABORADOR) ===== -->
 <div class="modal-overlay on-top" id="modalConfirmDelete">
   <div class="modal-box" style="max-width:440px">
     <div class="modal-header">
@@ -409,25 +409,45 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
   </div>
 </div>
 
-<!-- ===== MODAL: EDITAR REVISÃO ===== -->
+<!-- ===== MODAL: CONFIRMAÇÃO DE EXCLUSÃO (IOP) ===== -->
+<div class="modal-overlay on-top" id="modalConfirmDeleteIop">
+  <div class="modal-box" style="max-width:440px">
+    <div class="modal-header">
+      <h2 class="modal-title">⚠️ Excluir IOP</h2>
+      <button class="btn-close-modal" onclick="closeModal('modalConfirmDeleteIop')">×</button>
+    </div>
+    <div class="modal-body">
+      <p id="deleteIopText" style="font-size:.9rem;line-height:1.4;margin:0">Excluir esta IOP? Esta ação não pode ser desfeita.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary-action" onclick="closeModal('modalConfirmDeleteIop')">Cancelar</button>
+      <button class="btn-danger-action" onclick="executeDeleteIop()">🗑️ Excluir</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL: EDITAR IOP (tag, nome, revisão e data) ===== -->
 <div class="modal-overlay" id="modalEditRev">
   <div class="modal-box" style="max-width:480px">
     <div class="modal-header">
-      <h2 class="modal-title">✏️ Editar Revisão</h2>
+      <h2 class="modal-title">✏️ Editar IOP</h2>
       <button class="btn-close-modal" onclick="closeModal('modalEditRev')">×</button>
     </div>
     <div class="modal-body">
       <div class="form-grid">
-        <div class="form-field full"><label>IOP</label><select id="revIopSelect" onchange="fillRevFields()"></select></div>
+        <div class="form-field"><label>Código (tag)</label><input type="text" id="fIopEditCode" maxlength="3" placeholder="Ex.: 075"></div>
+        <div class="form-field"><label>Descrição (nome da IOP)</label><input type="text" id="fIopEditDesc" placeholder="Ex.: Operar Correia 02"></div>
         <div class="form-field"><label>Número da Revisão (REV)</label><input type="text" id="fRev" placeholder="Ex.: 14"></div>
         <div class="form-field"><label>Data da Revisão</label><input type="date" id="fRevDate" onchange="updateRevPreview()"></div>
       </div>
       <p class="card-dates" id="revValidityPreview" style="margin-top:.7rem"></p>
+      <p class="card-dates" style="margin-top:.4rem">Ao renomear o código, os registros de treinamento dos colaboradores são transferidos automaticamente para a nova tag.</p>
     </div>
     <div class="modal-footer">
-      <button class="btn-warn-action" onclick="clearRev()" style="margin-right:auto">🧹 Limpar revisão</button>
+      <button class="btn-danger-action" onclick="openConfirmDeleteIop()" style="margin-right:auto">🗑️ Excluir IOP</button>
+      <button class="btn-warn-action" onclick="clearRev()">🧹 Limpar revisão</button>
       <button class="btn-secondary-action" onclick="closeModal('modalEditRev')">Cancelar</button>
-      <button class="btn-primary" onclick="saveRev()">Salvar</button>
+      <button class="btn-primary" onclick="saveIopEdit()">Salvar</button>
     </div>
   </div>
 </div>
@@ -504,7 +524,7 @@ const state = {
   collaborators: [], iopDefs: [], iops: {}, catalog: [], registros: [],
   selectedFolga: 'TODAS', searchQuery: '', activeTab: 'colab',
   syncStatus: 'gray', lastSyncTime: null, pendingPush: false, returnToEditId: null,
-  editingId: null, editingSituation: true,
+  editingId: null, editingSituation: true, editingIopCode: null,
   viewColabId: null, viewIopCode: null, viewTrainingId: null
 };
 
@@ -518,24 +538,6 @@ function seedIopDefs(){
   ].map(d=>({code:d.code,desc:d.desc,critical:CRITICAL_CODES.includes(d.code)}));
 }
 function getIops(){ return [...state.iopDefs].sort((a,b)=>a.code.localeCompare(b.code,'pt-BR')); }
-
-// ==================== SEED (apenas 1º turno; T2/T3 nascem em branco) ====================
-function defaultRecords(){ const r={}; getIops().forEach(i=>r[i.code]={done:false,realizationDate:'',validityDate:'',userCustomValidity:false}); return r; }
-function seedCollaborators(){
-  const defs = [
-    ['ADRIANO DOS SANTOS','A'],['ALISON LUIZ LOPES','A'],['DIOGO MAIA','A'],
-    ['JESSÉ DA SILVA','A'],['MARCIO DA SILVA','A'],['NILSON DE OLIVEIRA BITTENCOURT','A'],
-    ['WELLISON F. S. DA SILVA','A'],['GABRIEL COSTA NOVAES DE OLIVEIRA','B'],
-    ['GUILHERME BRYAN DA ROSA','B'],['JORGE L. ROMÃO','B'],['JULIO COSTA JUNIOR','B'],
-    ['PAULO CESAR GREGÓRIO JUNIOR','B'],['VINICIUS H. DE LIMA','B'],['VITOR HUGO MARTINS','B'],
-    ['CARLOS ROBERTO DE O. GUIMARÃES','C'],['EDILSON SIQUEIRA','C'],['EDNILSON LIMA DE OLIVEIRA','C'],
-    ['HENRIQUE CORGONI DE SOUZA','C'],['LARRY PAIVA DA COSTA','C'],['ODAIR JOSÉ CUNHA','C'],
-    ['ARTHUR FONSECA DA SILVA','D'],['FELIPE ALVES DIAS','D'],['GIULEANO JOSE DOS SANTOS','D'],
-    ['MARLON VIEIRA MENDES','D'],['ROBERTO BRAULOS DE MELLO','D'],['SAMARA LUCIA DOS SANTOS','D']
-  ];
-  return defs.map((d,i)=>({id:'colab_'+(i+1),name:d[0],folga:d[1],funcao:'',enabled:true,records:defaultRecords()}));
-}
-function defaultIopsRev(){ const o={}; getIops().forEach(i=>o[i.code]={rev:'',revDate:''}); return o; }
 
 // ==================== DATAS ====================
 function todayStr(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
@@ -587,9 +589,7 @@ function loadState(){
     const raw = localStorage.getItem(storageKey());
     if(raw){
       const parsed = JSON.parse(raw);
-      // Turno vazio (T2/T3 recém-criado) também é um estado válido
-      const hasColabs = Array.isArray(parsed.collaborators) && (parsed.collaborators.length>0 || currentShift!=='T1');
-      if(hasColabs){
+      if(Array.isArray(parsed.collaborators)){
         if(Array.isArray(parsed.iops) && parsed.iops.length){
           state.iopDefs = parsed.iops.filter(it=>it&&it.code).map(it=>{
             const code = String(it.code).padStart(3,'0');
@@ -605,10 +605,10 @@ function loadState(){
       }
     }
   }catch(e){ console.warn('Erro ao carregar localStorage:', e); }
-  // Fallback: 1º turno com seed completo; T2/T3 nascem em branco (só IOPs padrão)
+  // Fallback: todos os turnos nascem vazios (apenas IOPs padrão); cadastre via SharePoint, backup ou manualmente
   state.iopDefs = seedIopDefs();
   state.iops = defaultIopsRev();
-  state.collaborators = currentShift==='T1' ? seedCollaborators() : [];
+  state.collaborators = [];
   state.catalog = [];
   state.registros = [];
   state.pendingPush = false;
@@ -628,6 +628,8 @@ function normalizeCollaborators(list){
     return { id: c.id || 'colab_'+Math.random().toString(36).slice(2), name: c.name||'Sem Nome', folga: c.folga||'A', funcao: c.funcao||'', enabled: typeof c.enabled==='boolean'?c.enabled:true, records };
   });
 }
+function defaultIopsRev(){ const o={}; getIops().forEach(i=>o[i.code]={rev:'',revDate:''}); return o; }
+function defaultRecords(){ const r={}; getIops().forEach(i=>r[i.code]={done:false,realizationDate:'',validityDate:'',userCustomValidity:false}); return r; }
 
 // ==================== ESTATÍSTICAS ====================
 function enabledColabs(){ return state.collaborators.filter(c=>c.enabled); }
@@ -764,7 +766,8 @@ function renderIopsView(){
     const rev = state.iops[i.code]||{};
     const revInfo = getRevValidityInfo(rev.revDate);
     const revExpired = revInfo && revInfo.valDateStr < todayStr();
-    const revBadge = rev.rev ? `<span class="badge-rev ${revExpired?'badge-rev-exp':''}" title="${revExpired?'Revisão vencida':'Validade da revisão: '+formatDateBR(revInfo.valDateStr)}">REV ${escapeHtml(rev.rev)}${rev.revDate?' • val. '+formatDateBR(revInfo.valDateStr):''}</span>` : '';
+    // Tag mostra somente o número da revisão, sem data
+    const revBadge = rev.rev ? `<span class="badge-rev ${revExpired?'badge-rev-exp':''}" title="${revExpired?'Revisão vencida':'Revisão vigente'}">REV ${escapeHtml(rev.rev)}</span>` : '';
     const doneClass = total>0 && i.emDia===total ? 'iop-100' : (i.emDia===0?'iop-zero':'');
     return `<div class="card-item clickable ${doneClass}" onclick="openViewIop('${i.code}')">
       <div class="card-top-row"><span class="badge-iop">IOP ${i.code}</span>${revBadge}</div>
@@ -948,30 +951,44 @@ function openViewColab(id){
 }
 function viewToEdit(){ const id = state.viewColabId; closeModal('modalViewColab'); openEditModal(id); }
 
-// ==================== MODAL VISUALIZAR IOP ====================
+// ==================== MODAL VISUALIZAR IOP (grupos: concluídos / vencidos / pendentes) ====================
 function openViewIop(code){
   const iop = getIops().find(i=>i.code===code); if(!iop) return;
   state.viewIopCode = code;
   const rev = state.iops[code]||{};
   const revInfo = getRevValidityInfo(rev.revDate);
+  const revExpired = revInfo && revInfo.valDateStr < todayStr();
   const stats = getIopStats().find(i=>i.code===code);
-  document.getElementById('viewIopTitle').innerHTML = `IOP ${iop.code} – ${escapeHtml(iop.desc)} ${rev.rev?`<span class="badge-rev">REV ${escapeHtml(rev.rev)}${rev.revDate?' • val. '+formatDateBR(revInfo.valDateStr):''}</span>`:''}`;
+  document.getElementById('viewIopTitle').innerHTML = `IOP ${iop.code} – ${escapeHtml(iop.desc)} ${rev.rev?`<span class="badge-rev ${revExpired?'badge-rev-exp':''}">REV ${escapeHtml(rev.rev)}</span>`:''}`;
   const sorted = [...state.collaborators].sort((a,b)=>{
     if(a.enabled!==b.enabled) return a.enabled?-1:1;
     if(a.folga!==b.folga) return a.folga.localeCompare(b.folga,'pt-BR');
     return a.name.localeCompare(b.name,'pt-BR');
   });
-  let html = `<div class="card-count" style="margin-bottom:.6rem">${stats.emDia}/${stats.total} em dia • ${stats.pend} pendentes</div>`;
-  html += sorted.map(c=>{
+  const concluidos=[], vencidos=[], pendentes=[], afastados=[];
+  sorted.forEach(c=>{
     const r = c.records[code];
-    let chip;
-    if(!c.enabled) chip = '<span class="badge-afastado">Afastado</span>';
-    else if(!r||!r.done) chip = '<span class="chip-pend">Faltando Treinamento</span>';
-    else if(isExpired(r)) chip = '<span class="chip-exp">🔴 Vencida</span>';
-    else chip = `<span class="chip-ok">Válido até ${formatDateBR(getValidity(r))||'—'}</span>`;
+    if(!c.enabled){ afastados.push({c,r}); return; }
+    if(!r || !r.done) pendentes.push({c,r});
+    else if(isExpired(r)) vencidos.push({c,r});
+    else concluidos.push({c,r});
+  });
+  const rowHtml = ({c,r}, chip)=>{
     const dates = r && r.done && c.enabled ? `<div class="card-dates">Realizado em ${formatDateBR(r.realizationDate)||'—'}${r.userCustomValidity?' (val. personalizada)':''}</div>` : '';
     return `<div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">${c.folga}</span><span class="dc-title">${escapeHtml(c.name)}</span>${dates}</span>${chip}</div>`;
-  }).join('');
+  };
+  const section = (title, list, chipFn)=>{
+    if(!list.length) return '';
+    return `<div class="view-section-title">${title} (${list.length})</div>` + list.map(item=>rowHtml(item, chipFn(item))).join('');
+  };
+  let html = `<div class="card-count" style="margin-bottom:.6rem">${stats.emDia}/${stats.total} em dia • ${stats.pend} pendentes</div>`;
+  html += section('✅ Concluídos', concluidos, ({r})=>`<span class="chip-ok">Válido até ${formatDateBR(getValidity(r))||'—'}</span>`);
+  html += section('🔴 Vencidos', vencidos, ()=>'<span class="chip-exp">🔴 Vencida</span>');
+  html += section('⏳ Pendentes', pendentes, ()=>'<span class="chip-pend">Faltando Treinamento</span>');
+  html += section('Afastados', afastados, ()=>'<span class="badge-afastado">Afastado</span>');
+  if(!concluidos.length && !vencidos.length && !pendentes.length && !afastados.length){
+    html += '<div class="help-text">Nenhum colaborador cadastrado neste turno.</div>';
+  }
   document.getElementById('viewIopBody').innerHTML = html;
   openModal('modalViewIop');
 }
@@ -1218,16 +1235,17 @@ function executeDeleteColab(){
   showToast('Colaborador excluído.');
 }
 
-// ==================== MODAL REVISÃO ====================
+// ==================== MODAL EDITAR IOP (tag + nome + revisão + exclusão) ====================
 function openRevModal(code){
-  const sel = document.getElementById('revIopSelect');
-  sel.innerHTML = getIops().map(i=>`<option value="${i.code}" ${i.code===code?'selected':''}>IOP ${i.code} – ${escapeHtml(i.desc)}</option>`).join('');
+  state.editingIopCode = code;
+  const iop = getIops().find(i=>i.code===code);
+  document.getElementById('fIopEditCode').value = code;
+  document.getElementById('fIopEditDesc').value = iop ? iop.desc : '';
   fillRevFields();
   openModal('modalEditRev');
 }
 function fillRevFields(){
-  const code = document.getElementById('revIopSelect').value;
-  const rev = state.iops[code]||{rev:'',revDate:''};
+  const rev = state.iops[state.editingIopCode]||{rev:'',revDate:''};
   document.getElementById('fRev').value = rev.rev||'';
   document.getElementById('fRevDate').value = rev.revDate||'';
   updateRevPreview();
@@ -1237,14 +1255,50 @@ function updateRevPreview(){
   const v = d ? addYear(d) : '';
   document.getElementById('revValidityPreview').textContent = v ? `Validade da revisão: ${formatDateBR(v)} (data + 1 ano)` : 'Preencha a data para calcular a validade.';
 }
-function saveRev(){
-  const code = document.getElementById('revIopSelect').value;
-  state.iops[code] = { rev: document.getElementById('fRev').value.trim(), revDate: document.getElementById('fRevDate').value };
+function saveIopEdit(){
+  const oldCode = state.editingIopCode;
+  if(!oldCode) return;
+  let newCode = document.getElementById('fIopEditCode').value.trim();
+  const desc = document.getElementById('fIopEditDesc').value.trim();
+  if(!/^\d{1,3}$/.test(newCode)){ showToast('Informe o código numérico da IOP (até 3 dígitos).', true); return; }
+  newCode = newCode.padStart(3,'0');
+  if(!desc){ showToast('Informe a descrição da IOP.', true); return; }
+  if(newCode!==oldCode && getIops().some(i=>i.code===newCode)){ showToast('Já existe uma IOP com o código '+newCode+'.', true); return; }
+  // Renomear a tag: transfere definição, revisão e registros dos colaboradores
+  if(newCode!==oldCode){
+    const def = state.iopDefs.find(i=>i.code===oldCode);
+    if(def){ def.code = newCode; def.critical = CRITICAL_CODES.includes(newCode); }
+    state.iops[newCode] = state.iops[oldCode] || {rev:'',revDate:''};
+    delete state.iops[oldCode];
+    state.collaborators.forEach(c=>{
+      if(c.records[oldCode]){ c.records[newCode] = c.records[oldCode]; }
+      else { c.records[newCode] = {done:false,realizationDate:'',validityDate:'',userCustomValidity:false}; }
+      delete c.records[oldCode];
+    });
+  }
+  const def2 = state.iopDefs.find(i=>i.code===newCode);
+  if(def2) def2.desc = desc;
+  state.iops[newCode] = { rev: document.getElementById('fRev').value.trim(), revDate: document.getElementById('fRevDate').value };
   saveState(); renderAll(); closeModal('modalEditRev');
-  showToast('Revisão da IOP '+code+' salva.');
+  showToast(newCode!==oldCode ? `IOP renomeada: ${oldCode} → ${newCode}.` : 'IOP '+newCode+' atualizada.');
+}
+function openConfirmDeleteIop(){
+  const code = state.editingIopCode;
+  const iop = getIops().find(i=>i.code===code);
+  document.getElementById('deleteIopText').textContent = `Excluir a IOP ${code} – ${iop?iop.desc:''}? Todos os registros de treinamento dela serão removidos da matriz. Esta ação não pode ser desfeita.`;
+  openModal('modalConfirmDeleteIop');
+}
+function executeDeleteIop(){
+  const code = state.editingIopCode;
+  state.iopDefs = state.iopDefs.filter(i=>i.code!==code);
+  delete state.iops[code];
+  state.collaborators.forEach(c=>{ delete c.records[code]; });
+  saveState(); renderAll();
+  closeModal('modalConfirmDeleteIop'); closeModal('modalEditRev');
+  showToast('IOP '+code+' excluída.');
 }
 function clearRev(){
-  const code = document.getElementById('revIopSelect').value;
+  const code = state.editingIopCode;
   state.iops[code] = { rev:'', revDate:'' };
   saveState(); renderAll(); fillRevFields();
   showToast('Revisão da IOP '+code+' limpa.');

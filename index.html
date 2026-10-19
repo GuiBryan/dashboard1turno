@@ -753,12 +753,12 @@ function renderColabView(){
     const pct = Math.round(s.done/defs.length*100);
     if(!c.enabled){
       return `<div class="card-item afastado">
-        <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">Folga ${c.folga}</span>${c.funcao?`<span class="badge-funcao">${escapeHtml(c.funcao)}</span>`:''}</span><span class="badge-afastado">Afastado</span></div>
+        <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">Folga ${c.folga}</span></span><span class="badge-afastado">Afastado</span></div>
         <div class="card-name">${escapeHtml(c.name)}</div>
       </div>`;
     }
     return `<div class="card-item clickable" onclick="openViewColab('${c.id}')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">Folga ${c.folga}</span>${c.funcao?`<span class="badge-funcao">${escapeHtml(c.funcao)}</span>`:''}</span><span class="card-count">${s.done}/${defs.length} Concluídas</span></div>
+      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">Folga ${c.folga}</span></span><span class="card-count">${s.done}/${defs.length} Concluídas</span></div>
       <div class="card-name">${escapeHtml(c.name)}</div>
       <div class="chip-row"><span class="chip-ok">✓ ${s.done} Realizadas</span><span class="chip-pend">✗ ${s.pend} Pendentes</span>${s.expired?`<span class="chip-exp">🔴 ${s.expired} Vencida(s)</span>`:''}</div>
       <div class="progress-bar"><div class="progress-bar-fill ${pct<50?'critical':''}" style="width:${pct}%"></div></div>

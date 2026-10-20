@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html lang="pt-BR"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Controle de Treinamentos – IOPS Críticas | 1º Turno</title>
 <style>
@@ -34,10 +35,6 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .btn-action:hover{background:rgba(255,255,255,.2)}
 .dropdown-menu{display:none;position:absolute;right:0;top:calc(100% + 6px);background:#fff;color:var(--text);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.2);min-width:250px;overflow:hidden;z-index:460}
 .dropdown-menu.show{display:block}
-/* Celular: menu abre centralizado no topo da tela, sem cortar */
-@media (max-width:640px){
-  .dropdown-menu{position:fixed;top:64px;right:auto;left:50%;transform:translateX(-50%);width:calc(100vw - 2rem);max-width:320px}
-}
 .dropdown-item{display:block;width:100%;text-align:left;background:none;border:none;padding:11px 16px;font-size:.9rem;cursor:pointer;color:var(--text)}
 .dropdown-item:hover{background:#f1f5f9}
 .dropdown-item-primary{color:var(--bps-navy);font-weight:600}
@@ -77,12 +74,12 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .card-top-row{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .badge-folga-pill{color:#fff;font-size:.76rem;font-weight:500;padding:3px 9px;border-radius:6px;display:inline-flex;align-items:center}
 .badge-folga-pill-A{background:#2E75B6}.badge-folga-pill-B{background:#548235}.badge-folga-pill-C{background:#ED7D31}.badge-folga-pill-D{background:#7030A0}
+.badge-folga-pill-none{background:#94a3b8}
 .badge-funcao{background:#eef2ff;color:#4338ca;font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:6px;display:inline-flex;align-items:center}
 .badge-status-chip{background:var(--bps-navy);color:#fff;font-size:.75rem;font-weight:500;padding:3px 9px;border-radius:6px}
 .badge-afastado{background:#94a3b8;color:#fff;font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:6px}
 .badge-iop{background:var(--bps-navy);color:#fff;font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:6px;letter-spacing:.03em}
 .badge-rev{background:var(--bps-light-blue);color:var(--bps-navy);font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:6px}
-.badge-rev-exp{background:#fecaca;color:#991b1b}
 .card-name{font-weight:600;letter-spacing:.03em;text-transform:uppercase;font-size:.95rem;color:var(--bps-navy)}
 .card-desc{font-weight:600;font-size:.95rem}
 .card-count{font-size:.8rem;color:var(--text-muted)}
@@ -100,7 +97,7 @@ body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,
 .card-item.afastado{opacity:.55}
 .card-item.afastado .card-name{text-decoration:line-through}
 .card-dates{font-size:.74rem;color:var(--text-muted);line-height:1.5}
-/* Balão de adicionar (último card da grade, mesma formatação dos retângulos) */
+/* Balão de adicionar */
 .add-card{border:2px dashed #b6c6e0;background:#f8fafc;box-shadow:none;align-items:center;justify-content:center;min-height:150px;text-align:center;color:var(--bps-navy)}
 .add-card:hover{transform:translateY(-2px);background:#eef2ff;border-color:var(--bps-light-blue);box-shadow:0 6px 16px rgba(20,23,31,.1)}
 .add-card .plus{font-size:1.7rem;line-height:1}
@@ -148,6 +145,12 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
 .iop-edit-row input[type=date]{border:1px solid var(--border);border-radius:6px;padding:5px 7px;font-size:.8rem;font-family:inherit}
 .iop-edit-row .custom-lbl{display:flex;align-items:center;gap:.25rem;font-size:.72rem;color:var(--text-muted);white-space:nowrap}
 .iop-edit-row .row-dates{grid-column:1/-1;display:flex;gap:.6rem;flex-wrap:wrap}
+/* Checklist de assinaturas (Editar IOP) */
+.iop-check-row{display:flex;align-items:center;gap:.6rem;padding:.45rem .7rem;border:1px solid var(--border);border-radius:8px;margin-bottom:.4rem;font-size:.84rem}
+.iop-check-row.row-off{opacity:.5}
+.iop-check-done{display:flex;align-items:center;gap:.3rem;font-weight:600;color:var(--bps-navy);white-space:nowrap;cursor:pointer}
+.iop-check-name{flex:1;line-height:1.3}
+.folga-mini{min-width:36px;justify-content:center;font-size:.7rem;padding:2px 6px;flex-shrink:0}
 .btn-add-training{width:100%;background:#8DB4E2;color:#243F5E;border:2px solid #6894c5;border-radius:8px;padding:10px;font-weight:600;cursor:pointer;font-size:.88rem;margin-top:.5rem;font-family:inherit}
 .btn-add-training:hover{background:#7ba6d8}
 .detail-card{display:flex;justify-content:space-between;align-items:center;gap:.7rem;padding:.6rem .7rem;border:1px solid var(--border);border-radius:8px;margin-bottom:.5rem;font-size:.85rem}
@@ -175,7 +178,7 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
 .toast-item.show{opacity:1;transform:none}
 /* ===== IMPRESSÃO: apenas Matriz Geral ===== */
 @media print{
-  .app-header,.control-panel,.alert-banner,.kpi-grid,#viewColab,#viewIops,#viewTrein,.toast-container{display:none!important}
+  .app-header,.control-panel,.alert-banner,.kpi-grid,#viewColab,#viewIops,#viewTrein,.toast-container,.modal-overlay{display:none!important}
   #viewMatriz{display:block!important}
   body{background:#fff}
   .matrix-table{font-size:9pt!important}
@@ -188,21 +191,21 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
 <header class="app-header">
   <div class="header-content">
     <div class="header-brand">
-      <div class="brand-badge">BPS</div>
-      <div class="header-divider"></div>
-      <div class="shift-toggle" id="shiftToggle" role="group" aria-label="Selecionar turno">
-        <button class="shift-btn active" id="shiftBtnT1" onclick="setShift('T1')">1º</button>
+      <span class="brand-badge">BPS</span>
+      <span class="header-divider"></span>
+      <div class="shift-toggle" role="group" aria-label="Turno">
+        <button class="shift-btn" id="shiftBtnT1" onclick="setShift('T1')">1º</button>
         <button class="shift-btn" id="shiftBtnT2" onclick="setShift('T2')">2º</button>
         <button class="shift-btn" id="shiftBtnT3" onclick="setShift('T3')">3º</button>
+        <button class="shift-btn" id="shiftBtnALL" onclick="setShift('ALL')">Todos</button>
       </div>
       <h1 class="header-title" id="headerTitle">CONTROLE DE TREINAMENTOS | 1º TURNO</h1>
     </div>
     <div class="header-actions">
-      <div class="sync-status-indicator" id="syncStatusIndicator" onclick="openSyncModal()" title="Sincronização SharePoint" role="button" aria-label="Status da sincronização">
+      <span class="sync-status-indicator" id="syncStatusIndicator" title="Sem configuração">
         <span class="sync-dot sync-gray" id="syncStatusDot"></span>
-      </div>
+      </span>
       <div class="dropdown">
-        <div class="dropdown-backdrop" id="dropdownBackdrop" onclick="closeDropdown()"></div>
         <button class="btn-action" onclick="toggleDropdown(event)">⚙️ Opções ▾</button>
         <div class="dropdown-menu" id="optionsMenu">
           <button class="dropdown-item dropdown-item-primary" onclick="openAddModal(); closeDropdown();">➕ Adicionar Colaborador</button>
@@ -212,16 +215,18 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
           <div class="dropdown-divider"></div>
           <button class="dropdown-item" onclick="exportExcel(); closeDropdown();">📊 Exportar Excel</button>
           <button class="dropdown-item" onclick="triggerPrint(); closeDropdown();">🖨️ Imprimir / PDF</button>
-          <button class="dropdown-item" onclick="exportBackup(); closeDropdown();">💾 Exportar backup</button>
-          <button class="dropdown-item" onclick="document.getElementById('fileBackupInput').click(); closeDropdown();">📂 Importar backup</button>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-item dropdown-item-primary" onclick="openBackupModal(); closeDropdown();">💾 Backup único…</button>
         </div>
       </div>
-      <input type="file" id="fileBackupInput" accept=".json" style="display:none" onchange="handleImportBackup(event)">
     </div>
   </div>
+  <div class="dropdown-backdrop" id="dropdownBackdrop" onclick="closeDropdown();"></div>
+  <input type="file" id="fileBackupInput" accept=".json" style="display:none" onchange="handleImportBackup(event)">
 </header>
 
 <main class="app-main">
+
   <section class="kpi-grid" id="kpisContainer"></section>
   <section class="alert-banner" id="alertBanner"></section>
 
@@ -241,24 +246,23 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
         <button class="chip-folga chip-folga-c" id="chipFolgaC" onclick="setFolgaFilter('C', this)">C</button>
         <button class="chip-folga chip-folga-d" id="chipFolgaD" onclick="setFolgaFilter('D', this)">D</button>
       </div>
-      <div class="search-box">🔍<input id="searchInput" placeholder="Buscar colaborador ou IOP..." oninput="handleSearch(event)"></div>
+      <div class="search-box">🔍<input id="searchInput" placeholder="Buscar por nome ou matrícula..." oninput="handleSearch(event)"></div>
     </div>
   </section>
 
-  <section id="viewColab" class="cards-grid" style="display: grid;"></section>
-  <section id="viewIops" class="cards-grid" style="display: none;"></section>
-  <section id="viewTrein" class="cards-grid" style="display: none;"></section>
-  <section id="viewMatriz" style="display: none;">
-    <div class="matrix-wrap">
-      <table class="matrix-table" id="matrixTable">
-        <thead id="matrixHead"></thead>
-        <tbody id="matrixBody"></tbody>
-      </table>
-    </div>
+  <section id="viewColab" class="cards-grid" style="display:grid"></section>
+  <section id="viewIops" class="cards-grid" style="display:none"></section>
+  <section id="viewTrein" class="cards-grid" style="display:none"></section>
+  <section id="viewMatriz" class="matrix-wrap" style="display:none">
+    <table class="matrix-table">
+      <thead id="matrixHead"></thead>
+      <tbody id="matrixBody"></tbody>
+    </table>
   </section>
+
 </main>
 
-<!-- ===== MODAL: VISUALIZAR COLABORADOR ===== -->
+<!-- ============ MODAL VISUALIZAR COLABORADOR ============ -->
 <div class="modal-overlay" id="modalViewColab">
   <div class="modal-box">
     <div class="modal-header">
@@ -273,7 +277,7 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
   </div>
 </div>
 
-<!-- ===== MODAL: VISUALIZAR IOP ===== -->
+<!-- ============ MODAL VISUALIZAR IOP ============ -->
 <div class="modal-overlay" id="modalViewIop">
   <div class="modal-box">
     <div class="modal-header">
@@ -288,7 +292,7 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
   </div>
 </div>
 
-<!-- ===== MODAL: VISUALIZAR TREINAMENTO ===== -->
+<!-- ============ MODAL VISUALIZAR TREINAMENTO ============ -->
 <div class="modal-overlay" id="modalViewTraining">
   <div class="modal-box">
     <div class="modal-header">
@@ -304,9 +308,9 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
   </div>
 </div>
 
-<!-- ===== MODAL: ADICIONAR TREINAMENTO (sempre por cima) ===== -->
-<div class="modal-overlay on-top" id="modalAddTraining">
-  <div class="modal-box" style="max-width:580px">
+<!-- ============ MODAL ADICIONAR TREINAMENTO ============ -->
+<div class="modal-overlay" id="modalAddTraining">
+  <div class="modal-box">
     <div class="modal-header">
       <h2 class="modal-title">➕ Adicionar Treinamento</h2>
       <button class="btn-close-modal" onclick="closeAddTraining()">×</button>
@@ -322,24 +326,24 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
           <span>Nome • tipo (NR / IOP / Interno) • validade padrão • obrigatório para</span>
         </button>
       </div>
-      <div id="formReg" class="train-form">
+      <div class="train-form" id="formReg">
         <div class="form-grid">
           <div class="form-field"><label>Colaborador</label><select id="trColab" onchange="updateTrPreview()"></select></div>
           <div class="form-field"><label>Treinamento do catálogo</label><select id="trTrain" onchange="updateTrPreview()"></select></div>
-          <div class="form-field full"><label>Data de realização</label><input type="date" id="trDate" onchange="updateTrPreview()"></div>
+          <div class="form-field"><label>Data de realização</label><input type="date" id="trDate" onchange="updateTrPreview()"></div>
         </div>
-        <p class="card-dates" id="trValidityPreview" style="margin:.6rem 0"></p>
+        <div class="kpi-legend" id="trValidityPreview"></div>
         <button class="btn-danger-action" id="btnRemoveReg" onclick="removeTrainingRecord()" style="display:none">🗑️ Remover registro</button>
       </div>
-      <div id="formCat" class="train-form" style="display:none">
+      <div class="train-form" id="formCat" style="display:none">
         <div class="form-grid">
-          <div class="form-field full"><label>Nome do treinamento</label><input type="text" id="catName" placeholder="Ex.: NR-35 Trabalho em Altura"></div>
+          <div class="form-field"><label>Nome do treinamento</label><input type="text" id="catName" placeholder="Ex.: NR-35 Trabalho em Altura"></div>
           <div class="form-field"><label>Tipo</label><select id="catType"><option value="NR">NR's</option><option value="IOP">IOP's</option><option value="INTERNO">Treinamentos Internos</option></select></div>
           <div class="form-field"><label>Validade padrão (meses)</label><input type="number" id="catMonths" value="12" min="1"></div>
           <div class="form-field"><label>Carga horária (h)</label><input type="number" id="catHours" placeholder="Ex.: 8"></div>
-          <div class="form-field full"><label>Obrigatório para</label><input type="text" id="catFor" list="obrigList" placeholder="Ex.: OP I, OP II — ou Todos / Ninguém" autocomplete="off"><datalist id="obrigList"></datalist></div>
+          <div class="form-field full"><label>Obrigatório para</label><input type="text" id="catFor" list="obrigList" placeholder="Ex.: OP I, OP II — ou Todos" autocomplete="off"><datalist id="obrigList"></datalist></div>
         </div>
-        <p class="card-dates" style="margin-top:.4rem">Escreva "Todos" para toda a equipe, "Ninguém" para tirar o treinamento dos indicadores (registro manual apenas), ou liste as funções separadas por vírgula — só quem pertence a essas funções entra no indicador deste treinamento.</p>
+        <div class="help-text" style="margin-top:.6rem">Deixe vazio ou escreva "Todos" para valer para toda a equipe. Separe funções por vírgula — só quem pertence a essas funções entra no indicador deste treinamento.</div>
       </div>
     </div>
     <div class="modal-footer">
@@ -349,9 +353,9 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
   </div>
 </div>
 
-<!-- ===== MODAL: ADICIONAR IOP ===== -->
+<!-- ============ MODAL ADICIONAR IOP ============ -->
 <div class="modal-overlay" id="modalAddIop">
-  <div class="modal-box" style="max-width:460px">
+  <div class="modal-box" style="max-width:520px">
     <div class="modal-header">
       <h2 class="modal-title">➕ Adicionar IOP</h2>
       <button class="btn-close-modal" onclick="closeModal('modalAddIop')">×</button>
@@ -361,7 +365,7 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
         <div class="form-field"><label>Código (número)</label><input type="text" id="fIopCode" maxlength="3" placeholder="Ex.: 075"></div>
         <div class="form-field"><label>Descrição</label><input type="text" id="fIopDesc" placeholder="Ex.: Operar Correia 02"></div>
       </div>
-      <p class="card-dates" style="margin-top:.6rem">A nova IOP entra na matriz de todos os colaboradores como pendente e é gravada na lista IOPs do SharePoint (compartilhada entre os turnos).</p>
+      <div class="help-text" style="margin-top:.8rem">A nova IOP entra na matriz de todos os colaboradores e é gravada na aba IOPs da planilha única.</div>
     </div>
     <div class="modal-footer">
       <button class="btn-secondary-action" onclick="closeModal('modalAddIop')">Cancelar</button>
@@ -370,7 +374,7 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
   </div>
 </div>
 
-<!-- ===== MODAL: EDITAR/ADICIONAR COLABORADOR ===== -->
+<!-- ============ MODAL EDITAR/ADICIONAR COLABORADOR ============ -->
 <div class="modal-overlay" id="modalEditColab">
   <div class="modal-box">
     <div class="modal-header">
@@ -379,14 +383,16 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
     </div>
     <div class="modal-body">
       <div class="form-grid">
-        <div class="form-field full"><label>Nome do colaborador</label><input type="text" id="fName" placeholder="NOME DO COLABORADOR"></div>
-        <div class="form-field"><label>Letra de Folga</label><select id="fFolga"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div>
+        <div class="form-field"><label>Matrícula</label><input type="text" id="fMatricula" inputmode="numeric" placeholder="Ex.: 2579629"></div>
+        <div class="form-field"><label>Turno</label><select id="fTurno"><option value="T1">1º Turno</option><option value="T2">2º Turno</option><option value="T3">3º Turno</option></select></div>
+        <div class="form-field"><label>Nome do colaborador</label><input type="text" id="fName" placeholder="NOME DO COLABORADOR"></div>
+        <div class="form-field"><label>Letra de Folga</label><select id="fFolga"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="">— (sem letra)</option></select></div>
         <div class="form-field"><label>Função</label><input type="text" id="fFuncao" list="funcaoList" placeholder="Ex.: OP I" autocomplete="off"><datalist id="funcaoList"></datalist></div>
-        <div class="form-field full"><label>Situação</label><button type="button" class="situation-toggle on" id="fSituationToggle" onclick="toggleSituation()">🟢 Habilitado</button></div>
+        <div class="form-field"><label>Situação</label><button type="button" class="situation-toggle on" id="fSituationToggle" onclick="toggleSituation()">🟢 Habilitado</button></div>
       </div>
       <div class="modal-subtitle">Treinamentos das IOPs</div>
       <div id="fIopsList"></div>
-      <button class="btn-add-training" onclick="openAddTrainingModal(state.editingId, null, true)">➕ Adicionar Treinamento (NR / IOP / Interno)</button>
+      <button class="btn-add-training" onclick="openAddTrainingModal(state.editingMatricula, null, true)">➕ Adicionar Treinamento (NR / IOP / Interno)</button>
     </div>
     <div class="modal-footer">
       <button class="btn-danger-action" id="btnDeleteColab" onclick="openConfirmDelete()" style="margin-right:auto; display:none">🗑️ Excluir</button>
@@ -396,16 +402,14 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
   </div>
 </div>
 
-<!-- ===== MODAL: CONFIRMAÇÃO DE EXCLUSÃO (COLABORADOR) ===== -->
-<div class="modal-overlay on-top" id="modalConfirmDelete">
-  <div class="modal-box" style="max-width:440px">
+<!-- ============ MODAL CONFIRMAR EXCLUSÃO COLABORADOR ============ -->
+<div class="modal-overlay" id="modalConfirmDelete">
+  <div class="modal-box" style="max-width:480px">
     <div class="modal-header">
       <h2 class="modal-title">⚠️ Excluir Colaborador</h2>
       <button class="btn-close-modal" onclick="closeModal('modalConfirmDelete')">×</button>
     </div>
-    <div class="modal-body">
-      <p id="deleteConfirmText" style="font-size:.9rem;line-height:1.4;margin:0">Excluir colaborador? Esta ação não pode ser desfeita. Use para mudança de turno ou desligamento.</p>
-    </div>
+    <div class="modal-body"><p id="deleteConfirmText">Excluir colaborador? Esta ação não pode ser desfeita. Use para mudança de turno ou desligamento.</p></div>
     <div class="modal-footer">
       <button class="btn-secondary-action" onclick="closeModal('modalConfirmDelete')">Cancelar</button>
       <button class="btn-danger-action" onclick="executeDeleteColab()">🗑️ Excluir</button>
@@ -413,16 +417,14 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
   </div>
 </div>
 
-<!-- ===== MODAL: CONFIRMAÇÃO DE EXCLUSÃO (IOP) ===== -->
-<div class="modal-overlay on-top" id="modalConfirmDeleteIop">
-  <div class="modal-box" style="max-width:440px">
+<!-- ============ MODAL CONFIRMAR EXCLUSÃO IOP ============ -->
+<div class="modal-overlay" id="modalConfirmDeleteIop">
+  <div class="modal-box" style="max-width:480px">
     <div class="modal-header">
       <h2 class="modal-title">⚠️ Excluir IOP</h2>
       <button class="btn-close-modal" onclick="closeModal('modalConfirmDeleteIop')">×</button>
     </div>
-    <div class="modal-body">
-      <p id="deleteIopText" style="font-size:.9rem;line-height:1.4;margin:0">Excluir esta IOP? Esta ação não pode ser desfeita.</p>
-    </div>
+    <div class="modal-body"><p id="deleteIopText">Excluir esta IOP? Esta ação não pode ser desfeita.</p></div>
     <div class="modal-footer">
       <button class="btn-secondary-action" onclick="closeModal('modalConfirmDeleteIop')">Cancelar</button>
       <button class="btn-danger-action" onclick="executeDeleteIop()">🗑️ Excluir</button>
@@ -430,9 +432,9 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
   </div>
 </div>
 
-<!-- ===== MODAL: EDITAR IOP (tag, nome, revisão e data) ===== -->
+<!-- ============ MODAL EDITAR IOP (tag + revisão + checklist de assinaturas) ============ -->
 <div class="modal-overlay" id="modalEditRev">
-  <div class="modal-box" style="max-width:480px">
+  <div class="modal-box">
     <div class="modal-header">
       <h2 class="modal-title">✏️ Editar IOP</h2>
       <button class="btn-close-modal" onclick="closeModal('modalEditRev')">×</button>
@@ -444,8 +446,10 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
         <div class="form-field"><label>Número da Revisão (REV)</label><input type="text" id="fRev" placeholder="Ex.: 14"></div>
         <div class="form-field"><label>Data da Revisão</label><input type="date" id="fRevDate" onchange="updateRevPreview()"></div>
       </div>
-      <p class="card-dates" id="revValidityPreview" style="margin-top:.7rem"></p>
-      <p class="card-dates" style="margin-top:.4rem">Ao renomear o código, os registros de treinamento dos colaboradores são transferidos automaticamente para a nova tag.</p>
+      <div class="kpi-legend" id="revValidityPreview"></div>
+      <div class="help-text" style="margin-top:.5rem">Ao renomear o código, os registros de treinamento dos colaboradores são transferidos automaticamente para a nova tag.</div>
+      <div class="modal-subtitle">👥 Colaboradores — conferência de assinaturas <span id="iopCheckCount" style="text-transform:none;letter-spacing:0"></span></div>
+      <div id="iopColabChecklist"></div>
     </div>
     <div class="modal-footer">
       <button class="btn-danger-action" onclick="openConfirmDeleteIop()" style="margin-right:auto">🗑️ Excluir IOP</button>
@@ -456,30 +460,22 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
   </div>
 </div>
 
-<!-- ===== MODAL: SINCRONIZAÇÃO SHAREPOINT ===== -->
+<!-- ============ MODAL SINCRONIZAÇÃO (PLANILHA ÚNICA) ============ -->
 <div class="modal-overlay" id="modalSyncConfig">
-  <div class="modal-box" style="max-width:640px">
+  <div class="modal-box" style="max-width:620px">
     <div class="modal-header">
-      <h2 class="modal-title">🔗 Sincronização com SharePoint</h2>
+      <h2 class="modal-title">🔗 Sincronização — Google Sheets</h2>
       <button class="btn-close-modal" onclick="closeModal('modalSyncConfig')">×</button>
     </div>
     <div class="modal-body">
-      <div class="form-grid">
-        <div class="form-field full"><label>URL do site SharePoint</label><input type="text" id="spSiteUrl" placeholder="https://empresa.sharepoint.com/sites/seu-site"></div>
-        <div class="form-field"><label>Lista Colaboradores</label><input type="text" id="spListColab"></div>
-        <div class="form-field"><label>Lista IOPs (compartilhada)</label><input type="text" id="spListIops"></div>
-        <div class="form-field"><label>Lista Treinamentos</label><input type="text" id="spListTrein"></div>
-        <div class="form-field"><label>Lista TreinamentosCatalogo (compartilhada)</label><input type="text" id="spListCatalog"></div>
-        <div class="form-field full"><label>Lista RegistrosGerais</label><input type="text" id="spListReg"></div>
+      <div class="form-field full">
+        <label>URL do Web App — planilha única (T1 + T2 + T3)</label>
+        <input type="text" id="gsUrl" placeholder="https://script.google.com/macros/s/.../exec">
       </div>
       <div class="help-text" style="margin-top:.8rem">
-        <strong>Colunas esperadas (nomes internos sem espaço/acento):</strong><br>
-        • Colaboradores: <code>Title</code> (nome), <code>Folga</code>, <code>Funcao</code>, <code>Habilitado</code>, <code>IdColab</code><br>
-        • IOPs: <code>Title</code>, <code>Codigo</code>, <code>Descricao</code>, <code>REV</code>, <code>DataRevisao</code><br>
-        • Treinamentos (IOPs críticas): <code>Title</code>, <code>ColaboradorId</code>, <code>IopCodigo</code>, <code>Realizado</code>, <code>DataRealizacao</code>, <code>DataValidade</code>, <code>ValidadePersonalizada</code><br>
-        • TreinamentosCatalogo: <code>Title</code> (nome), <code>Tipo</code> (NR / IOP / INTERNO), <code>CargaHoraria</code>, <code>ValidadeMeses</code>, <code>ObrigatorioPara</code>, <code>IdTrein</code><br>
-        • RegistrosGerais: <code>Title</code>, <code>ColaboradorId</code>, <code>TreinamentoId</code>, <code>DataRealizacao</code>, <code>DataValidade</code><br><br>
-        Cada turno usa suas próprias listas de Colaboradores, Treinamentos e RegistrosGerais (sufixo _T2 / _T3); as listas IOPs e TreinamentosCatalogo são compartilhadas entre os turnos. O SharePoint é a fonte principal: ao abrir, o dashboard carrega das listas; o cache local serve para consulta offline e preserva edições ainda não enviadas.
+        <b>Como obter a URL:</b> na planilha única, abra <i>Extensões › Apps Script</i>, cole o Code.gs novo, rode o menu ⚙️ Treinamentos IOPS › <i>Criar/verificar abas</i> e depois <i>Implantar › Nova implantação › App da Web</i> (Executar como: Eu; Quem pode acessar: Qualquer pessoa). Copie a URL gerada (termina em <b>/exec</b>).
+        <br><br>A aba <b>Colaboradores</b> identifica cada pessoa pela <b>Matrícula</b> e pelo <b>Turno</b> (T1/T2/T3) — o botão "Todos" do painel mostra o time inteiro a partir dessa mesma planilha. O cache local preserva edições quando o envio falha; elas são reenviadas na próxima sincronização.
+        <br><br>⚠️ Toda edição futura no Code.gs exige <i>Implantar › Gerenciar implantações › ✏️ › Nova versão</i> — sem isso o painel continua chamando a versão antiga (causa mais comum de sincronização parada).
       </div>
     </div>
     <div class="modal-footer">
@@ -491,50 +487,57 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
   </div>
 </div>
 
+<!-- ============ MODAL BACKUP ÚNICO ============ -->
+<div class="modal-overlay" id="modalBackup">
+  <div class="modal-box" style="max-width:560px">
+    <div class="modal-header">
+      <h2 class="modal-title">💾 Backup único</h2>
+      <button class="btn-close-modal" onclick="closeModal('modalBackup')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="help-text">O backup contém <b>os três turnos inteiros</b> — cada colaborador identificado por <b>Matrícula</b> e <b>Turno</b> — além das revisões das IOPs, catálogo e registros gerais. Um único arquivo serve para toda a unidade: o filtro de turno do painel é apenas visual.</div>
+      <div id="backupInfo" class="kpi-legend" style="margin-top:.6rem"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-primary" onclick="exportBackup()">📥 Exportar backup (.json)</button>
+      <button class="btn-secondary-action" onclick="document.getElementById('fileBackupInput').click()">📤 Importar backup</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast-container" id="toastContainer"></div>
 
 <script>
 'use strict';
 // ==================== CONSTANTES ====================
 const CRITICAL_CODES = ['009','034'];
-const DEFAULT_FUNCOES = [
-  'Oper Maquinas Equipamentos II',
-  'Oper Maquinas Equipamentos III',
-  'Oper Navios',
-  'Conferente Operacoes Portuarias',
-  'Sup Operacoes Portuarias'
-];
+const DEFAULT_FUNCOES = ['OP I','OP II','OP III','OP IV','CONFERENTE','SUPERVISOR'];
 const TYPE_META = {
   'NR': {label:"NR's", cls:'tag-nr'},
   'IOP': {label:"IOP's", cls:'tag-iop'},
   'INTERNO': {label:'Treinamentos Internos', cls:'tag-int'}
 };
-// ==================== TURNOS (T1/T2/T3) ====================
-// Cada turno tem cache próprio (sufixo) e listas próprias de Colaboradores/Treinamentos/RegistrosGerais.
-// IOPs e TreinamentosCatalogo são compartilhadas (sem sufixo).
+// ==================== TURNOS (T1/T2/T3/Todos) ====================
+// Fonte única: um cache, uma planilha, um backup. O turno é um campo do colaborador;
+// os botões do cabeçalho são apenas filtro visual (em "Todos" o painel mostra o time inteiro).
 const SHIFT_KEY = 'controle-treinamentos-iops-shift';
 const SHIFTS = {
-  T1: { label:'1º Turno', headerLabel:'1º TURNO', cacheSuffix:'', listSuffix:'', fileSuffix:'' },
-  T2: { label:'2º Turno', headerLabel:'2º TURNO', cacheSuffix:'-t2', listSuffix:'_T2', fileSuffix:'-t2' },
-  T3: { label:'3º Turno', headerLabel:'3º TURNO', cacheSuffix:'-t3', listSuffix:'_T3', fileSuffix:'-t3' }
+  T1: { label:'1º Turno', headerLabel:'1º TURNO' },
+  T2: { label:'2º Turno', headerLabel:'2º TURNO' },
+  T3: { label:'3º Turno', headerLabel:'3º TURNO' },
+  ALL:{ label:'Todos os Turnos', headerLabel:'TODOS OS TURNOS' }
 };
 let currentShift = 'T1';
 try{ const s = localStorage.getItem(SHIFT_KEY); if(s && SHIFTS[s]) currentShift = s; }catch(e){}
 function shiftCfg(){ return SHIFTS[currentShift]; }
 function shiftLabel(){ return shiftCfg().label; }
-function storageKey(){ return 'controle-treinamentos-iops-v5-sp' + shiftCfg().cacheSuffix; }
-function spConfigKey(){ return 'controle-treinamentos-iops-sp-config' + shiftCfg().cacheSuffix; }
-function fileSuffix(){ return shiftCfg().fileSuffix; }
-function defaultLists(){
-  const s = shiftCfg().listSuffix;
-  return { colab:'Colaboradores'+s, trein:'Treinamentos'+s, reg:'RegistrosGerais'+s, iops:'IOPs', catalog:'TreinamentosCatalogo' };
-}
+function storageKey(){ return 'controle-treinamentos-iops-v7-mat'; }
 
 const state = {
   collaborators: [], iopDefs: [], iops: {}, catalog: [], registros: [],
   selectedFolga: 'TODAS', searchQuery: '', activeTab: 'colab',
   syncStatus: 'gray', lastSyncTime: null, pendingPush: false, returnToEditId: null,
-  editingId: null, editingSituation: true, editingIopCode: null,
+  editingMatricula: null, editingSituation: true, editingIopCode: null,
   viewColabId: null, viewIopCode: null, viewTrainingId: null
 };
 
@@ -556,7 +559,7 @@ function addMonths(dateStr, m){ if(!dateStr) return ''; const d=new Date(dateStr
 function getValidity(rec){ return (rec.userCustomValidity && rec.validityDate) ? rec.validityDate : addYear(rec.realizationDate); }
 function isExpired(rec){ if(!rec.done) return false; const v=getValidity(rec); return !!v && v < todayStr(); }
 function isExpiring(rec){ if(!rec.done||isExpired(rec)) return false; const v=getValidity(rec); if(!v) return false; const lim=new Date(); lim.setDate(lim.getDate()+30); return v <= lim.toISOString().slice(0,10); }
-function formatDateBR(s){ if(!s) return ''; const p=s.split('-'); return p.length===3 ? p[2]+'/'+p[1]+'/'+p[0] : s; }
+function formatDateBR(s){ if(!s) return ''; const p=String(s).split('-'); return p.length===3 ? p[2]+'/'+p[1]+'/'+p[0] : s; }
 function getRevValidityInfo(revDate){ return revDate ? {valDateStr:addYear(revDate)} : null; }
 
 // ==================== TREINAMENTOS GERAIS (CAMADA 2) ====================
@@ -564,16 +567,10 @@ function getTrainingById(id){ return state.catalog.find(t=>t.id===id); }
 function trainingValidity(rec, cat){ return rec.validityDate || addMonths(rec.realizationDate, cat ? cat.validadeMeses : 12); }
 function isTrainingExpired(rec, cat){ const v=trainingValidity(rec,cat); return !!v && v < todayStr(); }
 function isTrainingExpiring(rec, cat){ const v=trainingValidity(rec,cat); if(!v||isTrainingExpired(rec,cat)) return false; const lim=new Date(); lim.setDate(lim.getDate()+30); return v <= lim.toISOString().slice(0,10); }
-function getTrainingRecord(colabId, treinamentoId){ return state.registros.find(x=>x.colabId===colabId && x.treinamentoId===treinamentoId); }
-// "Ninguém" = treinamento fora dos indicadores (registro manual apenas)
-function isTrainingNobody(t){
-  const req = (t.obrigatorioPara||'').trim().toUpperCase();
-  return req==='NINGUEM' || req==='NINGUÉM';
-}
+function getTrainingRecord(matricula, treinamentoId){ return state.registros.find(x=>x.matricula===matricula && x.treinamentoId===treinamentoId); }
 function isTrainingRequiredFor(c, t){
-  const req = (t.obrigatorioPara||'').trim().toUpperCase();
-  if(req==='NINGUEM' || req==='NINGUÉM') return false;
-  if(!req || req==='TODOS' || req==='TODA EQUIPE') return true;
+  const req = (t.obrigatorioPara||'').trim();
+  if(!req || req.toUpperCase()==='TODOS' || req.toUpperCase()==='TODA EQUIPE') return true;
   if(!c.funcao) return false;
   return req.split(/[,;]/).map(s=>s.trim().toUpperCase()).filter(Boolean).includes(c.funcao.toUpperCase());
 }
@@ -581,20 +578,21 @@ function getTrainingStats(t){
   const req = enabledColabs().filter(c=>isTrainingRequiredFor(c,t));
   const total = req.length;
   let emDia=0, vencidos=0;
-  req.forEach(c=>{ const r=getTrainingRecord(c.id,t.id); if(r){ if(isTrainingExpired(r,t)) vencidos++; else emDia++; } });
+  req.forEach(c=>{ const r=getTrainingRecord(c.matricula,t.id); if(r){ if(isTrainingExpired(r,t)) vencidos++; else emDia++; } });
   return { emDia, vencidos, pend: total-emDia-vencidos, total, pct: total?Math.round(emDia/total*100):0 };
 }
 
-// ==================== PERSISTÊNCIA (por turno) ====================
+// ==================== PERSISTÊNCIA ====================
 function persistCache(){
-  localStorage.setItem(storageKey(), JSON.stringify({
-    collaborators: state.collaborators,
-    iops: getIops().map(i=>({code:i.code,desc:i.desc,...(state.iops[i.code]||{})})),
-    catalog: state.catalog, registros: state.registros,
-    pendingPush: !!state.pendingPush
-  }));
+  try{
+    localStorage.setItem(storageKey(), JSON.stringify({
+      collaborators: state.collaborators,
+      iops: getIops().map(i=>({code:i.code,desc:i.desc,...(state.iops[i.code]||{})})),
+      catalog: state.catalog, registros: state.registros,
+      pendingPush: !!state.pendingPush
+    }));
+  }catch(e){ console.warn('Falha ao gravar cache:', e); }
 }
-// markPending=true em edições do usuário; false para gravações internas (seed/sync) que não devem disparar envio
 function saveState(markPending=true){
   state.pendingPush = markPending ? true : !!state.pendingPush;
   persistCache();
@@ -612,16 +610,17 @@ function loadState(){
             return {code, desc: it.desc||code, critical: CRITICAL_CODES.includes(code)};
           });
         }
-        state.collaborators = normalizeCollaborators(parsed.collaborators);
         applyIopsList(parsed.iops||[]);
+        state.collaborators = normalizeCollaborators(parsed.collaborators);
         if(Array.isArray(parsed.catalog)) state.catalog = parsed.catalog;
-        if(Array.isArray(parsed.registros)) state.registros = parsed.registros;
+        if(Array.isArray(parsed.registros)) state.registros = parsed.registros.filter(r=>r&&r.matricula&&r.treinamentoId);
         state.pendingPush = !!parsed.pendingPush;
+        persistCache();
         return;
       }
     }
-  }catch(e){ console.warn('Erro ao carregar localStorage:', e); }
-  // Fallback: todos os turnos nascem vazios (apenas IOPs padrão); cadastre via SharePoint, backup ou manualmente
+  }catch(e){ console.warn('Erro ao carregar cache:', e); }
+  // Nasce em branco: importe o backup único (💾) ou sincronize com a planilha
   state.iopDefs = seedIopDefs();
   state.iops = defaultIopsRev();
   state.collaborators = [];
@@ -635,20 +634,33 @@ function applyIopsList(list){
 }
 function normalizeCollaborators(list){
   const defs = getIops();
-  return list.map(c=>{
+  return (list||[]).map(c=>{
     const records = {};
     defs.forEach(iop=>{
       const rec = (c.records && c.records[iop.code]) || {};
       records[iop.code] = { done: !!rec.done, realizationDate: rec.realizationDate||'', validityDate: rec.validityDate||'', userCustomValidity: !!rec.userCustomValidity };
     });
-    return { id: c.id || 'colab_'+Math.random().toString(36).slice(2), name: c.name||'Sem Nome', folga: c.folga||'A', funcao: c.funcao||'', enabled: typeof c.enabled==='boolean'?c.enabled:true, records };
+    const turnoRaw = String(c.turno||'').trim().toUpperCase();
+    const turno = ['T1','T2','T3'].includes(turnoRaw) ? turnoRaw : 'T1';
+    const folgaRaw = String(c.folga||'').trim().toUpperCase();
+    const folga = ['A','B','C','D'].includes(folgaRaw) ? folgaRaw : '';
+    const matricula = String(c.matricula||'').trim() || String(c.id||'').trim() || ('legado_'+Math.random().toString(36).slice(2));
+    return { matricula, name: c.name||'Sem Nome', turno, folga, funcao: c.funcao||'', enabled: typeof c.enabled==='boolean'?c.enabled:true, records };
   });
 }
 function defaultIopsRev(){ const o={}; getIops().forEach(i=>o[i.code]={rev:'',revDate:''}); return o; }
 function defaultRecords(){ const r={}; getIops().forEach(i=>r[i.code]={done:false,realizationDate:'',validityDate:'',userCustomValidity:false}); return r; }
 
-// ==================== ESTATÍSTICAS ====================
-function enabledColabs(){ return state.collaborators.filter(c=>c.enabled); }
+// ==================== ESCOPO / ESTATÍSTICAS ====================
+function allColabsEscopo(){ return state.collaborators.filter(c=>currentShift==='ALL'||c.turno===currentShift); }
+function enabledColabs(){ return allColabsEscopo().filter(c=>c.enabled); }
+const TURNO_ORDEM = { T1:1, T2:2, T3:3 };
+function sortColabs(a,b){
+  if(a.turno!==b.turno) return (TURNO_ORDEM[a.turno]||9)-(TURNO_ORDEM[b.turno]||9);
+  const fa=a.folga||'~', fb=b.folga||'~';
+  if(fa!==fb) return fa.localeCompare(fb,'pt-BR');
+  return a.name.localeCompare(b.name,'pt-BR');
+}
 function getCollaboratorStats(c){
   const defs = getIops();
   let done=0, expired=0;
@@ -672,7 +684,7 @@ function renderAll(){ renderKPIs(); renderAlertBanner(); renderFilterCounts(); r
 function renderKPIs(){
   const defs = getIops();
   const enabled = enabledColabs();
-  const afastados = state.collaborators.length - enabled.length;
+  const afastados = allColabsEscopo().length - enabled.length;
   let done=0, expired=0;
   enabled.forEach(c=>{ const s=getCollaboratorStats(c); done+=s.done; expired+=s.expired; });
   const totalSlots = enabled.length*defs.length;
@@ -680,15 +692,39 @@ function renderKPIs(){
   const pend = missing + expired;
   const pct = totalSlots ? (done/totalSlots*100).toFixed(1).replace('.',',') : '0,0';
   let trEmDia=0, trVenc=0, trSlots=0;
-  state.catalog.forEach(t=>{ if(isTrainingNobody(t)) return; const s=getTrainingStats(t); trEmDia+=s.emDia; trVenc+=s.vencidos; trSlots+=s.total; });
+  state.catalog.forEach(t=>{ const s=getTrainingStats(t); trEmDia+=s.emDia; trVenc+=s.vencidos; trSlots+=s.total; });
   const trPct = trSlots ? Math.round(trEmDia/trSlots*100)+'%' : '—';
   const trSub = state.catalog.length ? `${trEmDia} em dia • ${trVenc} vencidos • catálogo: ${state.catalog.length}` : 'Nenhum treinamento no catálogo';
+  const porTurno = ['T1','T2','T3'].map(t=>t+': '+enabled.filter(c=>c.turno===t).length).join(' • ');
+  const sub1 = currentShift==='ALL'
+    ? `Time operacional completo (${porTurno}) • ${afastados} afastado(s)`
+    : `${shiftLabel()} Operacional (Letras A, B, C, D) • ${afastados} afastado(s)`;
   document.getElementById('kpisContainer').innerHTML = `
-    <div class="kpi-card"><div class="kpi-card-label">Colaboradores Monitorados</div><div class="kpi-card-val">${enabled.length}</div><div class="kpi-card-sub">${shiftLabel()} Operacional (Letras A, B, C, D) • ${afastados} afastado(s)</div></div>
-    <div class="kpi-card"><div class="kpi-card-label">IOPS Críticas Mapeadas</div><div class="kpi-card-val">${defs.length}</div><div class="kpi-card-sub">Instruções Operacionais Padronizadas</div></div>
-    <div class="kpi-card"><div class="kpi-card-label">Total de Pendências</div><div class="kpi-card-val">${pend}</div><div class="kpi-legend">🟠 Faltando treinamento: ${missing}<br>🔴 Vencidos: ${expired}</div></div>
-    <div class="kpi-card"><div class="kpi-card-label">Treinamentos Realizados</div><div class="kpi-card-val">${done}</div><div class="kpi-card-sub">${pct}% de conclusão (${done} de ${totalSlots})</div></div>
-    <div class="kpi-card"><div class="kpi-card-label">Panorama Geral</div><div class="kpi-card-val">${trPct}</div><div class="kpi-card-sub">Outros treinamentos: ${trSub}</div></div>`;
+    <div class="kpi-card">
+      <div class="kpi-card-label">Colaboradores Monitorados</div>
+      <div class="kpi-card-val">${enabled.length}</div>
+      <div class="kpi-card-sub">${sub1}</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card-label">IOPS Críticas Mapeadas</div>
+      <div class="kpi-card-val">${defs.length}</div>
+      <div class="kpi-card-sub">Instruções Operacionais Padronizadas</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card-label">Total de Pendências</div>
+      <div class="kpi-card-val">${pend}</div>
+      <div class="kpi-legend">🟠 Faltando treinamento: ${missing}<br>🔴 Vencidos: ${expired}</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card-label">Treinamentos Realizados</div>
+      <div class="kpi-card-val">${done}</div>
+      <div class="kpi-card-sub">${pct}% de conclusão (${done} de ${totalSlots})</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card-label">Panorama Geral</div>
+      <div class="kpi-card-val">${trPct}</div>
+      <div class="kpi-card-sub">Outros treinamentos: ${trSub}</div>
+    </div>`;
 }
 
 function renderAlertBanner(){
@@ -704,10 +740,9 @@ function renderAlertBanner(){
   const vencidasText = expiredCount>0 ? `${expiredCount} colaborador(es)` : 'Nenhum colaborador com IOPS vencida no momento';
   let trExpiredTotal=0, trExpiring=0;
   state.catalog.forEach(t=>{
-    if(isTrainingNobody(t)) return; // "Ninguém" não entra nos alertas
     const s = getTrainingStats(t);
     trExpiredTotal += s.vencidos;
-    trExpiring += enabledColabs().filter(c=>isTrainingRequiredFor(c,t) && (()=>{ const r=getTrainingRecord(c.id,t.id); return r && isTrainingExpiring(r,t); })()).length;
+    trExpiring += enabledColabs().filter(c=>isTrainingRequiredFor(c,t) && (()=>{ const r=getTrainingRecord(c.matricula,t.id); return r && isTrainingExpiring(r,t); })()).length;
   });
   const trText = !state.catalog.length ? 'Nenhum treinamento complementar no catálogo'
     : (trExpiredTotal||trExpiring) ? `${trExpiredTotal} vencido(s), ${trExpiring} vencendo em 30 dias`
@@ -717,11 +752,11 @@ function renderAlertBanner(){
     <div class="alert-content">
       <div class="alert-title">Alertas Prioritários do ${shiftLabel()}</div>
       <ul>
-        <li><strong>Gargalo Crítico:</strong> ${escapeHtml(gargaloText)}</li>
-        <li><strong>Destaque Positivo:</strong> ${escapeHtml(destaqueText)}</li>
-        <li><strong>IOPs com maior pendência:</strong> ${escapeHtml(top3Str)}</li>
-        <li><strong>Colaboradores com IOPS vencidas:</strong> ${escapeHtml(vencidasText)}</li>
-        <li><strong>Outros treinamentos:</strong> ${escapeHtml(trText)}</li>
+        <li><b>Gargalo Crítico:</b> ${escapeHtml(gargaloText)}</li>
+        <li><b>Destaque Positivo:</b> ${escapeHtml(destaqueText)}</li>
+        <li><b>IOPs com maior pendência:</b> ${escapeHtml(top3Str)}</li>
+        <li><b>Colaboradores com IOPS vencidas:</b> ${escapeHtml(vencidasText)}</li>
+        <li><b>Outros treinamentos:</b> ${escapeHtml(trText)}</li>
       </ul>
     </div>`;
 }
@@ -733,43 +768,62 @@ function renderFilterCounts(){
 }
 
 function getFilteredCollaborators(){
-  let list = [...state.collaborators];
+  let list = allColabsEscopo();
   if(state.selectedFolga!=='TODAS') list = list.filter(c=>c.folga===state.selectedFolga);
   const q = state.searchQuery.trim().toLowerCase();
-  if(q) list = list.filter(c=>c.name.toLowerCase().includes(q));
-  list.sort((a,b)=>{
+  if(q) list = list.filter(c=>c.name.toLowerCase().includes(q)||String(c.matricula).includes(q));
+  return list.sort((a,b)=>{
     if(a.enabled!==b.enabled) return a.enabled ? -1 : 1;
-    if(a.folga!==b.folga) return a.folga.localeCompare(b.folga,'pt-BR');
-    return a.name.localeCompare(b.name,'pt-BR');
+    return sortColabs(a,b);
   });
-  return list;
 }
 
 function addCardHtml(icon, title, sub, fn){
-  return `<div class="card-item add-card" onclick="${fn}"><span class="plus">${icon}</span><b>${title}</b><span class="card-count">${sub}</span></div>`;
+  return `<div class="card-item add-card clickable" onclick="${fn}"><span class="plus">${icon}</span><b>${title}</b><span class="card-count">${sub}</span></div>`;
 }
 
 function renderColabView(){
   const container = document.getElementById('viewColab');
   const defs = getIops();
   const list = getFilteredCollaborators();
-  if(!list.length){ container.innerHTML = '<div class="help-text">Nenhum colaborador cadastrado neste turno. Use o balão ➕ abaixo para adicionar o primeiro.</div>' + addCardHtml('➕','Adicionar Colaborador','Cadastrar novo membro do turno','openAddModal()'); return; }
+  if(!list.length){
+    container.innerHTML = '<div class="help-text" style="grid-column:1/-1">Nenhum colaborador neste escopo. Importe o backup único (menu ⚙️ › 💾 Backup único) ou use o balão ➕ abaixo.</div>' + addCardHtml('➕','Adicionar Colaborador','Cadastrar novo membro do time','openAddModal()');
+    return;
+  }
   container.innerHTML = list.map(c=>{
     const s = getCollaboratorStats(c);
     const pct = Math.round(s.done/defs.length*100);
     if(!c.enabled){
-      return `<div class="card-item afastado">
-        <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">Folga ${c.folga}</span></span><span class="badge-afastado">Afastado</span></div>
+      return `
+      <div class="card-item afastado">
+        <div class="card-top-row">
+          <span class="badge-folga-pill badge-folga-pill-${c.folga||'none'}">Folga ${c.folga||'—'}</span>
+          <div style="display:flex;gap:.4rem">
+            ${currentShift==='ALL'?`<span class="badge-iop">${c.turno}</span>`:''}
+            <span class="badge-afastado">Afastado</span>
+          </div>
+        </div>
         <div class="card-name">${escapeHtml(c.name)}</div>
       </div>`;
     }
-    return `<div class="card-item clickable" onclick="openViewColab('${c.id}')">
-      <div class="card-top-row"><span style="display:flex;gap:.4rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">Folga ${c.folga}</span></span><span class="card-count">${s.done}/${defs.length} Concluídas</span></div>
-      <div class="card-name">${escapeHtml(c.name)}</div>
-      <div class="chip-row"><span class="chip-ok">✓ ${s.done} Realizadas</span><span class="chip-pend">✗ ${s.pend} Pendentes</span>${s.expired?`<span class="chip-exp">🔴 ${s.expired} Vencida(s)</span>`:''}</div>
-      <div class="progress-bar"><div class="progress-bar-fill ${pct<50?'critical':''}" style="width:${pct}%"></div></div>
-    </div>`;
-  }).join('') + addCardHtml('➕','Adicionar Colaborador','Cadastrar novo membro do turno','openAddModal()');
+    return `
+      <div class="card-item clickable" onclick="openViewColab('${c.matricula}')">
+        <div class="card-top-row">
+          <span class="badge-folga-pill badge-folga-pill-${c.folga||'none'}">Folga ${c.folga||'—'}</span>
+          <div style="display:flex;gap:.4rem;flex-wrap:wrap;justify-content:flex-end">
+            ${currentShift==='ALL'?`<span class="badge-iop">${c.turno}</span>`:''}
+            <span class="badge-status-chip">${s.done}/${defs.length}</span>
+          </div>
+        </div>
+        <div class="card-name">${escapeHtml(c.name)}</div>
+        <div class="chip-row">
+          <span class="chip-ok">✓ ${s.done} Realizadas</span>
+          <span class="chip-pend">✗ ${s.pend} Pendentes</span>
+          ${s.expired?`<span class="chip-exp">🔴 ${s.expired} Vencida(s)</span>`:''}
+        </div>
+        <div class="progress-bar"><div class="progress-bar-fill${pct<50?' critical':''}" style="width:${pct}%"></div></div>
+      </div>`;
+  }).join('') + addCardHtml('➕','Adicionar Colaborador','Cadastrar novo membro do time','openAddModal()');
 }
 
 function renderIopsView(){
@@ -778,22 +832,27 @@ function renderIopsView(){
   const q = state.searchQuery.trim().toLowerCase();
   let stats = getIopStats();
   if(q) stats = stats.filter(i=>i.code.includes(q)||i.desc.toLowerCase().includes(q));
-  if(!stats.length){ container.innerHTML = '<div class="help-text">Nenhuma IOP encontrada.</div>' + addCardHtml('➕','Adicionar IOP','Nova IOP para a matriz do turno','openAddIopModal()'); return; }
+  if(!stats.length){ container.innerHTML = '<div class="help-text" style="grid-column:1/-1">Nenhuma IOP encontrada.</div>' + addCardHtml('➕','Adicionar IOP','Nova IOP para a matriz','openAddIopModal()'); return; }
   container.innerHTML = stats.map(i=>{
     const rev = state.iops[i.code]||{};
-    const revInfo = getRevValidityInfo(rev.revDate);
-    const revExpired = revInfo && revInfo.valDateStr < todayStr();
     // Tag mostra somente o número da revisão, sem data
-    const revBadge = rev.rev ? `<span class="badge-rev ${revExpired?'badge-rev-exp':''}" title="${revExpired?'Revisão vencida':'Revisão vigente'}">REV ${escapeHtml(rev.rev)}</span>` : '';
+    const revBadge = rev.rev ? `<span class="badge-rev">REV ${escapeHtml(rev.rev)}</span>` : '';
     const doneClass = total>0 && i.emDia===total ? 'iop-100' : (i.emDia===0?'iop-zero':'');
-    return `<div class="card-item clickable ${doneClass}" onclick="openViewIop('${i.code}')">
-      <div class="card-top-row"><span class="badge-iop">IOP ${i.code}</span>${revBadge}</div>
-      <div class="card-desc">${i.code} – ${escapeHtml(i.desc)}</div>
-      <div class="card-count">${i.emDia}/${total} em dia</div>
-      <div class="chip-row"><span class="chip-ok">✔ ${i.emDia} em dia (${i.pct}%)</span><span class="chip-pend">✗ ${i.pend} pendentes</span></div>
-      <div class="progress-bar"><div class="progress-bar-fill ${i.pct<50?'critical':''}" style="width:${i.pct}%"></div></div>
-    </div>`;
-  }).join('') + addCardHtml('➕','Adicionar IOP','Nova IOP para a matriz do turno','openAddIopModal()');
+    return `
+      <div class="card-item clickable ${doneClass}" onclick="openViewIop('${i.code}')">
+        <div class="card-top-row">
+          <span class="badge-iop">IOP ${i.code}</span>
+          ${revBadge}
+        </div>
+        <div class="card-desc">${i.code} – ${escapeHtml(i.desc)}</div>
+        <div class="card-count">${i.emDia}/${total} em dia</div>
+        <div class="chip-row">
+          <span class="chip-ok">✔ ${i.emDia} em dia (${i.pct}%)</span>
+          <span class="chip-pend">✗ ${i.pend} pendentes</span>
+        </div>
+        <div class="progress-bar"><div class="progress-bar-fill${i.pct<50?' critical':''}" style="width:${i.pct}%"></div></div>
+      </div>`;
+  }).join('') + addCardHtml('➕','Adicionar IOP','Nova IOP para a matriz','openAddIopModal()');
 }
 
 function renderTreinamentosView(){
@@ -801,24 +860,27 @@ function renderTreinamentosView(){
   const q = state.searchQuery.trim().toLowerCase();
   const list = state.catalog.filter(t=>!q || t.name.toLowerCase().includes(q));
   if(!list.length){
-    container.innerHTML = '<div class="help-text">Nenhum treinamento no catálogo. Cadastre NRs, IOPs complementares ou treinamentos internos para começar o controle.</div>' + addCardHtml('➕','Adicionar Treinamento','Registrar realização ou cadastrar no catálogo','openAddTrainingModal()');
+    container.innerHTML = '<div class="help-text" style="grid-column:1/-1">Nenhum treinamento no catálogo. Cadastre NRs, IOPs complementares ou treinamentos internos para começar o controle.</div>' + addCardHtml('➕','Adicionar Treinamento','Registrar realização ou cadastrar no catálogo','openAddTrainingModal()');
     return;
   }
   container.innerHTML = list.map(t=>{
     const s = getTrainingStats(t);
     const meta = TYPE_META[t.type]||TYPE_META['INTERNO'];
-    const nobody = isTrainingNobody(t);
-    const doneClass = !nobody && s.total>0 && s.emDia===s.total ? 'iop-100' : '';
-    // Treinamento "Ninguém": fora dos indicadores — exibe apenas registros manuais
-    const chips = nobody
-      ? `<span class="chip-na">Sem obrigatoriedade (registro manual)</span>${s.emDia?`<span class="chip-ok">📝 ${s.emDia} registro(s)</span>`:''}`
-      : `<span class="chip-ok">✔ ${s.emDia} em dia (${s.pct}%)</span><span class="chip-pend">✗ ${s.pend} pendentes</span>${s.vencidos?`<span class="chip-exp">🔴 ${s.vencidos} vencidos</span>`:''}`;
-    return `<div class="card-item clickable ${doneClass}" onclick="openViewTraining('${t.id}')">
-      <div class="card-top-row"><span class="train-tag ${meta.cls}">${meta.label}</span><span class="card-count">${nobody ? 'Registro manual' : `${s.emDia}/${s.total} em dia`}</span></div>
-      <div class="card-desc">${escapeHtml(t.name)}</div>
-      <div class="chip-row">${chips}</div>
-      ${nobody?'':'<div class="progress-bar"><div class="progress-bar-fill '+(s.pct<50?'critical':'')+'" style="width:'+s.pct+'%"></div></div>'}
-    </div>`;
+    const doneClass = s.total>0 && s.emDia===s.total ? 'iop-100' : '';
+    return `
+      <div class="card-item clickable ${doneClass}" onclick="openViewTraining('${t.id}')">
+        <div class="card-top-row">
+          <span class="train-tag ${meta.cls}">${meta.label}</span>
+          <span class="badge-status-chip">${s.emDia}/${s.total}</span>
+        </div>
+        <div class="card-desc">${escapeHtml(t.name)}</div>
+        <div class="chip-row">
+          <span class="chip-ok">✔ ${s.emDia} em dia (${s.pct}%)</span>
+          <span class="chip-pend">✗ ${s.pend} pendentes</span>
+          ${s.vencidos?`<span class="chip-exp">🔴 ${s.vencidos} vencidos</span>`:''}
+        </div>
+        <div class="progress-bar"><div class="progress-bar-fill${s.pct<50?' critical':''}" style="width:${s.pct}%"></div></div>
+      </div>`;
   }).join('') + addCardHtml('➕','Adicionar Treinamento','Registrar realização ou cadastrar no catálogo','openAddTrainingModal()');
 }
 
@@ -826,9 +888,10 @@ function renderMatrizGeral(){
   const head = document.getElementById('matrixHead');
   const body = document.getElementById('matrixBody');
   const defs = getIops();
-  head.innerHTML = '<tr><th>Folga</th><th style="text-align:left">Colaborador</th>' + defs.map(i=>`<th>${i.code}</th>`).join('') + '<th>Pendências</th><th>Ações</th></tr>';
+  const mostraTurno = currentShift==='ALL';
+  head.innerHTML = '<tr><th>Folga</th>' + (mostraTurno?'<th>Turno</th>':'') + '<th style="text-align:left">Colaborador</th>' + defs.map(i=>`<th>${i.code}</th>`).join('') + '<th>Pendências</th><th>Ações</th></tr>';
   const list = getFilteredCollaborators();
-  if(!list.length){ body.innerHTML = `<tr><td colspan="${defs.length+4}" style="padding:24px;color:var(--text-muted)">Nenhum colaborador encontrado.</td></tr>`; return; }
+  if(!list.length){ body.innerHTML = `<tr><td colspan="${defs.length+(mostraTurno?5:4)}" style="padding:24px;color:var(--text-muted)">Nenhum colaborador encontrado.</td></tr>`; return; }
   body.innerHTML = list.map(c=>{
     const s = getCollaboratorStats(c);
     const cells = defs.map(i=>{
@@ -838,11 +901,12 @@ function renderMatrizGeral(){
       return isExpired(r) ? '<td class="matrix-no">🔴</td>' : '<td class="matrix-ok">✓</td>';
     }).join('');
     return `<tr class="${c.enabled?'':'row-afastado'}">
-      <td><span class="badge-folga-pill badge-folga-pill-${c.folga}">${c.folga}</span></td>
-      <td class="name-cell">${escapeHtml(c.name)}${c.funcao?` <span class="funcao-mini">(${escapeHtml(c.funcao)})</span>`:''}${c.enabled?'':' <span class="badge-afastado">Afastado</span>'}</td>
+      <td>${c.folga||'—'}</td>
+      ${mostraTurno?`<td>${c.turno}</td>`:''}
+      <td class="name-cell">${escapeHtml(c.name)}${c.funcao?` (${escapeHtml(c.funcao)})`:''}${c.enabled?'':' Afastado'}<div class="funcao-mini">Mat. ${escapeHtml(c.matricula)}</div></td>
       ${cells}
       <td class="matrix-pend">${c.enabled?s.pend:'–'}</td>
-      <td><button class="btn-edit-mini" onclick="openEditModal('${c.id}')">✏️ Editar</button></td>
+      <td><button class="btn-edit-mini" onclick="openEditModal('${c.matricula}')">✏️ Editar</button></td>
     </tr>`;
   }).join('');
 }
@@ -879,9 +943,9 @@ function closeDropdown(){ document.getElementById('optionsMenu').classList.remov
 function openModal(id){ document.getElementById(id).classList.add('show'); }
 function closeModal(id){ document.getElementById(id).classList.remove('show'); }
 
-// ==================== TROCA DE TURNO ====================
+// ==================== TROCA DE VISÃO (TURNO) ====================
 function updateShiftUI(){
-  ['T1','T2','T3'].forEach(t=>{
+  ['T1','T2','T3','ALL'].forEach(t=>{
     document.getElementById('shiftBtn'+t).classList.toggle('active', t===currentShift);
   });
 }
@@ -893,33 +957,19 @@ function setShift(t){
   if(!SHIFTS[t] || t===currentShift) return;
   currentShift = t;
   try{ localStorage.setItem(SHIFT_KEY, t); }catch(e){}
-  // Limpa o estado em memória e recarrega do cache do turno selecionado
-  state.collaborators = []; state.iopDefs = []; state.iops = {};
-  state.catalog = []; state.registros = [];
-  state.pendingPush = false; state.lastSyncTime = null;
   state.selectedFolga = 'TODAS'; state.searchQuery = ''; state.activeTab = 'colab';
   document.getElementById('searchInput').value = '';
   document.querySelectorAll('.chip-folga').forEach(b=>b.classList.remove('active'));
   document.getElementById('chipFolgaTodas').classList.add('active');
-  switchTab('colab');
-  updateShiftUI();
-  applyShiftTexts();
-  const cfg = getSpConfig();
-  if(cfg.siteUrl){
-    loadState(); renderAll();
-    updateSyncIndicator('amber','Sincronizando…');
-    syncNow(true);
-  }else{
-    loadState(); renderAll();
-    updateSyncIndicator('gray','Sem configuração');
-  }
-  showToast('Turno alterado: ' + shiftLabel() + '.');
+  updateShiftUI(); applyShiftTexts();
+  switchTab('colab'); renderAll();
+  showToast('Visualização: ' + shiftLabel() + '.');
 }
 
 // ==================== MODAL VISUALIZAR COLABORADOR ====================
-function openViewColab(id){
-  const c = state.collaborators.find(x=>x.id===id); if(!c) return;
-  state.viewColabId = id;
+function openViewColab(mat){
+  const c = state.collaborators.find(x=>x.matricula===mat); if(!c) return;
+  state.viewColabId = mat;
   const defs = getIops();
   const s = getCollaboratorStats(c);
   document.getElementById('viewColabTitle').textContent = c.name;
@@ -930,10 +980,12 @@ function openViewColab(id){
     else pendentes.push({iop, r});
   });
   let html = `
-    <div style="display:flex;gap:.5rem;align-items:center;flex-wrap:wrap">
-      <span class="badge-folga-pill badge-folga-pill-${c.folga}">Folga ${c.folga}</span>
+    <div class="chip-row">
+      <span class="badge-folga-pill badge-folga-pill-${c.folga||'none'}">Folga ${c.folga||'—'}</span>
+      <span class="badge-funcao">Turno ${c.turno}</span>
       ${c.funcao?`<span class="badge-funcao">${escapeHtml(c.funcao)}</span>`:''}
       ${c.enabled?'<span class="badge-status-chip">Habilitado</span>':'<span class="badge-afastado">Afastado</span>'}
+      <span class="chip-na">Matrícula ${escapeHtml(c.matricula)}</span>
     </div>
     <div class="summary-row">
       <div class="summary-box summary-ok">✅ ${s.done} / ${defs.length} Realizadas</div>
@@ -946,52 +998,43 @@ function openViewColab(id){
       const chip = isExpired(r) ? '<span class="chip-exp">🔴 Vencida</span>'
         : isExpiring(r) ? `<span class="chip-warn">Válido até ${formatDateBR(v)}</span>`
         : `<span class="chip-ok">Válido até ${formatDateBR(v)||'—'}</span>`;
-      return `<div class="detail-card"><span class="dc-title">${iop.code} – ${escapeHtml(iop.desc)}</span><span style="display:flex;gap:.4rem;align-items:center"><span class="card-dates">Realizado em ${formatDateBR(r.realizationDate)||'—'}${r.userCustomValidity?' (val. personalizada)':''}</span>${chip}</span></div>`;
+      return `<div class="detail-card"><div><div class="dc-title"><b>${iop.code}</b> – ${escapeHtml(iop.desc)}</div><div class="card-dates">Realizado em ${formatDateBR(r.realizationDate)||'—'}${r.userCustomValidity?' (val. personalizada)':''}</div></div>${chip}</div>`;
     }).join('') : '<div class="help-text">Nenhuma IOP realizada.</div>';
     html += '<div class="view-section-title">Pendentes</div>';
-    html += pendentes.length ? pendentes.map(({iop})=>`<div class="detail-card"><span class="dc-title">${iop.code} – ${escapeHtml(iop.desc)}</span><span class="chip-pend">Faltando Treinamento</span></div>`).join('') : '<div class="help-text">Nenhuma pendência. 🎉</div>';
+    html += pendentes.length ? pendentes.map(({iop})=>`<div class="detail-card"><div class="dc-title"><b>${iop.code}</b> – ${escapeHtml(iop.desc)}</div><span class="chip-pend">Faltando Treinamento</span></div>`).join('') : '<div class="help-text">Nenhuma pendência. 🎉</div>';
     if(state.catalog.length){
       html += '<div class="view-section-title">Outros treinamentos</div>';
       html += state.catalog.map(t=>{
         const meta = TYPE_META[t.type]||TYPE_META['INTERNO'];
-        const r = getTrainingRecord(c.id, t.id);
-        // "Ninguém": só aparece se houver registro manual — sem chip "Não se aplica"
-        if(isTrainingNobody(t)){
-          if(!r) return '';
-          const chip = isTrainingExpired(r,t) ? '<span class="chip-exp">🔴 Vencido</span>' : `<span class="chip-ok">Válido até ${formatDateBR(trainingValidity(r,t))}</span>`;
-          return `<div class="detail-card"><span class="dc-title"><span class="train-tag ${meta.cls}">${meta.label}</span> ${escapeHtml(t.name)}</span><span style="display:flex;gap:.4rem;align-items:center"><span class="card-dates">Realizado em ${formatDateBR(r.realizationDate)||'—'}</span>${chip}</span></div>`;
-        }
         if(!isTrainingRequiredFor(c,t)){
-          return `<div class="detail-card"><span class="dc-title"><span class="train-tag ${meta.cls}">${meta.label}</span> ${escapeHtml(t.name)}</span><span class="chip-na">Não se aplica (${escapeHtml(c.funcao||'sem função')})</span></div>`;
+          return `<div class="detail-card"><div class="dc-title"><span class="train-tag ${meta.cls}">${meta.label}</span> ${escapeHtml(t.name)}</div><span class="chip-na">Não se aplica (${escapeHtml(c.funcao||'sem função')})</span></div>`;
         }
+        const r = getTrainingRecord(c.matricula, t.id);
         let chip;
         if(!r) chip = '<span class="chip-pend">Faltando</span>';
         else if(isTrainingExpired(r,t)) chip = '<span class="chip-exp">🔴 Vencido</span>';
         else chip = `<span class="chip-ok">Válido até ${formatDateBR(trainingValidity(r,t))}</span>`;
-        return `<div class="detail-card"><span class="dc-title"><span class="train-tag ${meta.cls}">${meta.label}</span> ${escapeHtml(t.name)}</span>${chip}</div>`;
+        return `<div class="detail-card"><div class="dc-title"><span class="train-tag ${meta.cls}">${meta.label}</span> ${escapeHtml(t.name)}</div>${chip}</div>`;
       }).join('');
     }
   } else {
-    html += '<div class="help-text" style="margin-top:.8rem">Colaborador afastado — fora dos indicadores do turno.</div>';
+    html += '<div class="help-text">Colaborador afastado — fora dos indicadores do turno.</div>';
   }
   document.getElementById('viewColabBody').innerHTML = html;
   openModal('modalViewColab');
 }
-function viewToEdit(){ const id = state.viewColabId; closeModal('modalViewColab'); openEditModal(id); }
+function viewToEdit(){ const mat = state.viewColabId; closeModal('modalViewColab'); openEditModal(mat); }
 
-// ==================== MODAL VISUALIZAR IOP (grupos: concluídos / vencidos / pendentes) ====================
+// ==================== MODAL VISUALIZAR IOP ====================
 function openViewIop(code){
   const iop = getIops().find(i=>i.code===code); if(!iop) return;
   state.viewIopCode = code;
   const rev = state.iops[code]||{};
-  const revInfo = getRevValidityInfo(rev.revDate);
-  const revExpired = revInfo && revInfo.valDateStr < todayStr();
   const stats = getIopStats().find(i=>i.code===code);
-  document.getElementById('viewIopTitle').innerHTML = `IOP ${iop.code} – ${escapeHtml(iop.desc)} ${rev.rev?`<span class="badge-rev ${revExpired?'badge-rev-exp':''}">REV ${escapeHtml(rev.rev)}</span>`:''}`;
-  const sorted = [...state.collaborators].sort((a,b)=>{
+  document.getElementById('viewIopTitle').innerHTML = `IOP ${iop.code} – ${escapeHtml(iop.desc)} ${rev.rev?`<span class="badge-rev">REV ${escapeHtml(rev.rev)}</span>`:''}`;
+  const sorted = [...allColabsEscopo()].sort((a,b)=>{
     if(a.enabled!==b.enabled) return a.enabled?-1:1;
-    if(a.folga!==b.folga) return a.folga.localeCompare(b.folga,'pt-BR');
-    return a.name.localeCompare(b.name,'pt-BR');
+    return sortColabs(a,b);
   });
   const concluidos=[], vencidos=[], pendentes=[], afastados=[];
   sorted.forEach(c=>{
@@ -1003,19 +1046,19 @@ function openViewIop(code){
   });
   const rowHtml = ({c,r}, chip)=>{
     const dates = r && r.done && c.enabled ? `<div class="card-dates">Realizado em ${formatDateBR(r.realizationDate)||'—'}${r.userCustomValidity?' (val. personalizada)':''}</div>` : '';
-    return `<div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">${c.folga}</span><span class="dc-title">${escapeHtml(c.name)}</span>${dates}</span>${chip}</div>`;
+    return `<div class="detail-card"><div><div class="dc-title"><span class="badge-folga-pill badge-folga-pill-${c.folga||'none'} folga-mini">${c.folga||'—'}</span> ${escapeHtml(c.name)}${currentShift==='ALL'?` <span class="funcao-mini">• ${c.turno}</span>`:''}</div>${dates}</div>${chip}</div>`;
   };
   const section = (title, list, chipFn)=>{
     if(!list.length) return '';
     return `<div class="view-section-title">${title} (${list.length})</div>` + list.map(item=>rowHtml(item, chipFn(item))).join('');
   };
-  let html = `<div class="card-count" style="margin-bottom:.6rem">${stats.emDia}/${stats.total} em dia • ${stats.pend} pendentes</div>`;
+  let html = `<div class="kpi-legend">${stats.emDia}/${stats.total} em dia • ${stats.pend} pendentes</div>`;
   html += section('✅ Concluídos', concluidos, ({r})=>`<span class="chip-ok">Válido até ${formatDateBR(getValidity(r))||'—'}</span>`);
   html += section('🔴 Vencidos', vencidos, ()=>'<span class="chip-exp">🔴 Vencida</span>');
-  html += section('⏳ Pendentes', pendentes, ()=>'<span class="chip-pend">Faltando Treinamento</span>');
-  html += section('Afastados', afastados, ()=>'<span class="badge-afastado">Afastado</span>');
+  html += section('⏳ Pendentes', pendentes, ()=>' <span class="chip-pend">Faltando Treinamento</span>');
+  html += section('Afastados', afastados, ()=>' <span class="chip-na">Afastado</span>');
   if(!concluidos.length && !vencidos.length && !pendentes.length && !afastados.length){
-    html += '<div class="help-text">Nenhum colaborador cadastrado neste turno.</div>';
+    html += '<div class="help-text">Nenhum colaborador neste escopo.</div>';
   }
   document.getElementById('viewIopBody').innerHTML = html;
   openModal('modalViewIop');
@@ -1028,45 +1071,31 @@ function openViewTraining(id){
   state.viewTrainingId = id;
   const meta = TYPE_META[t.type]||TYPE_META['INTERNO'];
   const s = getTrainingStats(t);
-  const nobody = isTrainingNobody(t);
   document.getElementById('viewTrainingTitle').innerHTML = `${escapeHtml(t.name)} <span class="train-tag ${meta.cls}">${meta.label}</span>`;
-  let html = `<div class="card-count" style="margin-bottom:.6rem">Validade padrão: ${t.validadeMeses} ${t.validadeMeses==1?'mês':'meses'}${t.cargaHoraria?` • ${escapeHtml(t.cargaHoraria)}h`:''}${nobody?' • Obrigatório para: Ninguém (fora dos indicadores — registro manual)':(t.obrigatorioPara?` • Obrigatório para: ${escapeHtml(t.obrigatorioPara)}`:' • Obrigatório para: Todos')}${nobody?'':` • ${s.emDia}/${s.total} em dia (apenas funções obrigatórias)`}</div>`;
-  const sorted = [...state.collaborators].sort((a,b)=>{
+  let html = `<div class="kpi-legend">Validade padrão: ${t.validadeMeses} ${t.validadeMeses==1?'mês':'meses'}${t.cargaHoraria?` • ${escapeHtml(t.cargaHoraria)}h`:''}${t.obrigatorioPara?` • Obrigatório para: ${escapeHtml(t.obrigatorioPara)}`:' • Obrigatório para: Todos'} • ${s.emDia}/${s.total} em dia (apenas funções obrigatórias)</div>`;
+  const sorted = [...allColabsEscopo()].sort((a,b)=>{
     if(a.enabled!==b.enabled) return a.enabled?-1:1;
-    if(a.folga!==b.folga) return a.folga.localeCompare(b.folga,'pt-BR');
-    return a.name.localeCompare(b.name,'pt-BR');
+    return sortColabs(a,b);
   });
-  if(nobody){
-    // "Ninguém": lista apenas quem tem registro manual — sem seção "Não se aplica"
-    const comRegistro = sorted.filter(c=>c.enabled && getTrainingRecord(c.id, id));
-    html += comRegistro.length
-      ? comRegistro.map(c=>{
-          const r = getTrainingRecord(c.id, id);
-          const chip = isTrainingExpired(r,t) ? '<span class="chip-exp">🔴 Vencido</span>' : `<span class="chip-ok">Válido até ${formatDateBR(trainingValidity(r,t))}</span>`;
-          return `<div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">${c.folga}</span><span class="dc-title">${escapeHtml(c.name)}${c.funcao?` <span class="funcao-mini">(${escapeHtml(c.funcao)})</span>`:''}</span><div class="card-dates">Realizado em ${formatDateBR(r.realizationDate)||'—'}</div></span>${chip}</div>`;
-        }).join('')
-      : '<div class="help-text">Nenhum registro manual. Use "📝 Registrar realização" para lançar quem fez este treinamento — ele não impacta os indicadores do turno.</div>';
-  } else {
-    const reqList = sorted.filter(c=>c.enabled && isTrainingRequiredFor(c,t));
-    const naList = sorted.filter(c=>c.enabled && !isTrainingRequiredFor(c,t));
-    const afastados = sorted.filter(c=>!c.enabled);
-    html += reqList.map(c=>{
-      const r = getTrainingRecord(c.id, id);
-      let chip;
-      if(!r) chip = '<span class="chip-pend">Faltando Treinamento</span>';
-      else if(isTrainingExpired(r,t)) chip = '<span class="chip-exp">🔴 Vencido</span>';
-      else chip = `<span class="chip-ok">Válido até ${formatDateBR(trainingValidity(r,t))}</span>`;
-      const dates = r ? `<div class="card-dates">Realizado em ${formatDateBR(r.realizationDate)||'—'}</div>` : '';
-      return `<div class="detail-card"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">${c.folga}</span><span class="dc-title">${escapeHtml(c.name)}${c.funcao?` <span class="funcao-mini">(${escapeHtml(c.funcao)})</span>`:''}</span>${dates}</span>${chip}</div>`;
-    }).join('');
-    if(naList.length){
-      html += `<div class="view-section-title">Não se aplica (função fora do escopo)</div>`;
-      html += naList.map(c=>`<div class="detail-card" style="opacity:.6"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">${c.folga}</span><span class="dc-title">${escapeHtml(c.name)}${c.funcao?` <span class="funcao-mini">(${escapeHtml(c.funcao)})</span>`:''}</span></span><span class="chip-na">Não se aplica</span></div>`).join('');
-    }
-    if(afastados.length){
-      html += `<div class="view-section-title">Afastados</div>`;
-      html += afastados.map(c=>`<div class="detail-card" style="opacity:.6"><span style="display:flex;gap:.5rem;align-items:center"><span class="badge-folga-pill badge-folga-pill-${c.folga}">${c.folga}</span><span class="dc-title" style="text-decoration:line-through">${escapeHtml(c.name)}</span></span><span class="badge-afastado">Afastado</span></div>`).join('');
-    }
+  const reqList = sorted.filter(c=>c.enabled && isTrainingRequiredFor(c,t));
+  const naList = sorted.filter(c=>c.enabled && !isTrainingRequiredFor(c,t));
+  const afastados = sorted.filter(c=>!c.enabled);
+  html += reqList.map(c=>{
+    const r = getTrainingRecord(c.matricula, id);
+    let chip;
+    if(!r) chip = '<span class="chip-pend">Faltando Treinamento</span>';
+    else if(isTrainingExpired(r,t)) chip = '<span class="chip-exp">🔴 Vencido</span>';
+    else chip = `<span class="chip-ok">Válido até ${formatDateBR(trainingValidity(r,t))}</span>`;
+    const dates = r ? `<div class="card-dates">Realizado em ${formatDateBR(r.realizationDate)||'—'}</div>` : '';
+    return `<div class="detail-card"><div><div class="dc-title"><span class="badge-folga-pill badge-folga-pill-${c.folga||'none'} folga-mini">${c.folga||'—'}</span> ${escapeHtml(c.name)}${c.funcao?` (${escapeHtml(c.funcao)})`:''}${currentShift==='ALL'?` <span class="funcao-mini">• ${c.turno}</span>`:''}</div>${dates}</div>${chip}</div>`;
+  }).join('');
+  if(naList.length){
+    html += `<div class="view-section-title">Não se aplica (função fora do escopo)</div>`;
+    html += naList.map(c=>`<div class="detail-card"><div class="dc-title">${escapeHtml(c.name)}${currentShift==='ALL'?` <span class="funcao-mini">• ${c.turno}</span>`:''}</div><span class="chip-na">Não se aplica</span></div>`).join('');
+  }
+  if(afastados.length){
+    html += `<div class="view-section-title">Afastados</div>`;
+    html += afastados.map(c=>`<div class="detail-card"><div class="dc-title">${escapeHtml(c.name)}</div><span class="chip-na">Afastado</span></div>`).join('');
   }
   document.getElementById('viewTrainingBody').innerHTML = html;
   openModal('modalViewTraining');
@@ -1085,20 +1114,19 @@ function deleteTraining(){
 let trainingMode = 'reg';
 function buildObrigList(){
   const used = state.collaborators.map(c=>c.funcao).filter(Boolean);
-  const all = [...new Set(['Todos', 'Ninguém', ...DEFAULT_FUNCOES, ...used])];
+  const all = [...new Set(['Todos', ...DEFAULT_FUNCOES, ...used])];
   const dl = document.getElementById('obrigList');
   if(dl) dl.innerHTML = all.map(f=>`<option value="${escapeHtml(f)}">`).join('');
 }
 function openAddTrainingModal(presetColab, presetTrain, returnToEdit){
   trainingMode = 'reg';
-  // Se veio do editor de colaborador: fecha o editor e guarda o retorno
-  state.returnToEditId = returnToEdit ? (presetColab||state.editingId) : null;
+  state.returnToEditId = returnToEdit ? (presetColab||state.editingMatricula) : null;
   if(state.returnToEditId) closeModal('modalEditColab');
   buildObrigList();
-  const sorted = enabledColabs().slice().sort((a,b)=> a.folga!==b.folga ? a.folga.localeCompare(b.folga,'pt-BR') : a.name.localeCompare(b.name,'pt-BR'));
+  const sorted = enabledColabs().slice().sort(sortColabs);
   document.getElementById('trColab').innerHTML = sorted.length
-    ? sorted.map(c=>`<option value="${c.id}">${escapeHtml(c.name)}${c.funcao?` (${escapeHtml(c.funcao)})`:''}</option>`).join('')
-    : '<option value="">Nenhum colaborador neste turno</option>';
+    ? sorted.map(c=>`<option value="${c.matricula}">${escapeHtml(c.name)} (${escapeHtml(c.matricula)})</option>`).join('')
+    : '<option value="">Nenhum colaborador neste escopo</option>';
   document.getElementById('trTrain').innerHTML = state.catalog.length
     ? state.catalog.map(t=>`<option value="${t.id}">${escapeHtml(t.name)}</option>`).join('')
     : '<option value="">Catálogo vazio — cadastre um treinamento primeiro</option>';
@@ -1115,8 +1143,7 @@ function openAddTrainingModal(presetColab, presetTrain, returnToEdit){
 }
 function closeAddTraining(){
   closeModal('modalAddTraining');
-  // Volta para o editor de colaborador quando a modal foi aberta a partir dele
-  if(state.returnToEditId){ const id = state.returnToEditId; state.returnToEditId = null; openEditModal(id); }
+  if(state.returnToEditId){ const mat = state.returnToEditId; state.returnToEditId = null; openEditModal(mat); }
 }
 function setTrainingMode(m){
   trainingMode = m;
@@ -1130,19 +1157,19 @@ function updateTrPreview(){
   const d = document.getElementById('trDate').value;
   const v = d ? addMonths(d, t?t.validadeMeses:12) : '';
   document.getElementById('trValidityPreview').textContent = v ? `Validade: ${formatDateBR(v)} (realização + ${t?t.validadeMeses:12} meses)` : '';
-  const cId = document.getElementById('trColab').value;
-  const existing = t && cId && getTrainingRecord(cId, t.id);
+  const cMat = document.getElementById('trColab').value;
+  const existing = t && cMat && getTrainingRecord(cMat, t.id);
   document.getElementById('btnRemoveReg').style.display = existing ? 'inline-block' : 'none';
 }
 function saveTraining(){
   if(trainingMode==='reg'){
-    const cId = document.getElementById('trColab').value;
+    const cMat = document.getElementById('trColab').value;
     const tId = document.getElementById('trTrain').value;
     const d = document.getElementById('trDate').value;
-    if(!cId || !tId || !d){ showToast('Preencha colaborador, treinamento e data.', true); return; }
-    const existing = getTrainingRecord(cId, tId);
+    if(!cMat || !tId || !d){ showToast('Preencha colaborador, treinamento e data.', true); return; }
+    const existing = getTrainingRecord(cMat, tId);
     if(existing){ existing.realizationDate = d; existing.validityDate = ''; }
-    else state.registros.push({ id:'reg_'+Date.now(), colabId:cId, treinamentoId:tId, realizationDate:d, validityDate:'' });
+    else state.registros.push({ id:'reg_'+Date.now(), matricula:cMat, treinamentoId:tId, realizationDate:d, validityDate:'' });
     showToast('Treinamento registrado.');
   } else {
     const name = document.getElementById('catName').value.trim();
@@ -1159,9 +1186,9 @@ function saveTraining(){
   saveState(); renderAll(); closeAddTraining();
 }
 function removeTrainingRecord(){
-  const cId = document.getElementById('trColab').value;
+  const cMat = document.getElementById('trColab').value;
   const tId = document.getElementById('trTrain').value;
-  state.registros = state.registros.filter(x=>!(x.colabId===cId && x.treinamentoId===tId));
+  state.registros = state.registros.filter(x=>!(x.matricula===cMat && x.treinamentoId===tId));
   saveState(); renderAll(); closeAddTraining();
   showToast('Registro removido.');
 }
@@ -1195,32 +1222,35 @@ function buildFuncaoDatalist(){
 function buildIopEditRows(c){
   return getIops().map(iop=>{
     const r = c.records[iop.code] || {done:false,realizationDate:'',validityDate:'',userCustomValidity:false};
-    return `<div class="iop-edit-row">
-      <span class="iop-code">IOP ${iop.code}</span>
-      <span>${escapeHtml(iop.desc)}</span>
-      <label style="display:flex;align-items:center;gap:.3rem;font-size:.78rem"><input type="checkbox" id="ck_${iop.code}" ${r.done?'checked':''}> Feito</label>
-      <label class="custom-lbl"><input type="checkbox" id="cv_${iop.code}" ${r.userCustomValidity?'checked':''}> Val. personalizada</label>
-      <div class="row-dates">
-        <label class="custom-lbl">Realização: <input type="date" id="dt_${iop.code}" value="${r.realizationDate}"></label>
-        <label class="custom-lbl">Validade: <input type="date" id="dv_${iop.code}" value="${r.validityDate}"></label>
-      </div>
-    </div>`;
+    return `
+      <div class="iop-edit-row">
+        <span class="iop-code">IOP ${iop.code}</span>
+        <span>${escapeHtml(iop.desc)}</span>
+        <label style="display:flex;align-items:center;gap:.3rem;font-size:.78rem"><input type="checkbox" id="ck_${iop.code}" ${r.done?'checked':''}> Feito</label>
+        <label class="custom-lbl"><input type="checkbox" id="cv_${iop.code}" ${r.userCustomValidity?'checked':''}> Val. personalizada</label>
+        <div class="row-dates">
+          <label class="custom-lbl">Realização: <input type="date" id="dt_${iop.code}" value="${r.realizationDate}"></label>
+          <label class="custom-lbl">Validade: <input type="date" id="dv_${iop.code}" value="${r.validityDate}"></label>
+        </div>
+      </div>`;
   }).join('');
 }
 function toggleSituation(){ state.editingSituation = !state.editingSituation; updateSituationToggle(); }
 function updateSituationToggle(){
   const btn = document.getElementById('fSituationToggle');
-  btn.textContent = state.editingSituation ? '🟢 Habilitado' : 'Afastado';
+  btn.textContent = state.editingSituation ? '🟢 Habilitado' : '⚫ Afastado';
   btn.classList.toggle('on', state.editingSituation);
   btn.classList.toggle('off', !state.editingSituation);
 }
-function openEditModal(id){
-  const c = state.collaborators.find(x=>x.id===id); if(!c) return;
-  state.editingId = id;
+function openEditModal(mat){
+  const c = state.collaborators.find(x=>x.matricula===mat); if(!c) return;
+  state.editingMatricula = mat;
   state.editingSituation = c.enabled;
   document.getElementById('editColabTitle').textContent = '✏️ Editar Colaborador';
+  document.getElementById('fMatricula').value = c.matricula;
+  document.getElementById('fTurno').value = c.turno;
   document.getElementById('fName').value = c.name;
-  document.getElementById('fFolga').value = c.folga;
+  document.getElementById('fFolga').value = c.folga||'';
   buildFuncaoDatalist();
   document.getElementById('fFuncao').value = c.funcao||'';
   updateSituationToggle();
@@ -1229,9 +1259,11 @@ function openEditModal(id){
   openModal('modalEditColab');
 }
 function openAddModal(){
-  state.editingId = null;
+  state.editingMatricula = null;
   state.editingSituation = true;
   document.getElementById('editColabTitle').textContent = '➕ Adicionar Colaborador';
+  document.getElementById('fMatricula').value = '';
+  document.getElementById('fTurno').value = currentShift==='ALL' ? 'T1' : currentShift;
   document.getElementById('fName').value = '';
   document.getElementById('fFolga').value = 'A';
   buildFuncaoDatalist();
@@ -1242,8 +1274,13 @@ function openAddModal(){
   openModal('modalEditColab');
 }
 function saveColab(){
+  const mat = document.getElementById('fMatricula').value.trim();
+  if(!/^\d{3,12}$/.test(mat)){ showToast('Informe a matrícula (apenas números).', true); return; }
+  const dup = state.collaborators.find(x=>x.matricula===mat && x.matricula!==state.editingMatricula);
+  if(dup){ showToast('A matrícula '+mat+' já está cadastrada ('+dup.name+').', true); return; }
   const name = document.getElementById('fName').value.trim();
   if(!name){ showToast('Informe o nome do colaborador.', true); return; }
+  const turno = document.getElementById('fTurno').value;
   const folga = document.getElementById('fFolga').value;
   const funcao = document.getElementById('fFuncao').value.trim();
   const enabled = state.editingSituation;
@@ -1256,33 +1293,37 @@ function saveColab(){
       userCustomValidity: document.getElementById('cv_'+iop.code).checked
     };
   });
-  if(state.editingId){
-    const c = state.collaborators.find(x=>x.id===state.editingId);
-    Object.assign(c, {name, folga, funcao, enabled, records});
+  if(state.editingMatricula){
+    const c = state.collaborators.find(x=>x.matricula===state.editingMatricula);
+    const mudouTurno = c.turno!==turno;
+    Object.assign(c, {matricula:mat, name, turno, folga, funcao, enabled, records});
+    showToast(mudouTurno ? 'Colaborador atualizado — agora no '+SHIFTS[turno].label+'. Os treinamentos acompanham.' : 'Colaborador atualizado.');
   } else {
-    state.collaborators.push({id:'colab_'+Date.now(), name, folga, funcao, enabled, records});
+    state.collaborators.push({matricula:mat, name, turno, folga, funcao, enabled, records});
+    showToast('Colaborador adicionado.');
   }
   saveState(); renderAll(); closeModal('modalEditColab');
-  showToast(state.editingId ? 'Colaborador atualizado.' : 'Colaborador adicionado.');
 }
 function openConfirmDelete(){
-  document.getElementById('deleteConfirmText').textContent = `Excluir ${document.getElementById('fName').value}? Esta ação não pode ser desfeita. Use para mudança de turno ou desligamento.`;
+  const c = state.collaborators.find(x=>x.matricula===state.editingMatricula);
+  document.getElementById('deleteConfirmText').textContent = `Excluir ${c?c.name:document.getElementById('fName').value}? Esta ação não pode ser desfeita. Use para desligamento — para mudança de turno, basta alterar o campo Turno.`;
   openModal('modalConfirmDelete');
 }
 function executeDeleteColab(){
-  state.collaborators = state.collaborators.filter(c=>c.id!==state.editingId);
+  state.collaborators = state.collaborators.filter(c=>c.matricula!==state.editingMatricula);
   saveState(); renderAll();
   closeModal('modalConfirmDelete'); closeModal('modalEditColab');
   showToast('Colaborador excluído.');
 }
 
-// ==================== MODAL EDITAR IOP (tag + nome + revisão + exclusão) ====================
+// ==================== MODAL EDITAR IOP (tag + nome + revisão + checklist + exclusão) ====================
 function openRevModal(code){
   state.editingIopCode = code;
   const iop = getIops().find(i=>i.code===code);
   document.getElementById('fIopEditCode').value = code;
   document.getElementById('fIopEditDesc').value = iop ? iop.desc : '';
   fillRevFields();
+  buildIopColabChecklist(code);
   openModal('modalEditRev');
 }
 function fillRevFields(){
@@ -1295,6 +1336,44 @@ function updateRevPreview(){
   const d = document.getElementById('fRevDate').value;
   const v = d ? addYear(d) : '';
   document.getElementById('revValidityPreview').textContent = v ? `Validade da revisão: ${formatDateBR(v)} (data + 1 ano)` : 'Preencha a data para calcular a validade.';
+}
+// Checklist de assinaturas: quem fez esta IOP, com data de realização
+function buildIopColabChecklist(code){
+  const wrap = document.getElementById('iopColabChecklist');
+  const list = allColabsEscopo().slice().sort((a,b)=>{
+    if(a.enabled!==b.enabled) return a.enabled?-1:1;
+    return sortColabs(a,b);
+  });
+  let html = ''; let ultimoTurno = '';
+  list.forEach(c=>{
+    if(currentShift==='ALL' && c.turno!==ultimoTurno){
+      ultimoTurno = c.turno;
+      html += `<div class="view-section-title">${SHIFTS[c.turno]?SHIFTS[c.turno].label:c.turno}</div>`;
+    }
+    const r = c.records[code] || {done:false,realizationDate:''};
+    html += `
+      <div class="iop-check-row${c.enabled?'':' row-off'}">
+        <span class="badge-folga-pill badge-folga-pill-${c.folga||'none'} folga-mini">${c.folga||'—'}</span>
+        <label class="iop-check-done"><input type="checkbox" id="ik_${c.matricula}" ${r.done?'checked':''} onchange="iopCheckChange('${c.matricula}')"> Feito</label>
+        <span class="iop-check-name">${escapeHtml(c.name)}${c.funcao?` <span class="funcao-mini">(${escapeHtml(c.funcao)})</span>`:''}${currentShift==='ALL'?` <span class="funcao-mini">• ${c.turno}</span>`:''}${c.enabled?'':' <span class="funcao-mini">(afastado)</span>'}</span>
+        <label class="custom-lbl">Realização: <input type="date" id="dk_${c.matricula}" value="${r.realizationDate||''}"></label>
+      </div>`;
+  });
+  wrap.innerHTML = html || '<div class="help-text">Nenhum colaborador neste escopo.</div>';
+  updateIopCheckCount();
+}
+function iopCheckChange(mat){
+  const ck = document.getElementById('ik_'+mat);
+  const dk = document.getElementById('dk_'+mat);
+  if(ck && ck.checked && dk && !dk.value) dk.value = todayStr();
+  updateIopCheckCount();
+}
+function updateIopCheckCount(){
+  const boxes = document.querySelectorAll('[id^="ik_"]');
+  let total=0, marcados=0;
+  boxes.forEach(b=>{ total++; if(b.checked) marcados++; });
+  const el = document.getElementById('iopCheckCount');
+  if(el) el.textContent = `— ${marcados}/${total} assinados`;
 }
 function saveIopEdit(){
   const oldCode = state.editingIopCode;
@@ -1320,6 +1399,16 @@ function saveIopEdit(){
   const def2 = state.iopDefs.find(i=>i.code===newCode);
   if(def2) def2.desc = desc;
   state.iops[newCode] = { rev: document.getElementById('fRev').value.trim(), revDate: document.getElementById('fRevDate').value };
+  // Aplica a conferência de assinaturas marcada no checklist
+  state.collaborators.forEach(c=>{
+    const ck = document.getElementById('ik_'+c.matricula);
+    if(!ck) return;
+    const dk = document.getElementById('dk_'+c.matricula);
+    const r = c.records[newCode] || (c.records[newCode] = {done:false,realizationDate:'',validityDate:'',userCustomValidity:false});
+    r.done = ck.checked;
+    if(dk) r.realizationDate = dk.value;
+    if(ck.checked && !r.realizationDate) r.realizationDate = todayStr();
+  });
   saveState(); renderAll(); closeModal('modalEditRev');
   showToast(newCode!==oldCode ? `IOP renomeada: ${oldCode} → ${newCode}.` : 'IOP '+newCode+' atualizada.');
 }
@@ -1345,14 +1434,21 @@ function clearRev(){
   showToast('Revisão da IOP '+code+' limpa.');
 }
 
-// ==================== BACKUP / EXCEL / IMPRESSÃO ====================
+// ==================== BACKUP ÚNICO / EXCEL / IMPRESSÃO ====================
+function openBackupModal(){
+  const t1 = state.collaborators.filter(c=>c.turno==='T1').length;
+  const t2 = state.collaborators.filter(c=>c.turno==='T2').length;
+  const t3 = state.collaborators.filter(c=>c.turno==='T3').length;
+  document.getElementById('backupInfo').innerHTML = `No momento: <b>${t1}</b> no 1º turno • <b>${t2}</b> no 2º • <b>${t3}</b> no 3º (total ${state.collaborators.length}) • ${getIops().length} IOPs • ${state.catalog.length} treinamentos no catálogo • ${state.registros.length} registros gerais.`;
+  openModal('modalBackup');
+}
 function exportBackup(){
-  const payload = { app:'controle-treinamentos-iops', version:3, shift:currentShift, exportedAt:new Date().toISOString(),
+  const payload = { app:'controle-treinamentos-iops', version:5, exportedAt:new Date().toISOString(),
     collaborators: state.collaborators,
     iops: getIops().map(i=>({code:i.code,desc:i.desc,...(state.iops[i.code]||{})})),
     catalog: state.catalog, registros: state.registros };
-  downloadFile(JSON.stringify(payload,null,2), 'backup-treinamentos-iops'+fileSuffix()+'.json', 'application/json');
-  showToast('Backup exportado ('+shiftLabel()+').');
+  downloadFile(JSON.stringify(payload,null,2), 'backup-treinamentos-iops.json', 'application/json');
+  showToast('Backup único exportado (todos os turnos).');
 }
 function handleImportBackup(e){
   const file = e.target.files[0]; if(!file) return;
@@ -1360,25 +1456,38 @@ function handleImportBackup(e){
   reader.onload = ev=>{
     try{
       const parsed = JSON.parse(ev.target.result);
-      if(Array.isArray(parsed.collaborators)){
-        // Preserva o padrão atual das IOPs (código + descrição): o backup NÃO substitui os nomes.
-        // Aplica apenas REV e DataRevisao vindas do backup, e somente em IOPs que já existem no app.
-        if(Array.isArray(parsed.iops)){
-          parsed.iops.forEach(it=>{
-            if(it && it.code){
-              const code = String(it.code).padStart(3,'0');
-              if(state.iopDefs.some(i=>i.code===code)){
-                state.iops[code] = { rev: it.rev||'', revDate: it.revDate||'' };
-              }
-            }
-          });
+      if(!Array.isArray(parsed.collaborators)){ showToast('Arquivo de backup inválido.', true); return; }
+      // Revisões das IOPs: aplica somente em IOPs que já existem no app (preserva os nomes atuais)
+      if(Array.isArray(parsed.iops)){
+        parsed.iops.forEach(it=>{
+          if(it && it.code){
+            const code = String(it.code).padStart(3,'0');
+            if(state.iopDefs.some(i=>i.code===code)) state.iops[code] = { rev: it.rev||'', revDate: it.revDate||'' };
+          }
+        });
+      }
+      // Aceita backup novo (v5, com matrícula/turno) e antigos (v3/v4, com id/shift)
+      const turnoPadrao = (parsed.shift && SHIFTS[parsed.shift] && parsed.shift!=='ALL') ? parsed.shift : (currentShift!=='ALL' ? currentShift : 'T1');
+      let novos=0, atualizados=0;
+      parsed.collaborators.forEach(raw=>{
+        const [nc] = normalizeCollaborators([Object.assign({}, raw, { turno: raw.turno || turnoPadrao })]);
+        const existente = state.collaborators.find(x=>x.matricula===nc.matricula);
+        if(existente){
+          Object.assign(existente, { name:nc.name, turno:nc.turno, folga:nc.folga, funcao:nc.funcao, enabled:nc.enabled, records:nc.records });
+          atualizados++;
+        } else {
+          state.collaborators.push(nc);
+          novos++;
         }
-        state.collaborators = normalizeCollaborators(parsed.collaborators);
-        if(Array.isArray(parsed.catalog)) state.catalog = parsed.catalog;
-        if(Array.isArray(parsed.registros)) state.registros = parsed.registros;
-        saveState(); renderAll();
-        showToast('Backup importado: revisões e datas atualizadas; nomes das IOPs preservados.');
-      } else showToast('Arquivo de backup inválido.', true);
+      });
+      if(Array.isArray(parsed.catalog)) state.catalog = parsed.catalog;
+      if(Array.isArray(parsed.registros)){
+        state.registros = parsed.registros
+          .map(r=>Object.assign({}, r, { matricula: (r && r.matricula) || (r && r.colabId) || '' }))
+          .filter(r=>r.matricula && r.treinamentoId);
+      }
+      saveState(); renderAll(); closeModal('modalBackup');
+      showToast(`Backup importado: ${novos} novo(s), ${atualizados} atualizado(s). Revisões das IOPs aplicadas.`);
     }catch(err){ showToast('Erro ao ler o arquivo JSON.', true); }
   };
   reader.readAsText(file);
@@ -1386,34 +1495,37 @@ function handleImportBackup(e){
 }
 function exportExcel(){
   const defs = getIops();
-  let html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"></head><body>
-  <table border="1" style="border-collapse:collapse;font-family:sans-serif;font-size:11pt">
-  <thead><tr style="font-weight:bold"><th>Folga</th><th>Colaborador</th><th>Função</th><th>Código IOP</th><th>Descrição IOP</th><th>Status</th><th>Data de Realização</th><th>Validade</th></tr></thead><tbody>`;
-  getFilteredCollaborators().forEach(c=>{
+  const esc = escapeHtml;
+  const list = allColabsEscopo().slice().sort((a,b)=>{
+    if(a.enabled!==b.enabled) return a.enabled?-1:1;
+    return sortColabs(a,b);
+  });
+  let t1 = '<table border="1"><thead><tr><th>Turno</th><th>Folga</th><th>Matrícula</th><th>Colaborador</th><th>Função</th><th>Código IOP</th><th>Descrição IOP</th><th>Status</th><th>Data de Realização</th><th>Validade</th></tr></thead><tbody>';
+  list.forEach(c=>{
     defs.forEach(iop=>{
-      const r = c.records[iop.code]||{done:false,realizationDate:'',validityDate:'',userCustomValidity:false};
-      const status = !c.enabled ? 'Afastado' : (!r.done ? 'Pendente' : (isExpired(r)?'Vencido':'Realizado'));
-      html += `<tr><td>${c.folga}</td><td>${escapeHtml(c.name)}</td><td>${escapeHtml(c.funcao||'')}</td><td style="text-align:center">${iop.code}</td><td>${escapeHtml(iop.desc)}</td><td>${status}</td><td>${formatDateBR(r.realizationDate)}</td><td>${formatDateBR(getValidity(r))}</td></tr>`;
+      const r = c.records[iop.code];
+      const status = (!c.enabled) ? 'Afastado' : (!r||!r.done) ? 'Pendente' : (isExpired(r)?'Vencida':'Concluída');
+      t1 += `<tr><td>${c.turno}</td><td>${esc(c.folga||'—')}</td><td>${esc(c.matricula)}</td><td>${esc(c.name)}</td><td>${esc(c.funcao||'')}</td><td>${iop.code}</td><td>${esc(iop.desc)}</td><td>${status}</td><td>${formatDateBR(r?r.realizationDate:'')}</td><td>${formatDateBR(r&&r.done?getValidity(r):'')}</td></tr>`;
     });
   });
-  html += `</tbody></table><br><table border="1" style="border-collapse:collapse;font-family:sans-serif;font-size:11pt">
-  <thead><tr style="font-weight:bold"><th colspan="5">Revisões das IOPs</th></tr><tr style="font-weight:bold"><th>Código</th><th>Descrição</th><th>REV</th><th>Data da Revisão</th><th>Validade da Revisão</th></tr></thead><tbody>`;
-  defs.forEach(iop=>{
-    const rev = state.iops[iop.code]||{};
-    const v = getRevValidityInfo(rev.revDate);
-    html += `<tr><td style="text-align:center">${iop.code}</td><td>${escapeHtml(iop.desc)}</td><td style="text-align:center">${escapeHtml(rev.rev||'')}</td><td style="text-align:center">${formatDateBR(rev.revDate)}</td><td style="text-align:center">${v?formatDateBR(v.valDateStr):''}</td></tr>`;
+  t1 += '</tbody></table>';
+  let t2 = '<table border="1"><thead><tr><th>Código</th><th>Descrição</th><th>REV</th><th>Data da Revisão</th><th>Validade da Revisão</th></tr></thead><tbody>';
+  getIops().forEach(iop=>{
+    const rv = state.iops[iop.code]||{};
+    const v = getRevValidityInfo(rv.revDate);
+    t2 += `<tr><td>${iop.code}</td><td>${esc(iop.desc)}</td><td>${esc(rv.rev||'')}</td><td>${formatDateBR(rv.revDate)}</td><td>${v?formatDateBR(v.valDateStr):''}</td></tr>`;
   });
-  html += `</tbody></table><br><table border="1" style="border-collapse:collapse;font-family:sans-serif;font-size:11pt">
-  <thead><tr style="font-weight:bold"><th colspan="6">Outros Treinamentos</th></tr><tr style="font-weight:bold"><th>Colaborador</th><th>Função</th><th>Treinamento</th><th>Tipo</th><th>Data de Realização</th><th>Validade</th></tr></thead><tbody>`;
-  state.registros.forEach(r=>{
-    const c = state.collaborators.find(x=>x.id===r.colabId);
-    const t = getTrainingById(r.treinamentoId);
-    if(!c || !t) return;
-    const meta = TYPE_META[t.type]||TYPE_META['INTERNO'];
-    html += `<tr><td>${escapeHtml(c.name)}</td><td>${escapeHtml(c.funcao||'')}</td><td>${escapeHtml(t.name)}</td><td>${meta.label}</td><td>${formatDateBR(r.realizationDate)}</td><td>${formatDateBR(trainingValidity(r,t))}</td></tr>`;
+  t2 += '</tbody></table>';
+  let t3 = '<table border="1"><thead><tr><th>Turno</th><th>Colaborador</th><th>Matrícula</th><th>Função</th><th>Treinamento</th><th>Tipo</th><th>Data de Realização</th><th>Validade</th></tr></thead><tbody>';
+  state.catalog.forEach(t=>{
+    list.filter(c=>c.enabled && isTrainingRequiredFor(c,t)).forEach(c=>{
+      const r = getTrainingRecord(c.matricula, t.id);
+      if(r) t3 += `<tr><td>${c.turno}</td><td>${esc(c.name)}</td><td>${esc(c.matricula)}</td><td>${esc(c.funcao||'')}</td><td>${esc(t.name)}</td><td>${(TYPE_META[t.type]||TYPE_META['INTERNO']).label}</td><td>${formatDateBR(r.realizationDate)}</td><td>${formatDateBR(trainingValidity(r,t))}</td></tr>`;
+    });
   });
-  html += '</tbody></table></body></html>';
-  downloadFile(html, 'controle-treinamentos-iops'+fileSuffix()+'.xls', 'application/vnd.ms-excel;charset=utf-8;');
+  t3 += '</tbody></table>';
+  const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"></head><body><h3>Treinamentos IOPS — ${shiftLabel()}</h3>${t1}<br><h3>Revisões das IOPs</h3>${t2}<br><h3>Outros Treinamentos</h3>${t3}</body></html>`;
+  downloadFile(html, 'controle-treinamentos-iops.xls', 'application/vnd.ms-excel;charset=utf-8;');
   showToast('Excel exportado.');
 }
 function downloadFile(content, filename, type){
@@ -1425,53 +1537,61 @@ function downloadFile(content, filename, type){
 }
 function triggerPrint(){ switchTab('matriz'); setTimeout(()=>window.print(), 150); }
 
-// ==================== SINCRONIZAÇÃO SHAREPOINT (API REST — FONTE PRINCIPAL, POR TURNO) ====================
-function getSpConfig(){
-  try{ return JSON.parse(localStorage.getItem(spConfigKey())) || {}; }catch(e){ return {}; }
+// ==================== SINCRONIZAÇÃO GOOGLE SHEETS (PLANILHA ÚNICA) ====================
+// Cache primeiro → envia pendências (diff) → puxa do servidor. Edições locais NUNCA são perdidas.
+function gsConfigKey(){ return 'controle-treinamentos-iops-gs-config'; }
+function getGsConfig(){
+  try{
+    const c = JSON.parse(localStorage.getItem(gsConfigKey())) || {};
+    return { url: c.url || (c.urls && c.urls.T1) || '' }; // migra configuração antiga de 3 URLs
+  }catch(e){ return { url:'' }; }
 }
+function gsCurrentUrl(){ return getGsConfig().url; }
+function gsMetaKey(){ return 'controle-treinamentos-iops-gs-meta'; }
+function gsLoadMeta(){
+  try{ return JSON.parse(localStorage.getItem(gsMetaKey())) || { pendingOps:[], snapshot:null }; }catch(e){ return { pendingOps:[], snapshot:null }; }
+}
+function gsSaveMeta(m){ try{ localStorage.setItem(gsMetaKey(), JSON.stringify(m)); }catch(e){} }
+function horaAgora(){ return new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}); }
+
+// ---- Configuração (modal) ----
 function openSyncModal(){
-  const cfg = getSpConfig();
-  const def = defaultLists();
-  document.getElementById('spSiteUrl').value = cfg.siteUrl||'';
-  document.getElementById('spListColab').value = cfg.listColab||def.colab;
-  document.getElementById('spListIops').value = cfg.listIops||def.iops;
-  document.getElementById('spListTrein').value = cfg.listTrein||def.trein;
-  document.getElementById('spListCatalog').value = cfg.listCatalog||def.catalog;
-  document.getElementById('spListReg').value = cfg.listReg||def.reg;
+  document.getElementById('gsUrl').value = gsCurrentUrl();
   openModal('modalSyncConfig');
 }
 function saveSyncConfig(){
-  const def = defaultLists();
-  const cfg = {
-    siteUrl: document.getElementById('spSiteUrl').value.trim(),
-    listColab: document.getElementById('spListColab').value.trim()||def.colab,
-    listIops: document.getElementById('spListIops').value.trim()||def.iops,
-    listTrein: document.getElementById('spListTrein').value.trim()||def.trein,
-    listCatalog: document.getElementById('spListCatalog').value.trim()||def.catalog,
-    listReg: document.getElementById('spListReg').value.trim()||def.reg
-  };
-  localStorage.setItem(spConfigKey(), JSON.stringify(cfg));
+  const url = document.getElementById('gsUrl').value.trim();
+  localStorage.setItem(gsConfigKey(), JSON.stringify({url}));
   closeModal('modalSyncConfig');
-  updateSyncIndicator('gray', cfg.siteUrl ? 'Configurado. Use "Sincronizar agora".' : 'Sem configuração');
-  showToast('Configuração de sincronização salva ('+shiftLabel()+').');
+  updateSyncIndicator('gray', url ? 'Configurado. Use "Sincronizar agora".' : 'Sem configuração');
+  showToast('Configuração de sincronização salva.');
 }
 function deactivateSync(){
-  localStorage.removeItem(spConfigKey());
+  localStorage.removeItem(gsConfigKey());
   state.lastSyncTime = null;
   closeModal('modalSyncConfig');
   updateSyncIndicator('gray','Sincronização desativada');
-  showToast('Sincronização desativada ('+shiftLabel()+').');
+  showToast('Sincronização desativada.');
 }
-function spBase(){ const cfg=getSpConfig(); return (cfg.siteUrl||'').replace(/\/+$/,''); }
-async function spFetch(url, opts={}){
-  const r = await fetch(url, { credentials:'include', headers:{'Accept':'application/json;odata=nometadata', ...(opts.headers||{})}, ...opts });
+
+// ---- Transporte (Content-Type text/plain evita preflight CORS) ----
+async function gsFetchJson(url, opts={}){
+  const r = await fetch(url, Object.assign({ cache:'no-store' }, opts));
   if(!r.ok) throw new Error('HTTP '+r.status);
   return r.json();
 }
-async function getDigest(){
-  const j = await spFetch(spBase()+'/_api/contextinfo', {method:'POST'});
-  return j.FormDigestValue;
+async function gsGet(action){
+  const url = gsCurrentUrl();
+  if(!url) throw new Error('URL do Web App não configurada');
+  return gsFetchJson(url + (url.indexOf('?')>=0?'&':'?') + 'action=' + encodeURIComponent(action));
 }
+async function gsPost(payload){
+  const url = gsCurrentUrl();
+  if(!url) throw new Error('URL do Web App não configurada');
+  return gsFetchJson(url, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload) });
+}
+
+// ---- Indicador de sincronização (4 estados) ----
 function updateSyncIndicator(status, tooltip){
   state.syncStatus = status;
   const dot = document.getElementById('syncStatusDot');
@@ -1480,92 +1600,232 @@ function updateSyncIndicator(status, tooltip){
   const time = state.lastSyncTime ? ' • Última: '+state.lastSyncTime : '';
   if(ind) ind.title = (tooltip||'')+time;
 }
-async function testConnection(){
-  if(!spBase()){ showToast('Informe a URL do site SharePoint.', true); return; }
-  try{
-    await spFetch(spBase()+'/_api/web');
-    showToast('Conexão com o SharePoint OK! ✔');
-    updateSyncIndicator('green','Conexão OK');
-  }catch(e){ showToast('Falha na conexão: '+e.message+'. Verifique a URL e se você está logado.', true); updateSyncIndicator('red','Falha na conexão'); }
+
+// ---- Snapshot: estado local → linhas das abas (mesmas chaves do Code.gs) ----
+function buildSnapshot(){
+  const snap = { colaboradores:[], iops:[], treinamentos:[], catalogo:[], registrosGerais:[] };
+  state.collaborators.forEach(c=>{
+    snap.colaboradores.push({ Matricula:c.matricula, Nome:c.name, Turno:c.turno, Folga:c.folga||'', Funcao:c.funcao||'', Habilitado:c.enabled?'Sim':'Não' });
+    Object.keys(c.records).forEach(code=>{
+      const r = c.records[code];
+      if(!r.done) return; // só treinamentos realizados vão para a planilha
+      snap.treinamentos.push({ Matricula:c.matricula, IopCodigo:code, Realizado:'Sim', DataRealizacao:r.realizationDate||'', DataValidade:r.validityDate||'', ValidadePersonalizada:r.userCustomValidity?'Sim':'Não' });
+    });
+  });
+  getIops().forEach(iop=>{
+    const rev = state.iops[iop.code]||{};
+    snap.iops.push({ Codigo:iop.code, Descricao:iop.desc, REV:rev.rev||'', DataRevisao:rev.revDate||'' });
+  });
+  state.catalog.forEach(t=>{
+    snap.catalogo.push({ Id:t.id, Nome:t.name, Tipo:t.type, CargaHoraria:t.cargaHoraria||'', ValidadeMeses:t.validadeMeses, ObrigatorioPara:t.obrigatorioPara||'' });
+  });
+  state.registros.forEach(r=>{
+    snap.registrosGerais.push({ Id:r.id, Matricula:r.matricula, TreinamentoId:r.treinamentoId, DataRealizacao:r.realizationDate||'', DataValidade:r.validityDate||'' });
+  });
+  return snap;
 }
+
+// ---- Diff: compara com o último snapshot conhecido e gera operações ----
+const GS_DEFS = {
+  colaboradores:   { chave:['Matricula'], campos:['Nome','Turno','Folga','Funcao','Habilitado'] },
+  iops:            { chave:['Codigo'], campos:['Descricao','REV','DataRevisao'] },
+  treinamentos:    { chave:['Matricula','IopCodigo'], campos:['Realizado','DataRealizacao','DataValidade','ValidadePersonalizada'] },
+  catalogo:        { chave:['Id'], campos:['Nome','Tipo','CargaHoraria','ValidadeMeses','ObrigatorioPara'] },
+  registrosGerais: { chave:['Id'], campos:['Matricula','TreinamentoId','DataRealizacao','DataValidade'] }
+};
+function gsRowKey(row, campos){ return campos.map(c=>String(row[c]===undefined||row[c]===null?'':row[c]).trim().toUpperCase()).join('|'); }
+function diffSnapshots(atual, anterior){
+  anterior = anterior || { colaboradores:[], iops:[], treinamentos:[], catalogo:[], registrosGerais:[] };
+  const ops = [];
+  Object.keys(GS_DEFS).forEach(ent=>{
+    const d = GS_DEFS[ent];
+    const prev = {};
+    (anterior[ent]||[]).forEach(row=>{ const k=gsRowKey(row,d.chave); if(k) prev[k]=row; });
+    const now = {};
+    (atual[ent]||[]).forEach(row=>{
+      const k = gsRowKey(row,d.chave); if(!k) return;
+      now[k]=row;
+      const old = prev[k];
+      if(!old){ ops.push({id:ent+':'+k, entity:ent, kind:'upsert', row}); return; }
+      const mudou = d.campos.some(f=>String(old[f]===undefined||old[f]===null?'':old[f])!==String(row[f]===undefined||row[f]===null?'':row[f]));
+      if(mudou) ops.push({id:ent+':'+k, entity:ent, kind:'upsert', row});
+    });
+    Object.keys(prev).forEach(k=>{
+      if(!now[k]){
+        const partes = k.split('|'); const key={};
+        d.chave.forEach((campo,i)=>key[campo]=partes[i]||'');
+        ops.push({id:ent+':'+k, entity:ent, kind:'delete', key});
+      }
+    });
+  });
+  return ops;
+}
+
+// ---- Aplica dados do servidor no estado local ----
+function applyServerData(data){
+  if(Array.isArray(data.iops) && data.iops.length){
+    state.iopDefs = data.iops.map(it=>{
+      const code = String(it.Codigo===undefined||it.Codigo===null?'':it.Codigo).trim().padStart(3,'0');
+      return { code, desc: it.Descricao||code, critical: CRITICAL_CODES.includes(code) };
+    }).filter(d=>/^\d{3}$/.test(d.code));
+    state.iops = defaultIopsRev();
+    data.iops.forEach(it=>{
+      const code = String(it.Codigo===undefined||it.Codigo===null?'':it.Codigo).trim().padStart(3,'0');
+      if(/^\d{3}$/.test(code)) state.iops[code] = { rev: String(it.REV||''), revDate: it.DataRevisao ? String(it.DataRevisao).slice(0,10) : '' };
+    });
+  }
+  if(Array.isArray(data.colaboradores) && data.colaboradores.length){
+    state.collaborators = data.colaboradores.map(it=>{
+      const matricula = String(it.Matricula===undefined||it.Matricula===null?'':it.Matricula).trim() || ('legado_'+Math.random().toString(36).slice(2));
+      const turnoRaw = String(it.Turno||'').trim().toUpperCase();
+      const turno = ['T1','T2','T3'].includes(turnoRaw) ? turnoRaw : 'T1';
+      const folgaRaw = String(it.Folga||'').trim().toUpperCase();
+      const hab = String(it.Habilitado===undefined||it.Habilitado===null?'':it.Habilitado).trim().toLowerCase();
+      const enabled = hab !== 'não' && hab !== 'nao' && hab !== 'n';
+      return { matricula, name: it.Nome||'Sem Nome', turno, folga: ['A','B','C','D'].includes(folgaRaw)?folgaRaw:'', funcao: it.Funcao||'', enabled, records: defaultRecords() };
+    });
+  }
+  if(Array.isArray(data.treinamentos) && data.treinamentos.length){
+    state.collaborators.forEach(c=>{ c.records = defaultRecords(); });
+    data.treinamentos.forEach(it=>{
+      const mat = String(it.Matricula===undefined||it.Matricula===null?'':it.Matricula).trim();
+      const c = state.collaborators.find(x=>x.matricula===mat);
+      const code = String(it.IopCodigo===undefined||it.IopCodigo===null?'':it.IopCodigo).trim().padStart(3,'0');
+      if(c && c.records[code]){
+        c.records[code] = {
+          done: String(it.Realizado||'').trim().toLowerCase()==='sim',
+          realizationDate: it.DataRealizacao ? String(it.DataRealizacao).slice(0,10) : '',
+          validityDate: it.DataValidade ? String(it.DataValidade).slice(0,10) : '',
+          userCustomValidity: String(it.ValidadePersonalizada||'').trim().toLowerCase()==='sim'
+        };
+      }
+    });
+  }
+  if(Array.isArray(data.catalogo) && data.catalogo.length){
+    state.catalog = data.catalogo.map(it=>{
+      const tipo = String(it.Tipo||'').trim().toUpperCase();
+      return {
+        id: String(it.Id||'') || 't_gs_'+Math.random().toString(36).slice(2),
+        name: it.Nome||'Treinamento',
+        type: TYPE_META[tipo] ? tipo : 'INTERNO',
+        validadeMeses: parseInt(it.ValidadeMeses,10) || 12,
+        cargaHoraria: (it.CargaHoraria===undefined||it.CargaHoraria===null) ? '' : String(it.CargaHoraria),
+        obrigatorioPara: it.ObrigatorioPara||''
+      };
+    });
+  }
+  if(Array.isArray(data.registrosGerais) && data.registrosGerais.length){
+    state.registros = data.registrosGerais.map(it=>({
+      id: String(it.Id||'') || 'reg_gs_'+Math.random().toString(36).slice(2),
+      matricula: String(it.Matricula||'').trim(),
+      treinamentoId: String(it.TreinamentoId||''),
+      realizationDate: it.DataRealizacao ? String(it.DataRealizacao).slice(0,10) : '',
+      validityDate: it.DataValidade ? String(it.DataValidade).slice(0,10) : ''
+    })).filter(r=>r.matricula && r.treinamentoId);
+  }
+}
+
+// ---- Envio com verificação de falhas por item (Code.gs retorna resultados) ----
+async function gsPushOps(ops){
+  const resp = await gsPost({ action:'push', ops });
+  const falhas = (resp.resultados||[]).filter(r=>!r.ok);
+  if(falhas.length){
+    throw new Error(falhas.length+' item(ns) rejeitado(s) — '+(falhas[0].error||'verifique as abas da planilha'));
+  }
+  return resp;
+}
+
+// ---- Push (chamado por saveState após qualquer edição) ----
+async function triggerRemotePush(){
+  if(!gsCurrentUrl()) return true; // sem configuração: mantém só cache local
+  const meta = gsLoadMeta();
+  const atual = buildSnapshot();
+  let ops = diffSnapshots(atual, meta.snapshot);
+  if(meta.pendingOps && meta.pendingOps.length){
+    const mapa = {};
+    meta.pendingOps.forEach(op=>{ mapa[op.id]=op; });
+    ops.forEach(op=>{ mapa[op.id]=op; });
+    ops = Object.values(mapa);
+  }
+  if(!ops.length){
+    meta.pendingOps = []; gsSaveMeta(meta);
+    state.pendingPush = false; persistCache();
+    return true;
+  }
+  updateSyncIndicator('amber','Enviando alterações…');
+  try{
+    await gsPushOps(ops);
+    meta.pendingOps = [];
+    meta.snapshot = atual;
+    gsSaveMeta(meta);
+    state.pendingPush = false;
+    persistCache();
+    state.lastSyncTime = horaAgora();
+    updateSyncIndicator('green','Alterações enviadas');
+    return true;
+  }catch(e){
+    meta.pendingOps = ops;
+    gsSaveMeta(meta);
+    state.pendingPush = true;
+    persistCache();
+    updateSyncIndicator('red','Falha ao enviar — edições preservadas localmente');
+    showToast('Não foi possível enviar agora ('+e.message+'). Suas edições estão salvas no cache e serão reenviadas na próxima sincronização.', true);
+    return false;
+  }
+}
+
+// ---- Sincronização manual / inicial ----
 async function syncNow(silent){
-  const cfg = getSpConfig();
-  if(!cfg.siteUrl){ showToast('Configure a sincronização primeiro (🔗 Configurar sincronização…).', true); openSyncModal(); return false; }
-  // Se há edições locais pendentes, tenta enviá-las ANTES de puxar (evita perder dados)
+  if(!gsCurrentUrl()){
+    if(!silent){ showToast('Configure a sincronização primeiro (🔗 Configurar sincronização…).', true); openSyncModal(); }
+    return false;
+  }
   if(state.pendingPush){
     updateSyncIndicator('amber','Enviando alterações pendentes…');
     const sent = await triggerRemotePush();
     if(!sent){
-      if(!silent) showToast('Há alterações locais que não puderam ser enviadas. Verifique as colunas das listas e tente de novo — dados locais preservados.', true);
-      updateSyncIndicator('red','Falha ao enviar alterações pendentes');
+      if(!silent) showToast('Há alterações locais que não puderam ser enviadas. Elas estão preservadas — tente novamente mais tarde.', true);
       return false;
     }
   }
   updateSyncIndicator('amber','Sincronizando…');
   try{
-    const [colabs, iops, treins, cats, regs] = await Promise.all([
-      spFetch(`${spBase()}/_api/web/lists/getbytitle('${encodeURIComponent(cfg.listColab)}')/items?$top=5000`),
-      spFetch(`${spBase()}/_api/web/lists/getbytitle('${encodeURIComponent(cfg.listIops)}')/items?$top=5000`),
-      spFetch(`${spBase()}/_api/web/lists/getbytitle('${encodeURIComponent(cfg.listTrein)}')/items?$top=5000`),
-      spFetch(`${spBase()}/_api/web/lists/getbytitle('${encodeURIComponent(cfg.listCatalog)}')/items?$top=5000`),
-      spFetch(`${spBase()}/_api/web/lists/getbytitle('${encodeURIComponent(cfg.listReg)}')/items?$top=5000`)
-    ]);
-    if(colabs.value && colabs.value.length){
-      state.collaborators = colabs.value.map(it=>{
-        const id = it.IdColab ? String(it.IdColab) : 'colab_'+it.Id;
-        const existing = state.collaborators.find(c=>c.id===id);
-        const records = existing ? existing.records : defaultRecords();
-        return { id, name: it.Title||'Sem Nome', folga: it.Folga||'A', funcao: it.Funcao||'', enabled: it.Habilitado!==false, records };
-      });
+    const resp = await gsGet('read');
+    const data = resp.data||{};
+    const semColabs = !(Array.isArray(data.colaboradores) && data.colaboradores.length);
+    const semIops = !(Array.isArray(data.iops) && data.iops.length);
+    if(semColabs && semIops){
+      // Planilha vazia/nova: envia o estado local completo (migração inicial)
+      const meta = gsLoadMeta();
+      const atual = buildSnapshot();
+      const ops = diffSnapshots(atual, null);
+      if(ops.length) await gsPushOps(ops);
+      meta.snapshot = atual;
+      meta.pendingOps = [];
+      gsSaveMeta(meta);
+      state.pendingPush = false; persistCache();
+      state.lastSyncTime = horaAgora();
+      updateSyncIndicator('green','Dados locais enviados para a planilha nova');
+      if(!silent) showToast('Planilha vazia: '+ops.length+' linha(s) enviadas do cache local. ✔');
+      return true;
     }
-    if(iops.value && iops.value.length){
-      state.iopDefs = iops.value.map(it=>{
-        const code = String(it.Codigo||'').padStart(3,'0');
-        return { code, desc: it.Descricao||code, critical: CRITICAL_CODES.includes(code) };
-      }).filter(d=>/^\d{3}$/.test(d.code));
-      iops.value.forEach(it=>{
-        const code = String(it.Codigo||'').padStart(3,'0');
-        state.iops[code] = { rev: it.REV||'', revDate: it.DataRevisao ? it.DataRevisao.slice(0,10) : '' };
-      });
-    }
-    if(treins.value && treins.value.length){
-      state.collaborators.forEach(c=>{ c.records = defaultRecords(); });
-      treins.value.forEach(it=>{
-        const c = state.collaborators.find(x=>x.id===String(it.ColaboradorId));
-        const code = String(it.IopCodigo||'').padStart(3,'0');
-        if(c && c.records[code]) c.records[code] = {
-          done: !!it.Realizado,
-          realizationDate: it.DataRealizacao ? it.DataRealizacao.slice(0,10) : '',
-          validityDate: it.DataValidade ? it.DataValidade.slice(0,10) : '',
-          userCustomValidity: !!it.ValidadePersonalizada
-        };
-      });
-    }
-    if(cats.value && cats.value.length){
-      state.catalog = cats.value.map(it=>({
-        id: it.IdTrein ? String(it.IdTrein) : 't_sp_'+it.Id,
-        name: it.Title||'Treinamento',
-        type: (it.Tipo&&TYPE_META[it.Tipo]) ? it.Tipo : 'INTERNO',
-        validadeMeses: it.ValidadeMeses || 12,
-        cargaHoraria: it.CargaHoraria ? String(it.CargaHoraria) : '',
-        obrigatorioPara: it.ObrigatorioPara || ''
-      }));
-    }
-    if(regs.value && regs.value.length){
-      state.registros = regs.value.map(it=>({
-        id:'reg_sp_'+it.Id,
-        colabId: String(it.ColaboradorId||''),
-        treinamentoId: String(it.TreinamentoId||''),
-        realizationDate: it.DataRealizacao ? it.DataRealizacao.slice(0,10) : '',
-        validityDate: it.DataValidade ? it.DataValidade.slice(0,10) : ''
-      }));
-    }
-    state.lastSyncTime = new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
-    state.pendingPush = false;
-    persistCache();
+    applyServerData(data);
+    // Baseline = conteúdo observado no servidor (seções vazias → envia o que existir localmente)
+    const baseline = {colaboradores:[],iops:[],treinamentos:[],catalogo:[],registrosGerais:[]};
+    ['colaboradores','iops','treinamentos','catalogo','registrosGerais'].forEach(ent=>{
+      if(Array.isArray(data[ent]) && data[ent].length) baseline[ent] = data[ent];
+    });
+    const atual = buildSnapshot();
+    const meta = gsLoadMeta();
+    meta.snapshot = atual;
+    gsSaveMeta(meta);
+    const extras = diffSnapshots(atual, baseline);
+    if(extras.length) await triggerRemotePush(); // auto-cura: envia dados locais que o servidor ainda não tem
+    state.pendingPush = false; persistCache();
+    state.lastSyncTime = horaAgora();
     renderAll();
-    updateSyncIndicator('green','Sincronizado do SharePoint');
-    if(!silent) showToast('Dados sincronizados do SharePoint. ✔');
+    updateSyncIndicator('green','Sincronizado');
+    if(!silent) showToast('Dados sincronizados da planilha. ✔');
     return true;
   }catch(e){
     updateSyncIndicator('red','Falha na última sincronização');
@@ -1573,85 +1833,19 @@ async function syncNow(silent){
     return false;
   }
 }
-async function triggerRemotePush(){
-  const cfg = getSpConfig();
-  if(!cfg.siteUrl) return true;
-  let errors = 0;
-  try{
-    const digest = await getDigest();
-    const base = spBase();
-    const jsonHeaders = { 'Content-Type':'application/json;odata=nometadata', 'X-RequestDigest':digest };
-    const listUrl = list=>`${base}/_api/web/lists/getbytitle('${encodeURIComponent(list)}')`;
-    const getAll = async list=>{ const j = await spFetch(listUrl(list)+'/items?$top=5000'); return j.value||[]; };
-    const post = (list, body)=>fetch(listUrl(list)+'/items', {method:'POST', credentials:'include', headers:jsonHeaders, body:JSON.stringify(body)});
-    const patch = (list, id, body)=>fetch(`${listUrl(list)}/items(${id})`, {method:'POST', credentials:'include', headers:{...jsonHeaders,'X-HTTP-Method':'MERGE','IF-MATCH':'*'}, body:JSON.stringify(body)});
-    // Erro em UM item não aborta os demais
-    const send = async (list, found, body)=>{
-      try{ if(found) await patch(list, found.Id, body); else await post(list, body); }
-      catch(e){ errors++; }
-    };
-    const d10 = v => v ? String(v).slice(0,10) : '';
 
-    // Colaboradores (chave: IdColab) — envia apenas se mudou
-    const spColabs = await getAll(cfg.listColab);
-    for(const c of state.collaborators){
-      const found = spColabs.find(it=>String(it.IdColab)===String(c.id));
-      const body = { Title:c.name, Folga:c.folga, Funcao:c.funcao||'', Habilitado:c.enabled, IdColab:c.id };
-      if(found && found.Title===body.Title && found.Folga===body.Folga && (found.Funcao||'')===(body.Funcao||'') && !!found.Habilitado===!!body.Habilitado) continue;
-      await send(cfg.listColab, found, body);
-    }
-    // IOPs: definições + revisões (chave: Codigo) — lista compartilhada entre turnos
-    const spIops = await getAll(cfg.listIops);
-    for(const iop of getIops()){
-      const r = state.iops[iop.code]||{rev:'',revDate:''};
-      const found = spIops.find(it=>String(it.Codigo).padStart(3,'0')===iop.code);
-      const body = { Title:iop.code, Codigo:parseInt(iop.code,10), Descricao:iop.desc, REV:r.rev||'', DataRevisao:r.revDate||null };
-      if(found && found.Title===body.Title && (found.REV||'')===(body.REV||'') && d10(found.DataRevisao)===(body.DataRevisao||'')) continue;
-      await send(cfg.listIops, found, body);
-    }
-    // Treinamentos IOPs críticas (chave: ColaboradorId + IopCodigo) — apenas realizados
-    const spTreins = await getAll(cfg.listTrein);
-    for(const c of state.collaborators){
-      for(const code of Object.keys(c.records)){
-        const r = c.records[code];
-        if(!r.done) continue;
-        const found = spTreins.find(it=>String(it.ColaboradorId)===String(c.id) && String(it.IopCodigo).padStart(3,'0')===code);
-        const body = { Title:c.id+'|'+code, ColaboradorId:c.id, IopCodigo:code, Realizado:true, DataRealizacao:r.realizationDate||null, DataValidade:r.validityDate||null, ValidadePersonalizada:!!r.userCustomValidity };
-        if(found && !!found.Realizado===!!body.Realizado && d10(found.DataRealizacao)===(body.DataRealizacao||'') && d10(found.DataValidade)===(body.DataValidade||'') && !!found.ValidadePersonalizada===!!body.ValidadePersonalizada) continue;
-        await send(cfg.listTrein, found, body);
-      }
-    }
-    // Catálogo (chave: Title) — lista compartilhada entre turnos
-    const spCats = await getAll(cfg.listCatalog);
-    for(const t of state.catalog){
-      const found = spCats.find(it=>String(it.Title)===t.name);
-      const body = { Title:t.name, Tipo:t.type, CargaHoraria:t.cargaHoraria?parseInt(t.cargaHoraria,10):null, ValidadeMeses:t.validadeMeses, ObrigatorioPara:t.obrigatorioPara||'', IdTrein:t.id };
-      if(found && (found.Tipo||'')===(body.Tipo||'') && (found.ValidadeMeses||0)===(body.ValidadeMeses||0) && (found.ObrigatorioPara||'')===(body.ObrigatorioPara||'') && String(found.IdTrein||'')===String(body.IdTrein||'')) continue;
-      await send(cfg.listCatalog, found, body);
-    }
-    // Registros gerais (chave: ColaboradorId + TreinamentoId)
-    const spRegs = await getAll(cfg.listReg);
-    for(const r of state.registros){
-      const found = spRegs.find(it=>String(it.ColaboradorId)===String(r.colabId) && String(it.TreinamentoId)===String(r.treinamentoId));
-      const body = { Title:r.colabId+'|'+r.treinamentoId, ColaboradorId:r.colabId, TreinamentoId:r.treinamentoId, DataRealizacao:r.realizationDate||null, DataValidade:r.validityDate||null };
-      if(found && d10(found.DataRealizacao)===(body.DataRealizacao||'') && d10(found.DataValidade)===(body.DataValidade||'')) continue;
-      await send(cfg.listReg, found, body);
-    }
-    if(errors===0){
-      state.pendingPush = false;
-      persistCache();
-      state.lastSyncTime = new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
-      updateSyncIndicator('green','Enviado ao SharePoint');
-      showToast('Alterações enviadas ao SharePoint. ✔');
-      return true;
-    }
-    updateSyncIndicator('red','Falha ao enviar ao SharePoint');
-    showToast(errors+' item(ns) não puderam ser salvos. Verifique se as colunas existem nas listas (ex.: Funcao em Colaboradores).', true);
-    return false;
+// ---- Teste de conexão ----
+async function testConnection(){
+  const url = gsCurrentUrl();
+  if(!url){ showToast('Informe a URL do Web App.', true); return; }
+  updateSyncIndicator('amber','Testando conexão…');
+  try{
+    const r = await gsFetchJson(url + (url.indexOf('?')>=0?'&':'?') + 'action=ping');
+    updateSyncIndicator('green','Conexão OK');
+    showToast('Conexão OK — planilha: "'+(r.planilha||'')+'". ✔');
   }catch(e){
-    updateSyncIndicator('red','Falha ao enviar ao SharePoint');
-    showToast('Erro ao enviar ao SharePoint: '+e.message, true);
-    return false;
+    updateSyncIndicator('red','Falha na conexão');
+    showToast('Falha na conexão: '+e.message, true);
   }
 }
 
@@ -1667,26 +1861,27 @@ function showToast(message, isError=false){
   setTimeout(()=>{ item.classList.remove('show'); setTimeout(()=>item.remove(), 300); }, 3500);
 }
 
-// ==================== INIT: SharePoint como fonte principal, sem perder edições locais ====================
+// ==================== INIT ====================
 (async function init(){
   updateShiftUI();
   applyShiftTexts();
-  const cfg = getSpConfig();
-  if(cfg.siteUrl){
-    loadState(); renderAll(); // cache primeiro: nada some enquanto o SharePoint responde
+  loadState(); renderAll(); // cache primeiro: nada some enquanto o servidor responde
+  if(gsCurrentUrl()){
+    updateSyncIndicator('gray','Conectando…');
     if(state.pendingPush){
       updateSyncIndicator('amber','Enviando alterações pendentes…');
       const sent = await triggerRemotePush();
       if(!sent){
-        showToast('Há alterações locais aguardando envio. Elas estão preservadas — resolva o problema (ex.: colunas das listas) e use "Sincronizar agora".', true);
+        showToast('Há alterações locais aguardando envio. Elas estão preservadas — use "Sincronizar agora" após resolver o problema.', true);
         return; // NÃO puxa: preserva as edições locais
       }
     }
     await syncNow(true);
   }else{
-    loadState(); renderAll();
+    updateSyncIndicator('gray','Sem configuração');
   }
 })();
 </script>
 
-</body></html>
+</body>
+</html>

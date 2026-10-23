@@ -140,8 +140,11 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
 .situation-toggle.on{background:#e7f6d8;color:#3f6212;border-color:#a3d160}
 .situation-toggle.off{background:#fee2e2;color:#991b1b;border-color:#fca5a5}
 .modal-subtitle{font-size:.78rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.03em;margin:1rem 0 .5rem}
-.iop-edit-row{display:grid;grid-template-columns:auto 1fr auto;gap:.6rem;align-items:center;padding:.55rem .7rem;border:1px solid var(--border);border-radius:8px;margin-bottom:.5rem;font-size:.82rem}
+.iop-edit-row{display:grid;grid-template-columns:auto 1fr auto auto;gap:.6rem;align-items:center;padding:.55rem .7rem;border:1px solid var(--border);border-radius:8px;margin-bottom:.5rem;font-size:.82rem}
 .iop-edit-row .iop-code{font-weight:700;color:var(--bps-navy);white-space:nowrap}
+.iop-edit-row input[type=date]{border:1px solid var(--border);border-radius:6px;padding:5px 7px;font-size:.8rem;font-family:inherit}
+.iop-edit-row .custom-lbl{display:flex;align-items:center;gap:.25rem;font-size:.72rem;color:var(--text-muted);white-space:nowrap}
+.iop-edit-row .row-dates{grid-column:1/-1;display:flex;gap:.6rem;flex-wrap:wrap}
 /* Checklist de assinaturas (Editar IOP) */
 .iop-check-row{display:flex;align-items:center;gap:.6rem;padding:.45rem .7rem;border:1px solid var(--border);border-radius:8px;margin-bottom:.4rem;font-size:.84rem}
 .iop-check-row.row-off{opacity:.5}
@@ -174,7 +177,7 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
 .toast-item.toast-error{border-left-color:var(--status-danger)}
 .toast-item.show{opacity:1;transform:none}
 
-/* ===== AJUSTES PARA CELULAR ===== */
+/* ===== AJUSTES PARA CELULAR (o menu não pode mais ficar cortado) ===== */
 @media (max-width:640px){
   .app-header{padding:.7rem .9rem}
   .header-content{gap:.6rem}
@@ -210,566 +213,325 @@ tr.row-afastado td.name-cell{text-decoration:line-through}
 <body>
 
 <header class="app-header">
-  
-    
-      BPS
-      
-      
+  <div class="header-content">
+    <div class="header-brand">
+      <span class="brand-badge">BPS</span>
+      <span class="header-divider"></span>
+      <div class="shift-toggle" role="group" aria-label="Turno">
         <button class="shift-btn" id="shiftBtnT1" onclick="setShift('T1')">1º</button>
         <button class="shift-btn" id="shiftBtnT2" onclick="setShift('T2')">2º</button>
         <button class="shift-btn" id="shiftBtnT3" onclick="setShift('T3')">3º</button>
         <button class="shift-btn" id="shiftBtnALL" onclick="setShift('ALL')">Todos</button>
-      
-
-
+      </div>
       <h1 class="header-title" id="headerTitle">CONTROLE DE TREINAMENTOS | 1º TURNO</h1>
-    
-
-
-    
-      
-        
-      
-      
+    </div>
+    <div class="header-actions">
+      <span class="sync-status-indicator" id="syncStatusIndicator" title="Sem configuração">
+        <span class="sync-dot sync-gray" id="syncStatusDot"></span>
+      </span>
+      <div class="dropdown">
         <button class="btn-action" id="optionsBtn" onclick="toggleDropdown(event)">⚙️ Opções ▾</button>
-        
+        <div class="dropdown-menu" id="optionsMenu">
           <button class="dropdown-item dropdown-item-primary" onclick="openAddModal(); closeDropdown();">➕ Adicionar Colaborador</button>
-          
-
-
+          <div class="dropdown-divider"></div>
           <button class="dropdown-item" onclick="syncNow(); closeDropdown();">🔄 Sincronizar agora</button>
           <button class="dropdown-item" onclick="openSyncModal(); closeDropdown();">🔗 Configurar sincronização…</button>
-          
-
-
+          <div class="dropdown-divider"></div>
           <button class="dropdown-item" onclick="exportExcel(); closeDropdown();">📊 Exportar Excel</button>
           <button class="dropdown-item" onclick="triggerPrint(); closeDropdown();">🖨️ Imprimir / PDF</button>
-          
-
-
+          <div class="dropdown-divider"></div>
           <button class="dropdown-item dropdown-item-primary" onclick="openBackupModal(); closeDropdown();">💾 Backup único…</button>
-        
-
-
-      
-
-
-    
-
-
-  
-
-
-  
-
-
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dropdown-backdrop" id="dropdownBackdrop" onclick="closeDropdown();"></div>
   <input type="file" id="fileBackupInput" accept=".json" style="display:none" onchange="handleImportBackup(event)">
 </header>
 
 <main class="app-main">
 
-  
+  <section class="kpi-grid" id="kpisContainer"></section>
+  <section class="alert-banner" id="alertBanner"></section>
 
-
-  
-
-
-
-  
+  <section class="control-panel">
     <nav class="view-tabs" role="tablist">
       <button class="tab-btn active" id="tabColabBtn" onclick="switchTab('colab')">👤 Por Colaborador</button>
       <button class="tab-btn" id="tabIopsBtn" onclick="switchTab('iops')">📋 Por IOPS</button>
       <button class="tab-btn" id="tabTreinBtn" onclick="switchTab('trein')">🎓 Outros Treinamentos</button>
       <button class="tab-btn" id="tabMatrizBtn" onclick="switchTab('matriz')">▦ Matriz Geral</button>
     </nav>
-    
-      
+    <div class="filter-row">
+      <div class="folga-chips">
         Folga:
         <button class="chip-folga chip-folga-todas active" id="chipFolgaTodas" onclick="setFolgaFilter('TODAS', this)">Todas</button>
         <button class="chip-folga chip-folga-a" id="chipFolgaA" onclick="setFolgaFilter('A', this)">A</button>
         <button class="chip-folga chip-folga-b" id="chipFolgaB" onclick="setFolgaFilter('B', this)">B</button>
         <button class="chip-folga chip-folga-c" id="chipFolgaC" onclick="setFolgaFilter('C', this)">C</button>
         <button class="chip-folga chip-folga-d" id="chipFolgaD" onclick="setFolgaFilter('D', this)">D</button>
-      
+      </div>
+      <div class="search-box">🔍<input id="searchInput" placeholder="Buscar por nome ou matrícula..." oninput="handleSearch(event)"></div>
+    </div>
+  </section>
 
-
-      🔍<input id="searchInput" placeholder="Buscar por nome ou matrícula..." oninput="handleSearch(event)">
-
-
-    
-
-
-  
-
-
-
-  
-
-
-  
-
-
-  
-
-
-  
-    
-  
-
-
+  <section id="viewColab" class="cards-grid" style="display:grid"></section>
+  <section id="viewIops" class="cards-grid" style="display:none"></section>
+  <section id="viewTrein" class="cards-grid" style="display:none"></section>
+  <section id="viewMatriz" class="matrix-wrap" style="display:none">
+    <table class="matrix-table">
+      <thead id="matrixHead"></thead>
+      <tbody id="matrixBody"></tbody>
+    </table>
+  </section>
 
 </main>
 
-
-
-  
-    
+<!-- ============ MODAL VISUALIZAR COLABORADOR ============ -->
+<div class="modal-overlay" id="modalViewColab">
+  <div class="modal-box">
+    <div class="modal-header">
       <h2 class="modal-title" id="viewColabTitle">Colaborador</h2>
       <button class="btn-close-modal" onclick="closeModal('modalViewColab')">×</button>
-    
-
-
-    
-
-
-    
+    </div>
+    <div class="modal-body" id="viewColabBody"></div>
+    <div class="modal-footer">
       <button class="btn-secondary-action" onclick="closeModal('modalViewColab')">Fechar</button>
       <button class="btn-primary" onclick="viewToEdit()">✏️ Editar</button>
-    
+    </div>
+  </div>
+</div>
 
-
-  
-
-
-
-
-
-
-
-
-  
-    
+<!-- ============ MODAL VISUALIZAR IOP ============ -->
+<div class="modal-overlay" id="modalViewIop">
+  <div class="modal-box">
+    <div class="modal-header">
       <h2 class="modal-title" id="viewIopTitle">IOP</h2>
       <button class="btn-close-modal" onclick="closeModal('modalViewIop')">×</button>
-    
-
-
-    
-
-
-    
+    </div>
+    <div class="modal-body" id="viewIopBody"></div>
+    <div class="modal-footer">
       <button class="btn-secondary-action" onclick="closeModal('modalViewIop')">Fechar</button>
       <button class="btn-primary" onclick="viewToRev()">✏️ Editar IOP</button>
-    
+    </div>
+  </div>
+</div>
 
-
-  
-
-
-
-
-
-
-
-
-  
-    
+<!-- ============ MODAL VISUALIZAR TREINAMENTO ============ -->
+<div class="modal-overlay" id="modalViewTraining">
+  <div class="modal-box">
+    <div class="modal-header">
       <h2 class="modal-title" id="viewTrainingTitle">Treinamento</h2>
       <button class="btn-close-modal" onclick="closeModal('modalViewTraining')">×</button>
-    
-
-
-    
-
-
-    
+    </div>
+    <div class="modal-body" id="viewTrainingBody"></div>
+    <div class="modal-footer">
       <button class="btn-warn-action" onclick="deleteTraining()" style="margin-right:auto">🗑️ Excluir treinamento</button>
       <button class="btn-secondary-action" onclick="closeModal('modalViewTraining')">Fechar</button>
       <button class="btn-primary" onclick="viewToTrainingReg()">📝 Registrar realização</button>
-    
+    </div>
+  </div>
+</div>
 
-
-  
-
-
-
-
-
-
-
-
-  
-    
+<!-- ============ MODAL ADICIONAR TREINAMENTO ============ -->
+<div class="modal-overlay" id="modalAddTraining">
+  <div class="modal-box">
+    <div class="modal-header">
       <h2 class="modal-title">➕ Adicionar Treinamento</h2>
       <button class="btn-close-modal" onclick="closeAddTraining()">×</button>
-    
-
-
-    
-      
+    </div>
+    <div class="modal-body">
+      <div class="choice-cards">
         <button type="button" class="choice-card active" id="choiceReg" onclick="setTrainingMode('reg')">
-          **📝 Registrar realização**
-          Colaborador • treinamento do catálogo • data • validade
+          <b>📝 Registrar realização</b>
+          <span>Colaborador • treinamento do catálogo • data • validade</span>
         </button>
         <button type="button" class="choice-card" id="choiceCat" onclick="setTrainingMode('cat')">
-          **📚 Cadastrar treinamento**
-          Nome • tipo (NR / IOP / Interno) • validade padrão • obrigatório para
+          <b>📚 Cadastrar treinamento</b>
+          <span>Nome • tipo (NR / IOP / Interno) • validade padrão • obrigatório para</span>
         </button>
-      
-
-
-      
-        
-          <label>Colaborador</label><select id="trColab" onchange="updateTrPreview()"></select>
-
-
-          <label>Treinamento do catálogo</label><select id="trTrain" onchange="updateTrPreview()"></select>
-
-
-          <label>Data de realização</label><input type="date" id="trDate" onchange="updateTrPreview()">
-
-
-        
-
-
-        
-
-
+      </div>
+      <div class="train-form" id="formReg">
+        <div class="form-grid">
+          <div class="form-field"><label>Colaborador</label><select id="trColab" onchange="updateTrPreview()"></select></div>
+          <div class="form-field"><label>Treinamento do catálogo</label><select id="trTrain" onchange="updateTrPreview()"></select></div>
+          <div class="form-field"><label>Data de realização</label><input type="date" id="trDate" onchange="updateTrPreview()"></div>
+        </div>
+        <div class="kpi-legend" id="trValidityPreview"></div>
         <button class="btn-danger-action" id="btnRemoveReg" onclick="removeTrainingRecord()" style="display:none">🗑️ Remover registro</button>
-      
-
-
-      
-        
-          <label>Nome do treinamento</label><input type="text" id="catName" placeholder="Ex.: NR-35 Trabalho em Altura">
-
-
-          <label>Tipo</label><select id="catType"><option value="NR">NR's</option><option value="IOP">IOP's</option><option value="INTERNO">Treinamentos Internos</option></select>
-
-
-          <label>Validade padrão (meses)</label><input type="number" id="catMonths" value="12" min="1">
-
-
-          <label>Carga horária (h)</label><input type="number" id="catHours" placeholder="Ex.: 8">
-
-
-          <label>Obrigatório para</label><input type="text" id="catFor" list="obrigList" placeholder="Ex.: OP I, OP II — ou Todos" autocomplete="off"><datalist id="obrigList"></datalist>
-
-
-        
-
-
-        Deixe vazio ou escreva "Todos" para valer para toda a equipe. Separe funções por vírgula — só quem pertence a essas funções entra no indicador deste treinamento.
-
-
-      
-
-
-    
-
-
-    
+      </div>
+      <div class="train-form" id="formCat" style="display:none">
+        <div class="form-grid">
+          <div class="form-field"><label>Nome do treinamento</label><input type="text" id="catName" placeholder="Ex.: NR-35 Trabalho em Altura"></div>
+          <div class="form-field"><label>Tipo</label><select id="catType"><option value="NR">NR's</option><option value="IOP">IOP's</option><option value="INTERNO">Treinamentos Internos</option></select></div>
+          <div class="form-field"><label>Validade padrão (meses)</label><input type="number" id="catMonths" value="12" min="1"></div>
+          <div class="form-field"><label>Carga horária (h)</label><input type="number" id="catHours" placeholder="Ex.: 8"></div>
+          <div class="form-field full"><label>Obrigatório para</label><input type="text" id="catFor" list="obrigList" placeholder="Ex.: OP I, OP II — ou Todos" autocomplete="off"><datalist id="obrigList"></datalist></div>
+        </div>
+        <div class="help-text" style="margin-top:.6rem">Deixe vazio ou escreva "Todos" para valer para toda a equipe. Separe funções por vírgula — só quem pertence a essas funções entra no indicador deste treinamento.</div>
+      </div>
+    </div>
+    <div class="modal-footer">
       <button class="btn-secondary-action" onclick="closeAddTraining()">Cancelar</button>
       <button class="btn-primary" onclick="saveTraining()">Salvar</button>
-    
+    </div>
+  </div>
+</div>
 
-
-  
-
-
-
-
-
-
-
-
-  
-    
+<!-- ============ MODAL ADICIONAR IOP ============ -->
+<div class="modal-overlay" id="modalAddIop">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-header">
       <h2 class="modal-title">➕ Adicionar IOP</h2>
       <button class="btn-close-modal" onclick="closeModal('modalAddIop')">×</button>
-    
-
-
-    
-      
-        <label>Código (número)</label><input type="text" id="fIopCode" maxlength="3" placeholder="Ex.: 075">
-
-
-        <label>Descrição</label><input type="text" id="fIopDesc" placeholder="Ex.: Operar Correia 02">
-
-
-      
-
-
-      A nova IOP entra na matriz de todos os colaboradores e é gravada na aba IOPs da planilha única.
-
-
-    
-
-
-    
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-field"><label>Código (número)</label><input type="text" id="fIopCode" maxlength="3" placeholder="Ex.: 075"></div>
+        <div class="form-field"><label>Descrição</label><input type="text" id="fIopDesc" placeholder="Ex.: Operar Correia 02"></div>
+      </div>
+      <div class="help-text" style="margin-top:.8rem">A nova IOP entra na matriz de todos os colaboradores e é gravada na aba IOPs da planilha única.</div>
+    </div>
+    <div class="modal-footer">
       <button class="btn-secondary-action" onclick="closeModal('modalAddIop')">Cancelar</button>
       <button class="btn-primary" onclick="saveIop()">Salvar</button>
-    
+    </div>
+  </div>
+</div>
 
-
-  
-
-
-
-
-
-
-
-
-  
-    
+<!-- ============ MODAL EDITAR/ADICIONAR COLABORADOR ============ -->
+<div class="modal-overlay" id="modalEditColab">
+  <div class="modal-box">
+    <div class="modal-header">
       <h2 class="modal-title" id="editColabTitle">✏️ Editar Colaborador</h2>
       <button class="btn-close-modal" onclick="closeModal('modalEditColab')">×</button>
-    
-
-
-    
-      
-        <label>Matrícula</label><input type="text" id="fMatricula" inputmode="numeric" placeholder="Ex.: 2579629">
-
-
-        <label>Turno</label><select id="fTurno"><option value="T1">1º Turno</option><option value="T2">2º Turno</option><option value="T3">3º Turno</option></select>
-
-
-        <label>Nome do colaborador</label><input type="text" id="fName" placeholder="NOME DO COLABORADOR">
-
-
-        <label>Letra de Folga</label><select id="fFolga"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="">— (sem letra)</option></select>
-
-
-        <label>Função</label><input type="text" id="fFuncao" list="funcaoList" placeholder="Ex.: OP I" autocomplete="off"><datalist id="funcaoList"></datalist>
-
-
-        <label>Situação</label><button type="button" class="situation-toggle on" id="fSituationToggle" onclick="toggleSituation()">🟢 Habilitado</button>
-
-
-      
-
-
-      Treinamentos das IOPs
-
-
-      
-
-
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-field"><label>Matrícula</label><input type="text" id="fMatricula" inputmode="numeric" placeholder="Ex.: 2579629"></div>
+        <div class="form-field"><label>Turno</label><select id="fTurno"><option value="T1">1º Turno</option><option value="T2">2º Turno</option><option value="T3">3º Turno</option></select></div>
+        <div class="form-field"><label>Nome do colaborador</label><input type="text" id="fName" placeholder="NOME DO COLABORADOR"></div>
+        <div class="form-field"><label>Letra de Folga</label><select id="fFolga"><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="">— (sem letra)</option></select></div>
+        <div class="form-field"><label>Função</label><input type="text" id="fFuncao" list="funcaoList" placeholder="Ex.: OP I" autocomplete="off"><datalist id="funcaoList"></datalist></div>
+        <div class="form-field"><label>Situação</label><button type="button" class="situation-toggle on" id="fSituationToggle" onclick="toggleSituation()">🟢 Habilitado</button></div>
+      </div>
+      <div class="modal-subtitle">Treinamentos das IOPs</div>
+      <div id="fIopsList"></div>
       <button class="btn-add-training" onclick="openAddTrainingModal(state.editingMatricula, null, true)">➕ Adicionar Treinamento (NR / IOP / Interno)</button>
-    
-
-
-    
+    </div>
+    <div class="modal-footer">
       <button class="btn-danger-action" id="btnDeleteColab" onclick="openConfirmDelete()" style="margin-right:auto; display:none">🗑️ Excluir</button>
       <button class="btn-secondary-action" onclick="closeModal('modalEditColab')">Cancelar</button>
       <button class="btn-primary" onclick="saveColab()">Salvar</button>
-    
+    </div>
+  </div>
+</div>
 
-
-  
-
-
-
-
-
-
-
-
-  
-    
+<!-- ============ MODAL CONFIRMAR EXCLUSÃO COLABORADOR ============ -->
+<div class="modal-overlay" id="modalConfirmDelete">
+  <div class="modal-box" style="max-width:480px">
+    <div class="modal-header">
       <h2 class="modal-title">⚠️ Excluir Colaborador</h2>
       <button class="btn-close-modal" onclick="closeModal('modalConfirmDelete')">×</button>
-    
-
-
-    Excluir colaborador? Esta ação não pode ser desfeita. Use para mudança de turno ou desligamento.
-
-
-
-
-    
+    </div>
+    <div class="modal-body"><p id="deleteConfirmText">Excluir colaborador? Esta ação não pode ser desfeita. Use para mudança de turno ou desligamento.</p></div>
+    <div class="modal-footer">
       <button class="btn-secondary-action" onclick="closeModal('modalConfirmDelete')">Cancelar</button>
       <button class="btn-danger-action" onclick="executeDeleteColab()">🗑️ Excluir</button>
-    
+    </div>
+  </div>
+</div>
 
-
-  
-
-
-
-
-
-
-
-
-  
-    
+<!-- ============ MODAL CONFIRMAR EXCLUSÃO IOP ============ -->
+<div class="modal-overlay" id="modalConfirmDeleteIop">
+  <div class="modal-box" style="max-width:480px">
+    <div class="modal-header">
       <h2 class="modal-title">⚠️ Excluir IOP</h2>
       <button class="btn-close-modal" onclick="closeModal('modalConfirmDeleteIop')">×</button>
-    
-
-
-    Excluir esta IOP? Esta ação não pode ser desfeita.
-
-
-
-
-    
+    </div>
+    <div class="modal-body"><p id="deleteIopText">Excluir esta IOP? Esta ação não pode ser desfeita.</p></div>
+    <div class="modal-footer">
       <button class="btn-secondary-action" onclick="closeModal('modalConfirmDeleteIop')">Cancelar</button>
       <button class="btn-danger-action" onclick="executeDeleteIop()">🗑️ Excluir</button>
-    
+    </div>
+  </div>
+</div>
 
-
-  
-
-
-
-
-
-
-
-
-  
-    
+<!-- ============ MODAL EDITAR IOP (tag + revisão + checklist de assinaturas) ============ -->
+<div class="modal-overlay" id="modalEditRev">
+  <div class="modal-box">
+    <div class="modal-header">
       <h2 class="modal-title">✏️ Editar IOP</h2>
       <button class="btn-close-modal" onclick="closeModal('modalEditRev')">×</button>
-    
-
-
-    
-      
-        <label>Código (tag)</label><input type="text" id="fIopEditCode" maxlength="3" placeholder="Ex.: 075">
-
-
-        <label>Descrição (nome da IOP)</label><input type="text" id="fIopEditDesc" placeholder="Ex.: Operar Correia 02">
-
-
-        <label>Número da Revisão (REV)</label><input type="text" id="fRev" placeholder="Ex.: 14">
-
-
-        <label>Data da Revisão</label><input type="date" id="fRevDate" onchange="updateRevPreview()">
-
-
-      
-
-
-      
-
-
-      Ao renomear o código, os registros de treinamento dos colaboradores são transferidos automaticamente para a nova tag.
-
-
-      👥 Colaboradores — conferência de assinaturas 
-
-
-      
-
-
-    
-
-
-    
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-field"><label>Código (tag)</label><input type="text" id="fIopEditCode" maxlength="3" placeholder="Ex.: 075"></div>
+        <div class="form-field"><label>Descrição (nome da IOP)</label><input type="text" id="fIopEditDesc" placeholder="Ex.: Operar Correia 02"></div>
+        <div class="form-field"><label>Número da Revisão (REV)</label><input type="text" id="fRev" placeholder="Ex.: 14"></div>
+        <div class="form-field"><label>Data da Revisão</label><input type="date" id="fRevDate" onchange="updateRevPreview()"></div>
+      </div>
+      <div class="kpi-legend" id="revValidityPreview"></div>
+      <div class="help-text" style="margin-top:.5rem">Ao renomear o código, os registros de treinamento dos colaboradores são transferidos automaticamente para a nova tag.</div>
+      <div class="modal-subtitle">👥 Colaboradores — conferência de assinaturas <span id="iopCheckCount" style="text-transform:none;letter-spacing:0"></span></div>
+      <div id="iopColabChecklist"></div>
+    </div>
+    <div class="modal-footer">
       <button class="btn-danger-action" onclick="openConfirmDeleteIop()" style="margin-right:auto">🗑️ Excluir IOP</button>
       <button class="btn-warn-action" onclick="clearRev()">🧹 Limpar revisão</button>
       <button class="btn-secondary-action" onclick="closeModal('modalEditRev')">Cancelar</button>
       <button class="btn-primary" onclick="saveIopEdit()">Salvar</button>
-    
+    </div>
+  </div>
+</div>
 
-
-  
-
-
-
-
-
-
-
-
-  
-    
+<!-- ============ MODAL SINCRONIZAÇÃO (PLANILHA ÚNICA) ============ -->
+<div class="modal-overlay" id="modalSyncConfig">
+  <div class="modal-box" style="max-width:620px">
+    <div class="modal-header">
       <h2 class="modal-title">🔗 Sincronização — Google Sheets</h2>
       <button class="btn-close-modal" onclick="closeModal('modalSyncConfig')">×</button>
-    
-
-
-    
-      
+    </div>
+    <div class="modal-body">
+      <div class="form-field full">
         <label>URL do Web App — planilha única (T1 + T2 + T3)</label>
         <input type="text" id="gsUrl" placeholder="https://script.google.com/macros/s/.../exec">
-      
-
-
-      
-        **Já configurada:** este painel vem com a URL do Web App embutida no código — ao abrir, ele sincroniza sozinho. Apague o campo e salve apenas se quiser desativar.
-        
-
-
-        **Como obter a URL:** na planilha única, abra *Extensões › Apps Script*, cole o Code.gs novo, rode o menu ⚙️ Treinamentos IOPS › *Criar/verificar abas* e depois *Implantar › Nova implantação › App da Web* (Executar como: Eu; Quem pode acessar: Qualquer pessoa). Copie a URL gerada (termina em **/exec**).
-        
-
-A aba **Colaboradores** identifica cada pessoa pela **Matrícula** e pelo **Turno** (T1/T2/T3) — o botão "Todos" do painel mostra o time inteiro a partir dessa mesma planilha. O cache local preserva edições quando o envio falha; elas são reenviadas na próxima sincronização.
-        
-
-⚠️ Toda edição futura no Code.gs exige *Implantar › Gerenciar implantações › ✏️ › Nova versão* — sem isso o painel continua chamando a versão antiga (causa mais comum de sincronização parada).
-      
-
-
-    
-
-
-    
+      </div>
+      <div class="help-text" style="margin-top:.8rem">
+        <b>Já configurada:</b> este painel vem com a URL do Web App embutida no código — ao abrir, ele sincroniza sozinho. Apague o campo e salve apenas se quiser desativar.
+        <br><br>
+        <b>Como obter a URL:</b> na planilha única, abra <i>Extensões › Apps Script</i>, cole o Code.gs novo, rode o menu ⚙️ Treinamentos IOPS › <i>Criar/verificar abas</i> e depois <i>Implantar › Nova implantação › App da Web</i> (Executar como: Eu; Quem pode acessar: Qualquer pessoa). Copie a URL gerada (termina em <b>/exec</b>).
+        <br><br>A aba <b>Colaboradores</b> identifica cada pessoa pela <b>Matrícula</b> e pelo <b>Turno</b> (T1/T2/T3) — o botão "Todos" do painel mostra o time inteiro a partir dessa mesma planilha. O cache local preserva edições quando o envio falha; elas são reenviadas na próxima sincronização.
+        <br><br>⚠️ Toda edição futura no Code.gs exige <i>Implantar › Gerenciar implantações › ✏️ › Nova versão</i> — sem isso o painel continua chamando a versão antiga (causa mais comum de sincronização parada).
+      </div>
+    </div>
+    <div class="modal-footer">
       <button class="btn-warn-action" onclick="deactivateSync()" style="margin-right:auto">🚫 Desativar sincronização</button>
       <button class="btn-secondary-action" onclick="testConnection()">🔌 Testar conexão</button>
       <button class="btn-secondary-action" onclick="closeModal('modalSyncConfig')">Cancelar</button>
       <button class="btn-primary" onclick="saveSyncConfig()">Salvar</button>
-    
+    </div>
+  </div>
+</div>
 
-
-  
-
-
-
-
-
-
-
-
-  
-    
+<!-- ============ MODAL BACKUP ÚNICO ============ -->
+<div class="modal-overlay" id="modalBackup">
+  <div class="modal-box" style="max-width:560px">
+    <div class="modal-header">
       <h2 class="modal-title">💾 Backup único</h2>
       <button class="btn-close-modal" onclick="closeModal('modalBackup')">×</button>
-    
-
-
-    
-      O backup contém **os três turnos inteiros** — cada colaborador identificado por **Matrícula** e **Turno** — além das revisões das IOPs, catálogo e registros gerais. Um único arquivo serve para toda a unidade: o filtro de turno do painel é apenas visual.
-
-
-      
-
-
-    
-
-
-    
+    </div>
+    <div class="modal-body">
+      <div class="help-text">O backup contém <b>os três turnos inteiros</b> — cada colaborador identificado por <b>Matrícula</b> e <b>Turno</b> — além das revisões das IOPs, catálogo e registros gerais. Um único arquivo serve para toda a unidade: o filtro de turno do painel é apenas visual.</div>
+      <div id="backupInfo" class="kpi-legend" style="margin-top:.6rem"></div>
+    </div>
+    <div class="modal-footer">
       <button class="btn-primary" onclick="exportBackup()">📥 Exportar backup (.json)</button>
       <button class="btn-secondary-action" onclick="document.getElementById('fileBackupInput').click()">📤 Importar backup</button>
-    
+    </div>
+  </div>
+</div>
 
-
-  
-
-
-
-
-
-
-
-
-
+<div class="toast-container" id="toastContainer"></div>
 
 <script>
 'use strict';
@@ -782,6 +544,8 @@ const TYPE_META = {
   'INTERNO': {label:'Treinamentos Internos', cls:'tag-int'}
 };
 // ==================== TURNOS (T1/T2/T3/Todos) ====================
+// Fonte única: um cache, uma planilha, um backup. O turno é um campo do colaborador;
+// os botões do cabeçalho são apenas filtro visual (em "Todos" o painel mostra o time inteiro).
 const SHIFT_KEY = 'controle-treinamentos-iops-shift';
 const SHIFTS = {
   T1: { label:'1º Turno', headerLabel:'1º TURNO' },
@@ -815,15 +579,16 @@ function seedIopDefs(){
 function getIops(){ return [...state.iopDefs].sort((a,b)=>a.code.localeCompare(b.code,'pt-BR')); }
 
 // ==================== DATAS ====================
-// As 12 IOPs NÃO usam mais data de realização nem validade — o controle é apenas "fez / não fez".
-// As funções de data seguem sendo usadas pela REVISÃO das IOPs e pelos OUTROS TREINAMENTOS.
 function todayStr(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function addYear(dateStr){ if(!dateStr) return ''; const d=new Date(dateStr+'T12:00:00'); if(isNaN(d)) return ''; d.setFullYear(d.getFullYear()+1); return d.toISOString().slice(0,10); }
 function addMonths(dateStr, m){ if(!dateStr) return ''; const d=new Date(dateStr+'T12:00:00'); if(isNaN(d)) return ''; d.setMonth(d.getMonth()+parseInt(m||0,10)); return d.toISOString().slice(0,10); }
+function getValidity(rec){ return (rec.userCustomValidity && rec.validityDate) ? rec.validityDate : addYear(rec.realizationDate); }
+function isExpired(rec){ if(!rec.done) return false; const v=getValidity(rec); return !!v && v < todayStr(); }
+function isExpiring(rec){ if(!rec.done||isExpired(rec)) return false; const v=getValidity(rec); if(!v) return false; const lim=new Date(); lim.setDate(lim.getDate()+30); return v <= lim.toISOString().slice(0,10); }
 function formatDateBR(s){ if(!s) return ''; const p=String(s).split('-'); return p.length===3 ? p[2]+'/'+p[1]+'/'+p[0] : s; }
 function getRevValidityInfo(revDate){ return revDate ? {valDateStr:addYear(revDate)} : null; }
 
-// ==================== OUTROS TREINAMENTOS (mantêm datas e validade) ====================
+// ==================== TREINAMENTOS GERAIS (CAMADA 2) ====================
 function getTrainingById(id){ return state.catalog.find(t=>t.id===id); }
 function trainingValidity(rec, cat){ return rec.validityDate || addMonths(rec.realizationDate, cat ? cat.validadeMeses : 12); }
 function isTrainingExpired(rec, cat){ const v=trainingValidity(rec,cat); return !!v && v < todayStr(); }
@@ -881,6 +646,7 @@ function loadState(){
       }
     }
   }catch(e){ console.warn('Erro ao carregar cache:', e); }
+  // Nasce em branco: importe o backup único (💾) ou sincronize com a planilha
   state.iopDefs = seedIopDefs();
   state.iops = defaultIopsRev();
   state.collaborators = [];
@@ -892,8 +658,6 @@ function loadState(){
 function applyIopsList(list){
   (list||[]).forEach(it=>{ if(it && it.code){ state.iops[String(it.code).padStart(3,'0')] = { rev: it.rev||'', revDate: it.revDate||'' }; } });
 }
-// As datas continuam existindo no objeto do registro apenas por compatibilidade com a planilha
-// (não são exibidas nem editáveis nas IOPs). Assim nada é apagado no Sheets.
 function normalizeCollaborators(list){
   const defs = getIops();
   return (list||[]).map(c=>{
@@ -923,22 +687,20 @@ function sortColabs(a,b){
   if(fa!==fb) return fa.localeCompare(fb,'pt-BR');
   return a.name.localeCompare(b.name,'pt-BR');
 }
-// IOPs: sem vencimento — só realizado ou pendente.
 function getCollaboratorStats(c){
   const defs = getIops();
-  let done=0;
-  defs.forEach(i=>{ const r=c.records[i.code]; if(r&&r.done) done++; });
-  return { done, pend: defs.length-done };
+  let done=0, expired=0;
+  defs.forEach(i=>{ const r=c.records[i.code]; if(r&&r.done){ done++; if(isExpired(r)) expired++; } });
+  return { done, pend: defs.length-done, expired };
 }
 function getIopStats(){
   const total = enabledColabs().length;
   return getIops().map(iop=>{
-    let done=0;
-    enabledColabs().forEach(c=>{ const r=c.records[iop.code]; if(r&&r.done) done++; });
-    const pend = total - done;
-    const pct = total ? Math.round(done/total*100) : 0;
+    let emDia=0, pend=0;
+    enabledColabs().forEach(c=>{ const r=c.records[iop.code]; if(r&&r.done && !isExpired(r)) emDia++; else pend++; });
+    const pct = total ? Math.round(emDia/total*100) : 0;
     const pctPend = total ? Math.round(pend/total*100) : 0;
-    return { code:iop.code, desc:iop.desc, critical:!!iop.critical, done, pend, pct, pctPend, total };
+    return { code:iop.code, desc:iop.desc, critical:!!iop.critical, emDia, pend, pct, pctPend, total };
   });
 }
 
@@ -949,10 +711,11 @@ function renderKPIs(){
   const defs = getIops();
   const enabled = enabledColabs();
   const afastados = allColabsEscopo().length - enabled.length;
-  let done=0;
-  enabled.forEach(c=>{ done += getCollaboratorStats(c).done; });
+  let done=0, expired=0;
+  enabled.forEach(c=>{ const s=getCollaboratorStats(c); done+=s.done; expired+=s.expired; });
   const totalSlots = enabled.length*defs.length;
   const missing = totalSlots - done;
+  const pend = missing + expired;
   const pct = totalSlots ? (done/totalSlots*100).toFixed(1).replace('.',',') : '0,0';
   let trEmDia=0, trVenc=0, trSlots=0;
   state.catalog.forEach(t=>{ const s=getTrainingStats(t); trEmDia+=s.emDia; trVenc+=s.vencidos; trSlots+=s.total; });
@@ -963,82 +726,44 @@ function renderKPIs(){
     ? `Time operacional completo (${porTurno}) • ${afastados} afastado(s)`
     : `${shiftLabel()} Operacional (Letras A, B, C, D) • ${afastados} afastado(s)`;
   document.getElementById('kpisContainer').innerHTML = `
-    
-      Colaboradores Monitorados
-
-
-      ${enabled.length}
-
-
-      ${sub1}
-
-
-    
-
-
-    
-      IOPS Críticas Mapeadas
-
-
-      ${defs.length}
-
-
-      Instruções Operacionais Padronizadas
-
-
-    
-
-
-    
-      Total de Pendências
-
-
-      ${missing}
-
-
-      🟠 Faltando treinamento: ${missing}
-
-
-    
-
-
-    
-      Treinamentos Realizados
-
-
-      ${done}
-
-
-      ${pct}% de conclusão (${done} de ${totalSlots})
-
-
-    
-
-
-    
-      Panorama Geral
-
-
-      ${trPct}
-
-
-      Outros treinamentos: ${trSub}
-
-
-    
-
-`;
+    <div class="kpi-card">
+      <div class="kpi-card-label">Colaboradores Monitorados</div>
+      <div class="kpi-card-val">${enabled.length}</div>
+      <div class="kpi-card-sub">${sub1}</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card-label">IOPS Críticas Mapeadas</div>
+      <div class="kpi-card-val">${defs.length}</div>
+      <div class="kpi-card-sub">Instruções Operacionais Padronizadas</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card-label">Total de Pendências</div>
+      <div class="kpi-card-val">${pend}</div>
+      <div class="kpi-legend">🟠 Faltando treinamento: ${missing}<br>🔴 Vencidos: ${expired}</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card-label">Treinamentos Realizados</div>
+      <div class="kpi-card-val">${done}</div>
+      <div class="kpi-card-sub">${pct}% de conclusão (${done} de ${totalSlots})</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-card-label">Panorama Geral</div>
+      <div class="kpi-card-val">${trPct}</div>
+      <div class="kpi-card-sub">Outros treinamentos: ${trSub}</div>
+    </div>`;
 }
 
 function renderAlertBanner(){
   const total = enabledColabs().length;
   const stats = getIopStats();
-  const gargalo = stats.filter(i=>total>0 && i.done/total < 0.5).sort((a,b)=>a.done-b.done);
-  const gargaloText = gargalo.length ? gargalo.map(i=>`IOP ${i.code} (${i.desc}) com ${i.done} de ${total} treinados (${i.pct}%)`).join(', ') : 'Nenhum gargalo crítico no momento';
-  const destaques = stats.filter(i=>i.done===total && total>0).sort((a,b)=>a.code.localeCompare(b.code,'pt-BR'));
-  const destaqueText = destaques.length ? destaques.map(i=>`IOP ${i.code} (${i.desc}) com ${i.done} de ${total} treinados (100%)`).join(' e ') : 'Nenhuma IOP 100% concluída no momento';
+  const gargalo = stats.filter(i=>total>0 && i.emDia/total < 0.5).sort((a,b)=>a.emDia-b.emDia);
+  const gargaloText = gargalo.length ? gargalo.map(i=>`IOP ${i.code} (${i.desc}) com ${i.emDia} de ${total} treinados (${i.pct}%)`).join(', ') : 'Nenhum gargalo crítico no momento';
+  const destaques = stats.filter(i=>i.emDia===total && total>0).sort((a,b)=>a.code.localeCompare(b.code,'pt-BR'));
+  const destaqueText = destaques.length ? destaques.map(i=>`IOP ${i.code} (${i.desc}) com ${i.emDia} de ${total} treinados (100%)`).join(' e ') : 'Nenhuma IOP 100% concluída no momento';
   const top3 = [...stats].sort((a,b)=> b.pend!==a.pend ? b.pend-a.pend : a.code.localeCompare(b.code,'pt-BR')).slice(0,3);
   const top3Str = top3.map(i=>`IOP ${i.code} (${i.pend} • ${i.pctPend}%)`).join(', ');
+  const expiredCount = enabledColabs().filter(c=>getCollaboratorStats(c).expired>0).length;
+  const vencidasText = expiredCount>0 ? `${expiredCount} colaborador(es)` : 'Nenhum colaborador com IOPS vencida no momento';
   let trExpiredTotal=0, trExpiring=0;
   state.catalog.forEach(t=>{
     const s = getTrainingStats(t);
@@ -1049,26 +774,17 @@ function renderAlertBanner(){
     : (trExpiredTotal||trExpiring) ? `${trExpiredTotal} vencido(s), ${trExpiring} vencendo em 30 dias`
     : 'Nenhum vencido no momento';
   document.getElementById('alertBanner').innerHTML = `
-    ⚠️
-
-
-    
-      Alertas Prioritários do ${shiftLabel()}
-
-
-      
-        - **Gargalo Crítico:** ${escapeHtml(gargaloText)}
-
-        - **Destaque Positivo:** ${escapeHtml(destaqueText)}
-
-        - **IOPs com maior pendência:** ${escapeHtml(top3Str)}
-
-        - **Outros treinamentos:** ${escapeHtml(trText)}
-
-      
-    
-
-`;
+    <div class="alert-icon">⚠️</div>
+    <div class="alert-content">
+      <div class="alert-title">Alertas Prioritários do ${shiftLabel()}</div>
+      <ul>
+        <li><b>Gargalo Crítico:</b> ${escapeHtml(gargaloText)}</li>
+        <li><b>Destaque Positivo:</b> ${escapeHtml(destaqueText)}</li>
+        <li><b>IOPs com maior pendência:</b> ${escapeHtml(top3Str)}</li>
+        <li><b>Colaboradores com IOPS vencidas:</b> ${escapeHtml(vencidasText)}</li>
+        <li><b>Outros treinamentos:</b> ${escapeHtml(trText)}</li>
+      </ul>
+    </div>`;
 }
 
 function renderFilterCounts(){
@@ -1089,9 +805,7 @@ function getFilteredCollaborators(){
 }
 
 function addCardHtml(icon, title, sub, fn){
-  return `${icon}**${title}**${sub}
-
-`;
+  return `<div class="card-item add-card clickable" onclick="${fn}"><span class="plus">${icon}</span><b>${title}</b><span class="card-count">${sub}</span></div>`;
 }
 
 function renderColabView(){
@@ -1099,9 +813,7 @@ function renderColabView(){
   const defs = getIops();
   const list = getFilteredCollaborators();
   if(!list.length){
-    container.innerHTML = 'Nenhum colaborador neste escopo. Importe o backup único (menu ⚙️ › 💾 Backup único) ou use o balão ➕ abaixo.
-
-' + addCardHtml('➕','Adicionar Colaborador','Cadastrar novo membro do time','openAddModal()');
+    container.innerHTML = '<div class="help-text" style="grid-column:1/-1">Nenhum colaborador neste escopo. Importe o backup único (menu ⚙️ › 💾 Backup único) ou use o balão ➕ abaixo.</div>' + addCardHtml('➕','Adicionar Colaborador','Cadastrar novo membro do time','openAddModal()');
     return;
   }
   container.innerHTML = list.map(c=>{
@@ -1109,55 +821,34 @@ function renderColabView(){
     const pct = Math.round(s.done/defs.length*100);
     if(!c.enabled){
       return `
-      
-        
-          Folga ${c.folga||'—'}
-          
-            ${currentShift==='ALL'?`${c.turno}`:''}
-            Afastado
-          
-
-
-        
-
-
-        ${escapeHtml(c.name)}
-
-
-      
-
-`;
+      <div class="card-item afastado">
+        <div class="card-top-row">
+          <span class="badge-folga-pill badge-folga-pill-${c.folga||'none'}">Folga ${c.folga||'—'}</span>
+          <div style="display:flex;gap:.4rem">
+            ${currentShift==='ALL'?`<span class="badge-iop">${c.turno}</span>`:''}
+            <span class="badge-afastado">Afastado</span>
+          </div>
+        </div>
+        <div class="card-name">${escapeHtml(c.name)}</div>
+      </div>`;
     }
     return `
-      
-        
-          Folga ${c.folga||'—'}
-          
-            ${currentShift==='ALL'?`${c.turno}`:''}
-            ${s.done}/${defs.length}
-          
-
-
-        
-
-
-        ${escapeHtml(c.name)}
-
-
-        
-          ✓ ${s.done} Realizadas
-          ✗ ${s.pend} Pendentes
-        
-
-
-        
-
-
-
-
-      
-
-`;
+      <div class="card-item clickable" onclick="openViewColab('${c.matricula}')">
+        <div class="card-top-row">
+          <span class="badge-folga-pill badge-folga-pill-${c.folga||'none'}">Folga ${c.folga||'—'}</span>
+          <div style="display:flex;gap:.4rem;flex-wrap:wrap;justify-content:flex-end">
+            ${currentShift==='ALL'?`<span class="badge-iop">${c.turno}</span>`:''}
+            <span class="badge-status-chip">${s.done}/${defs.length}</span>
+          </div>
+        </div>
+        <div class="card-name">${escapeHtml(c.name)}</div>
+        <div class="chip-row">
+          <span class="chip-ok">✓ ${s.done} Realizadas</span>
+          <span class="chip-pend">✗ ${s.pend} Pendentes</span>
+          ${s.expired?`<span class="chip-exp">🔴 ${s.expired} Vencida(s)</span>`:''}
+        </div>
+        <div class="progress-bar"><div class="progress-bar-fill${pct<50?' critical':''}" style="width:${pct}%"></div></div>
+      </div>`;
   }).join('') + addCardHtml('➕','Adicionar Colaborador','Cadastrar novo membro do time','openAddModal()');
 }
 
@@ -1167,41 +858,26 @@ function renderIopsView(){
   const q = state.searchQuery.trim().toLowerCase();
   let stats = getIopStats();
   if(q) stats = stats.filter(i=>i.code.includes(q)||i.desc.toLowerCase().includes(q));
-  if(!stats.length){ container.innerHTML = 'Nenhuma IOP encontrada.
-
-' + addCardHtml('➕','Adicionar IOP','Nova IOP para a matriz','openAddIopModal()'); return; }
+  if(!stats.length){ container.innerHTML = '<div class="help-text" style="grid-column:1/-1">Nenhuma IOP encontrada.</div>' + addCardHtml('➕','Adicionar IOP','Nova IOP para a matriz','openAddIopModal()'); return; }
   container.innerHTML = stats.map(i=>{
     const rev = state.iops[i.code]||{};
-    const revBadge = rev.rev ? `REV ${escapeHtml(rev.rev)}` : '';
-    const doneClass = total>0 && i.done===total ? 'iop-100' : (i.done===0?'iop-zero':'');
+    // Tag mostra somente o número da revisão, sem data
+    const revBadge = rev.rev ? `<span class="badge-rev">REV ${escapeHtml(rev.rev)}</span>` : '';
+    const doneClass = total>0 && i.emDia===total ? 'iop-100' : (i.emDia===0?'iop-zero':'');
     return `
-      
-        
-          IOP ${i.code}
+      <div class="card-item clickable ${doneClass}" onclick="openViewIop('${i.code}')">
+        <div class="card-top-row">
+          <span class="badge-iop">IOP ${i.code}</span>
           ${revBadge}
-        
-
-
-        ${i.code} – ${escapeHtml(i.desc)}
-
-
-        ${i.done}/${total} treinados
-
-
-        
-          ✔ ${i.done} treinados (${i.pct}%)
-          ✗ ${i.pend} pendentes
-        
-
-
-        
-
-
-
-
-      
-
-`;
+        </div>
+        <div class="card-desc">${i.code} – ${escapeHtml(i.desc)}</div>
+        <div class="card-count">${i.emDia}/${total} em dia</div>
+        <div class="chip-row">
+          <span class="chip-ok">✔ ${i.emDia} em dia (${i.pct}%)</span>
+          <span class="chip-pend">✗ ${i.pend} pendentes</span>
+        </div>
+        <div class="progress-bar"><div class="progress-bar-fill${i.pct<50?' critical':''}" style="width:${i.pct}%"></div></div>
+      </div>`;
   }).join('') + addCardHtml('➕','Adicionar IOP','Nova IOP para a matriz','openAddIopModal()');
 }
 
@@ -1210,9 +886,7 @@ function renderTreinamentosView(){
   const q = state.searchQuery.trim().toLowerCase();
   const list = state.catalog.filter(t=>!q || t.name.toLowerCase().includes(q));
   if(!list.length){
-    container.innerHTML = 'Nenhum treinamento no catálogo. Cadastre NRs, IOPs complementares ou treinamentos internos para começar o controle.
-
-' + addCardHtml('➕','Adicionar Treinamento','Registrar realização ou cadastrar no catálogo','openAddTrainingModal()');
+    container.innerHTML = '<div class="help-text" style="grid-column:1/-1">Nenhum treinamento no catálogo. Cadastre NRs, IOPs complementares ou treinamentos internos para começar o controle.</div>' + addCardHtml('➕','Adicionar Treinamento','Registrar realização ou cadastrar no catálogo','openAddTrainingModal()');
     return;
   }
   container.innerHTML = list.map(t=>{
@@ -1220,31 +894,19 @@ function renderTreinamentosView(){
     const meta = TYPE_META[t.type]||TYPE_META['INTERNO'];
     const doneClass = s.total>0 && s.emDia===s.total ? 'iop-100' : '';
     return `
-      
-        
-          ${meta.label}
-          ${s.emDia}/${s.total}
-        
-
-
-        ${escapeHtml(t.name)}
-
-
-        
-          ✔ ${s.emDia} em dia (${s.pct}%)
-          ✗ ${s.pend} pendentes
-          ${s.vencidos?`🔴 ${s.vencidos} vencidos`:''}
-        
-
-
-        
-
-
-
-
-      
-
-`;
+      <div class="card-item clickable ${doneClass}" onclick="openViewTraining('${t.id}')">
+        <div class="card-top-row">
+          <span class="train-tag ${meta.cls}">${meta.label}</span>
+          <span class="badge-status-chip">${s.emDia}/${s.total}</span>
+        </div>
+        <div class="card-desc">${escapeHtml(t.name)}</div>
+        <div class="chip-row">
+          <span class="chip-ok">✔ ${s.emDia} em dia (${s.pct}%)</span>
+          <span class="chip-pend">✗ ${s.pend} pendentes</span>
+          ${s.vencidos?`<span class="chip-exp">🔴 ${s.vencidos} vencidos</span>`:''}
+        </div>
+        <div class="progress-bar"><div class="progress-bar-fill${s.pct<50?' critical':''}" style="width:${s.pct}%"></div></div>
+      </div>`;
   }).join('') + addCardHtml('➕','Adicionar Treinamento','Registrar realização ou cadastrar no catálogo','openAddTrainingModal()');
 }
 
@@ -1262,14 +924,12 @@ function renderMatrizGeral(){
       const r = c.records[i.code];
       if(!c.enabled) return '<td>–</td>';
       if(!r||!r.done) return '<td class="matrix-no">✗</td>';
-      return '<td class="matrix-ok">✓</td>';
+      return isExpired(r) ? '<td class="matrix-no">🔴</td>' : '<td class="matrix-ok">✓</td>';
     }).join('');
     return `<tr class="${c.enabled?'':'row-afastado'}">
       <td>${c.folga||'—'}</td>
       ${mostraTurno?`<td>${c.turno}</td>`:''}
-      <td class="name-cell">${escapeHtml(c.name)}${c.funcao?` (${escapeHtml(c.funcao)})`:''}${c.enabled?'':' Afastado'}Mat. ${escapeHtml(c.matricula)}
-
-</td>
+      <td class="name-cell">${escapeHtml(c.name)}${c.funcao?` (${escapeHtml(c.funcao)})`:''}${c.enabled?'':' Afastado'}<div class="funcao-mini">Mat. ${escapeHtml(c.matricula)}</div></td>
       ${cells}
       <td class="matrix-pend">${c.enabled?s.pend:'–'}</td>
       <td><button class="btn-edit-mini" onclick="openEditModal('${c.matricula}')">✏️ Editar</button></td>
@@ -1306,6 +966,8 @@ function setFolgaFilter(letter, btn){
 function handleSearch(e){ state.searchQuery = e.target.value; renderActiveView(); }
 
 // ---------- MENU DE OPÇÕES ----------
+// No celular o menu vira uma "folha" presa à viewport: sempre inteiro na tela,
+// com rolagem interna quando os itens não couberem. No desktop segue o padrão (absoluto).
 function toggleDropdown(e){
   if(e) e.stopPropagation();
   const menu = document.getElementById('optionsMenu');
@@ -1317,7 +979,7 @@ function toggleDropdown(e){
 }
 function positionDropdown(menu){
   clearDropdownInline(menu);
-  if(window.innerWidth > 640) return;
+  if(window.innerWidth > 640) return;              // desktop: mantém o posicionamento absoluto
   const btn = document.getElementById('optionsBtn');
   if(!btn) return;
   const rect = btn.getBoundingClientRect();
@@ -1341,6 +1003,7 @@ function closeDropdown(){
   clearDropdownInline(menu);
   document.getElementById('dropdownBackdrop').classList.remove('show');
 }
+// Girar o celular / redimensionar: fecha ao entrar no desktop e recalcula no modo estreito.
 let dropdownResizeTimer = null;
 window.addEventListener('resize', ()=>{
   const menu = document.getElementById('optionsMenu');
@@ -1390,75 +1053,45 @@ function openViewColab(mat){
     else pendentes.push({iop, r});
   });
   let html = `
-    
-      Folga ${c.folga||'—'}
-      Turno ${c.turno}
-      ${c.funcao?`${escapeHtml(c.funcao)}`:''}
-      ${c.enabled?'Habilitado':'Afastado'}
-      Matrícula ${escapeHtml(c.matricula)}
-    
-
-
-    
-      ✅ ${s.done} / ${defs.length} Realizadas
-
-
-      ❌ ${s.pend} / ${defs.length} Pendências
-
-
-    
-
-`;
+    <div class="chip-row">
+      <span class="badge-folga-pill badge-folga-pill-${c.folga||'none'}">Folga ${c.folga||'—'}</span>
+      <span class="badge-funcao">Turno ${c.turno}</span>
+      ${c.funcao?`<span class="badge-funcao">${escapeHtml(c.funcao)}</span>`:''}
+      ${c.enabled?'<span class="badge-status-chip">Habilitado</span>':'<span class="badge-afastado">Afastado</span>'}
+      <span class="chip-na">Matrícula ${escapeHtml(c.matricula)}</span>
+    </div>
+    <div class="summary-row">
+      <div class="summary-box summary-ok">✅ ${s.done} / ${defs.length} Realizadas</div>
+      <div class="summary-box summary-pend">❌ ${s.pend} / ${defs.length} Pendências</div>
+    </div>`;
   if(c.enabled){
-    html += 'Realizadas
-
-';
-    html += realizadas.length ? realizadas.map(({iop})=>`**${iop.code}** – ${escapeHtml(iop.desc)}
-
-✓ Realizada
-
-`).join('') : 'Nenhuma IOP realizada.
-
-';
-    html += 'Pendentes
-
-';
-    html += pendentes.length ? pendentes.map(({iop})=>`**${iop.code}** – ${escapeHtml(iop.desc)}
-
-Faltando Treinamento
-
-`).join('') : 'Nenhuma pendência. 🎉
-
-';
+    html += '<div class="view-section-title">Realizadas</div>';
+    html += realizadas.length ? realizadas.map(({iop,r})=>{
+      const v = getValidity(r);
+      const chip = isExpired(r) ? '<span class="chip-exp">🔴 Vencida</span>'
+        : isExpiring(r) ? `<span class="chip-warn">Válido até ${formatDateBR(v)}</span>`
+        : `<span class="chip-ok">Válido até ${formatDateBR(v)||'—'}</span>`;
+      return `<div class="detail-card"><div><div class="dc-title"><b>${iop.code}</b> – ${escapeHtml(iop.desc)}</div><div class="card-dates">Realizado em ${formatDateBR(r.realizationDate)||'—'}${r.userCustomValidity?' (val. personalizada)':''}</div></div>${chip}</div>`;
+    }).join('') : '<div class="help-text">Nenhuma IOP realizada.</div>';
+    html += '<div class="view-section-title">Pendentes</div>';
+    html += pendentes.length ? pendentes.map(({iop})=>`<div class="detail-card"><div class="dc-title"><b>${iop.code}</b> – ${escapeHtml(iop.desc)}</div><span class="chip-pend">Faltando Treinamento</span></div>`).join('') : '<div class="help-text">Nenhuma pendência. 🎉</div>';
     if(state.catalog.length){
-      html += 'Outros treinamentos
-
-';
+      html += '<div class="view-section-title">Outros treinamentos</div>';
       html += state.catalog.map(t=>{
         const meta = TYPE_META[t.type]||TYPE_META['INTERNO'];
         if(!isTrainingRequiredFor(c,t)){
-          return `${meta.label} ${escapeHtml(t.name)}
-
-Não se aplica (${escapeHtml(c.funcao||'sem função')})
-
-`;
+          return `<div class="detail-card"><div class="dc-title"><span class="train-tag ${meta.cls}">${meta.label}</span> ${escapeHtml(t.name)}</div><span class="chip-na">Não se aplica (${escapeHtml(c.funcao||'sem função')})</span></div>`;
         }
         const r = getTrainingRecord(c.matricula, t.id);
         let chip;
-        if(!r) chip = 'Faltando';
-        else if(isTrainingExpired(r,t)) chip = '🔴 Vencido';
-        else chip = `Válido até ${formatDateBR(trainingValidity(r,t))}`;
-        return `${meta.label} ${escapeHtml(t.name)}
-
-${chip}
-
-`;
+        if(!r) chip = '<span class="chip-pend">Faltando</span>';
+        else if(isTrainingExpired(r,t)) chip = '<span class="chip-exp">🔴 Vencido</span>';
+        else chip = `<span class="chip-ok">Válido até ${formatDateBR(trainingValidity(r,t))}</span>`;
+        return `<div class="detail-card"><div class="dc-title"><span class="train-tag ${meta.cls}">${meta.label}</span> ${escapeHtml(t.name)}</div>${chip}</div>`;
       }).join('');
     }
   } else {
-    html += 'Colaborador afastado — fora dos indicadores do turno.
-
-';
+    html += '<div class="help-text">Colaborador afastado — fora dos indicadores do turno.</div>';
   }
   document.getElementById('viewColabBody').innerHTML = html;
   openModal('modalViewColab');
@@ -1466,45 +1099,39 @@ ${chip}
 function viewToEdit(){ const mat = state.viewColabId; closeModal('modalViewColab'); openEditModal(mat); }
 
 // ==================== MODAL VISUALIZAR IOP ====================
-// Sem datas e sem vencimento: apenas treinados / pendentes / afastados.
 function openViewIop(code){
   const iop = getIops().find(i=>i.code===code); if(!iop) return;
   state.viewIopCode = code;
   const rev = state.iops[code]||{};
   const stats = getIopStats().find(i=>i.code===code);
-  document.getElementById('viewIopTitle').innerHTML = `IOP ${iop.code} – ${escapeHtml(iop.desc)} ${rev.rev?`REV ${escapeHtml(rev.rev)}`:''}`;
+  document.getElementById('viewIopTitle').innerHTML = `IOP ${iop.code} – ${escapeHtml(iop.desc)} ${rev.rev?`<span class="badge-rev">REV ${escapeHtml(rev.rev)}</span>`:''}`;
   const sorted = [...allColabsEscopo()].sort((a,b)=>{
     if(a.enabled!==b.enabled) return a.enabled?-1:1;
     return sortColabs(a,b);
   });
-  const concluidos=[], pendentes=[], afastados=[];
+  const concluidos=[], vencidos=[], pendentes=[], afastados=[];
   sorted.forEach(c=>{
     const r = c.records[code];
     if(!c.enabled){ afastados.push({c,r}); return; }
     if(!r || !r.done) pendentes.push({c,r});
+    else if(isExpired(r)) vencidos.push({c,r});
     else concluidos.push({c,r});
   });
-  const rowHtml = ({c}, chip)=>`${c.folga||'—'} ${escapeHtml(c.name)}${currentShift==='ALL'?` • ${c.turno}`:''}
-
-${chip}
-
-`;
+  const rowHtml = ({c,r}, chip)=>{
+    const dates = r && r.done && c.enabled ? `<div class="card-dates">Realizado em ${formatDateBR(r.realizationDate)||'—'}${r.userCustomValidity?' (val. personalizada)':''}</div>` : '';
+    return `<div class="detail-card"><div><div class="dc-title"><span class="badge-folga-pill badge-folga-pill-${c.folga||'none'} folga-mini">${c.folga||'—'}</span> ${escapeHtml(c.name)}${currentShift==='ALL'?` <span class="funcao-mini">• ${c.turno}</span>`:''}</div>${dates}</div>${chip}</div>`;
+  };
   const section = (title, list, chipFn)=>{
     if(!list.length) return '';
-    return `${title} (${list.length})
-
-` + list.map(item=>rowHtml(item, chipFn(item))).join('');
+    return `<div class="view-section-title">${title} (${list.length})</div>` + list.map(item=>rowHtml(item, chipFn(item))).join('');
   };
-  let html = `${stats.done}/${stats.total} treinados • ${stats.pend} pendentes
-
-`;
-  html += section('✅ Treinados', concluidos, ()=>'✓ Realizada');
-  html += section('⏳ Pendentes', pendentes, ()=>'Faltando Treinamento');
-  html += section('Afastados', afastados, ()=>'Afastado');
-  if(!concluidos.length && !pendentes.length && !afastados.length){
-    html += 'Nenhum colaborador neste escopo.
-
-';
+  let html = `<div class="kpi-legend">${stats.emDia}/${stats.total} em dia • ${stats.pend} pendentes</div>`;
+  html += section('✅ Concluídos', concluidos, ({r})=>`<span class="chip-ok">Válido até ${formatDateBR(getValidity(r))||'—'}</span>`);
+  html += section('🔴 Vencidos', vencidos, ()=>'<span class="chip-exp">🔴 Vencida</span>');
+  html += section('⏳ Pendentes', pendentes, ()=>' <span class="chip-pend">Faltando Treinamento</span>');
+  html += section('Afastados', afastados, ()=>' <span class="chip-na">Afastado</span>');
+  if(!concluidos.length && !vencidos.length && !pendentes.length && !afastados.length){
+    html += '<div class="help-text">Nenhum colaborador neste escopo.</div>';
   }
   document.getElementById('viewIopBody').innerHTML = html;
   openModal('modalViewIop');
@@ -1517,10 +1144,8 @@ function openViewTraining(id){
   state.viewTrainingId = id;
   const meta = TYPE_META[t.type]||TYPE_META['INTERNO'];
   const s = getTrainingStats(t);
-  document.getElementById('viewTrainingTitle').innerHTML = `${escapeHtml(t.name)} ${meta.label}`;
-  let html = `Validade padrão: ${t.validadeMeses} ${t.validadeMeses==1?'mês':'meses'}${t.cargaHoraria?` • ${escapeHtml(t.cargaHoraria)}h`:''}${t.obrigatorioPara?` • Obrigatório para: ${escapeHtml(t.obrigatorioPara)}`:' • Obrigatório para: Todos'} • ${s.emDia}/${s.total} em dia (apenas funções obrigatórias)
-
-`;
+  document.getElementById('viewTrainingTitle').innerHTML = `${escapeHtml(t.name)} <span class="train-tag ${meta.cls}">${meta.label}</span>`;
+  let html = `<div class="kpi-legend">Validade padrão: ${t.validadeMeses} ${t.validadeMeses==1?'mês':'meses'}${t.cargaHoraria?` • ${escapeHtml(t.cargaHoraria)}h`:''}${t.obrigatorioPara?` • Obrigatório para: ${escapeHtml(t.obrigatorioPara)}`:' • Obrigatório para: Todos'} • ${s.emDia}/${s.total} em dia (apenas funções obrigatórias)</div>`;
   const sorted = [...allColabsEscopo()].sort((a,b)=>{
     if(a.enabled!==b.enabled) return a.enabled?-1:1;
     return sortColabs(a,b);
@@ -1531,39 +1156,19 @@ function openViewTraining(id){
   html += reqList.map(c=>{
     const r = getTrainingRecord(c.matricula, id);
     let chip;
-    if(!r) chip = 'Faltando Treinamento';
-    else if(isTrainingExpired(r,t)) chip = '🔴 Vencido';
-    else chip = `Válido até ${formatDateBR(trainingValidity(r,t))}`;
-    const dates = r ? `Realizado em ${formatDateBR(r.realizationDate)||'—'}
-
-` : '';
-    return `${c.folga||'—'} ${escapeHtml(c.name)}${c.funcao?` (${escapeHtml(c.funcao)})`:''}${currentShift==='ALL'?` • ${c.turno}`:''}
-
-${dates}
-
-${chip}
-
-`;
+    if(!r) chip = '<span class="chip-pend">Faltando Treinamento</span>';
+    else if(isTrainingExpired(r,t)) chip = '<span class="chip-exp">🔴 Vencido</span>';
+    else chip = `<span class="chip-ok">Válido até ${formatDateBR(trainingValidity(r,t))}</span>`;
+    const dates = r ? `<div class="card-dates">Realizado em ${formatDateBR(r.realizationDate)||'—'}</div>` : '';
+    return `<div class="detail-card"><div><div class="dc-title"><span class="badge-folga-pill badge-folga-pill-${c.folga||'none'} folga-mini">${c.folga||'—'}</span> ${escapeHtml(c.name)}${c.funcao?` (${escapeHtml(c.funcao)})`:''}${currentShift==='ALL'?` <span class="funcao-mini">• ${c.turno}</span>`:''}</div>${dates}</div>${chip}</div>`;
   }).join('');
   if(naList.length){
-    html += `Não se aplica (função fora do escopo)
-
-`;
-    html += naList.map(c=>`${escapeHtml(c.name)}${currentShift==='ALL'?` • ${c.turno}`:''}
-
-Não se aplica
-
-`).join('');
+    html += `<div class="view-section-title">Não se aplica (função fora do escopo)</div>`;
+    html += naList.map(c=>`<div class="detail-card"><div class="dc-title">${escapeHtml(c.name)}${currentShift==='ALL'?` <span class="funcao-mini">• ${c.turno}</span>`:''}</div><span class="chip-na">Não se aplica</span></div>`).join('');
   }
   if(afastados.length){
-    html += `Afastados
-
-`;
-    html += afastados.map(c=>`${escapeHtml(c.name)}
-
-Afastado
-
-`).join('');
+    html += `<div class="view-section-title">Afastados</div>`;
+    html += afastados.map(c=>`<div class="detail-card"><div class="dc-title">${escapeHtml(c.name)}</div><span class="chip-na">Afastado</span></div>`).join('');
   }
   document.getElementById('viewTrainingBody').innerHTML = html;
   openModal('modalViewTraining');
@@ -1687,18 +1292,20 @@ function buildFuncaoDatalist(){
   const all = [...new Set([...DEFAULT_FUNCOES, ...used])];
   document.getElementById('funcaoList').innerHTML = all.map(f=>`<option value="${escapeHtml(f)}">`).join('');
 }
-// IOPs: apenas o checkbox "Feito" — sem data de realização, sem validade.
 function buildIopEditRows(c){
   return getIops().map(iop=>{
-    const r = c.records[iop.code] || {done:false};
+    const r = c.records[iop.code] || {done:false,realizationDate:'',validityDate:'',userCustomValidity:false};
     return `
-      
-        IOP ${iop.code}
-        ${escapeHtml(iop.desc)}
+      <div class="iop-edit-row">
+        <span class="iop-code">IOP ${iop.code}</span>
+        <span>${escapeHtml(iop.desc)}</span>
         <label style="display:flex;align-items:center;gap:.3rem;font-size:.78rem"><input type="checkbox" id="ck_${iop.code}" ${r.done?'checked':''}> Feito</label>
-      
-
-`;
+        <label class="custom-lbl"><input type="checkbox" id="cv_${iop.code}" ${r.userCustomValidity?'checked':''}> Val. personalizada</label>
+        <div class="row-dates">
+          <label class="custom-lbl">Realização: <input type="date" id="dt_${iop.code}" value="${r.realizationDate}"></label>
+          <label class="custom-lbl">Validade: <input type="date" id="dv_${iop.code}" value="${r.validityDate}"></label>
+        </div>
+      </div>`;
   }).join('');
 }
 function toggleSituation(){ state.editingSituation = !state.editingSituation; updateSituationToggle(); }
@@ -1750,16 +1357,13 @@ function saveColab(){
   const folga = document.getElementById('fFolga').value;
   const funcao = document.getElementById('fFuncao').value.trim();
   const enabled = state.editingSituation;
-  const atual = state.editingMatricula ? state.collaborators.find(x=>x.matricula===state.editingMatricula) : null;
   const records = {};
   getIops().forEach(iop=>{
-    // Datas antigas são preservadas no objeto (compatibilidade com a planilha), mas não são mais editáveis.
-    const antigo = (atual && atual.records[iop.code]) || {};
     records[iop.code] = {
       done: document.getElementById('ck_'+iop.code).checked,
-      realizationDate: antigo.realizationDate || '',
-      validityDate: antigo.validityDate || '',
-      userCustomValidity: !!antigo.userCustomValidity
+      realizationDate: document.getElementById('dt_'+iop.code).value,
+      validityDate: document.getElementById('dv_'+iop.code).value,
+      userCustomValidity: document.getElementById('cv_'+iop.code).checked
     };
   });
   if(state.editingMatricula){
@@ -1806,7 +1410,7 @@ function updateRevPreview(){
   const v = d ? addYear(d) : '';
   document.getElementById('revValidityPreview').textContent = v ? `Validade da revisão: ${formatDateBR(v)} (data + 1 ano)` : 'Preencha a data para calcular a validade.';
 }
-// Checklist de assinaturas: apenas quem fez esta IOP (sem data).
+// Checklist de assinaturas: quem fez esta IOP, com data de realização
 function buildIopColabChecklist(code){
   const wrap = document.getElementById('iopColabChecklist');
   const list = allColabsEscopo().slice().sort((a,b)=>{
@@ -1817,26 +1421,26 @@ function buildIopColabChecklist(code){
   list.forEach(c=>{
     if(currentShift==='ALL' && c.turno!==ultimoTurno){
       ultimoTurno = c.turno;
-      html += `${SHIFTS[c.turno]?SHIFTS[c.turno].label:c.turno}
-
-`;
+      html += `<div class="view-section-title">${SHIFTS[c.turno]?SHIFTS[c.turno].label:c.turno}</div>`;
     }
-    const r = c.records[code] || {done:false};
+    const r = c.records[code] || {done:false,realizationDate:''};
     html += `
-      
-        ${c.folga||'—'}
-        <label class="iop-check-done"><input type="checkbox" id="ik_${c.matricula}" ${r.done?'checked':''} onchange="iopCheckChange()"> Feito</label>
-        ${escapeHtml(c.name)}${c.funcao?` (${escapeHtml(c.funcao)})`:''}${currentShift==='ALL'?` • ${c.turno}`:''}${c.enabled?'':' (afastado)'}
-      
-
-`;
+      <div class="iop-check-row${c.enabled?'':' row-off'}">
+        <span class="badge-folga-pill badge-folga-pill-${c.folga||'none'} folga-mini">${c.folga||'—'}</span>
+        <label class="iop-check-done"><input type="checkbox" id="ik_${c.matricula}" ${r.done?'checked':''} onchange="iopCheckChange('${c.matricula}')"> Feito</label>
+        <span class="iop-check-name">${escapeHtml(c.name)}${c.funcao?` <span class="funcao-mini">(${escapeHtml(c.funcao)})</span>`:''}${currentShift==='ALL'?` <span class="funcao-mini">• ${c.turno}</span>`:''}${c.enabled?'':' <span class="funcao-mini">(afastado)</span>'}</span>
+        <label class="custom-lbl">Realização: <input type="date" id="dk_${c.matricula}" value="${r.realizationDate||''}"></label>
+      </div>`;
   });
-  wrap.innerHTML = html || 'Nenhum colaborador neste escopo.
-
-';
+  wrap.innerHTML = html || '<div class="help-text">Nenhum colaborador neste escopo.</div>';
   updateIopCheckCount();
 }
-function iopCheckChange(){ updateIopCheckCount(); }
+function iopCheckChange(mat){
+  const ck = document.getElementById('ik_'+mat);
+  const dk = document.getElementById('dk_'+mat);
+  if(ck && ck.checked && dk && !dk.value) dk.value = todayStr();
+  updateIopCheckCount();
+}
 function updateIopCheckCount(){
   const boxes = document.querySelectorAll('[id^="ik_"]');
   let total=0, marcados=0;
@@ -1868,12 +1472,15 @@ function saveIopEdit(){
   const def2 = state.iopDefs.find(i=>i.code===newCode);
   if(def2) def2.desc = desc;
   state.iops[newCode] = { rev: document.getElementById('fRev').value.trim(), revDate: document.getElementById('fRevDate').value };
-  // Aplica a conferência de assinaturas marcada no checklist (apenas feito/não feito)
+  // Aplica a conferência de assinaturas marcada no checklist
   state.collaborators.forEach(c=>{
     const ck = document.getElementById('ik_'+c.matricula);
     if(!ck) return;
+    const dk = document.getElementById('dk_'+c.matricula);
     const r = c.records[newCode] || (c.records[newCode] = {done:false,realizationDate:'',validityDate:'',userCustomValidity:false});
     r.done = ck.checked;
+    if(dk) r.realizationDate = dk.value;
+    if(ck.checked && !r.realizationDate) r.realizationDate = todayStr();
   });
   saveState(); renderAll(); closeModal('modalEditRev');
   showToast(newCode!==oldCode ? `IOP renomeada: ${oldCode} → ${newCode}.` : 'IOP '+newCode+' atualizada.');
@@ -1905,7 +1512,7 @@ function openBackupModal(){
   const t1 = state.collaborators.filter(c=>c.turno==='T1').length;
   const t2 = state.collaborators.filter(c=>c.turno==='T2').length;
   const t3 = state.collaborators.filter(c=>c.turno==='T3').length;
-  document.getElementById('backupInfo').innerHTML = `No momento: **${t1}** no 1º turno • **${t2}** no 2º • **${t3}** no 3º (total ${state.collaborators.length}) • ${getIops().length} IOPs • ${state.catalog.length} treinamentos no catálogo • ${state.registros.length} registros gerais.`;
+  document.getElementById('backupInfo').innerHTML = `No momento: <b>${t1}</b> no 1º turno • <b>${t2}</b> no 2º • <b>${t3}</b> no 3º (total ${state.collaborators.length}) • ${getIops().length} IOPs • ${state.catalog.length} treinamentos no catálogo • ${state.registros.length} registros gerais.`;
   openModal('modalBackup');
 }
 function exportBackup(){
@@ -1923,6 +1530,7 @@ function handleImportBackup(e){
     try{
       const parsed = JSON.parse(ev.target.result);
       if(!Array.isArray(parsed.collaborators)){ showToast('Arquivo de backup inválido.', true); return; }
+      // Revisões das IOPs: aplica somente em IOPs que já existem no app (preserva os nomes atuais)
       if(Array.isArray(parsed.iops)){
         parsed.iops.forEach(it=>{
           if(it && it.code){
@@ -1931,6 +1539,7 @@ function handleImportBackup(e){
           }
         });
       }
+      // Aceita backup novo (v5, com matrícula/turno) e antigos (v3/v4, com id/shift)
       const turnoPadrao = (parsed.shift && SHIFTS[parsed.shift] && parsed.shift!=='ALL') ? parsed.shift : (currentShift!=='ALL' ? currentShift : 'T1');
       let novos=0, atualizados=0;
       parsed.collaborators.forEach(raw=>{
@@ -1964,19 +1573,31 @@ function exportExcel(){
     if(a.enabled!==b.enabled) return a.enabled?-1:1;
     return sortColabs(a,b);
   });
-  // Aba 1: IOPs — sem colunas de data e sem status "Vencida"
-  let t1 = '| Turno | Folga | Matrícula | Colaborador | Função | Código IOP | Descrição IOP | Status |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| ${c.turno} | ${esc(c.folga\|\|'—')} | ${esc(c.matricula)} | ${esc(c.name)} | ${esc(c.funcao\|\|'')} | ${iop.code} | ${esc(iop.desc)} | ${status} |';
-  let t2 = '| Código | Descrição | REV | Data da Revisão | Validade da Revisão |
-| --- | --- | --- | --- | --- |
-| ${iop.code} | ${esc(iop.desc)} | ${esc(rv.rev\|\|'')} | ${formatDateBR(rv.revDate)} | ${v?formatDateBR(v.valDateStr):''} |';
-  let t3 = '| Turno | Colaborador | Matrícula | Função | Treinamento | Tipo | Data de Realização | Validade |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| ${c.turno} | ${esc(c.name)} | ${esc(c.matricula)} | ${esc(c.funcao\|\|'')} | ${esc(t.name)} | ${(TYPE_META[t.type]\|\|TYPE_META['INTERNO']).label} | ${formatDateBR(r.realizationDate)} | ${formatDateBR(trainingValidity(r,t))} |';
-  const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"></head><body><h3>Treinamentos IOPS — ${shiftLabel()}</h3>${t1}
-<h3>Revisões das IOPs</h3>${t2}
-<h3>Outros Treinamentos</h3>${t3}</body></html>`;
+  let t1 = '<table border="1"><thead><tr><th>Turno</th><th>Folga</th><th>Matrícula</th><th>Colaborador</th><th>Função</th><th>Código IOP</th><th>Descrição IOP</th><th>Status</th><th>Data de Realização</th><th>Validade</th></tr></thead><tbody>';
+  list.forEach(c=>{
+    defs.forEach(iop=>{
+      const r = c.records[iop.code];
+      const status = (!c.enabled) ? 'Afastado' : (!r||!r.done) ? 'Pendente' : (isExpired(r)?'Vencida':'Concluída');
+      t1 += `<tr><td>${c.turno}</td><td>${esc(c.folga||'—')}</td><td>${esc(c.matricula)}</td><td>${esc(c.name)}</td><td>${esc(c.funcao||'')}</td><td>${iop.code}</td><td>${esc(iop.desc)}</td><td>${status}</td><td>${formatDateBR(r?r.realizationDate:'')}</td><td>${formatDateBR(r&&r.done?getValidity(r):'')}</td></tr>`;
+    });
+  });
+  t1 += '</tbody></table>';
+  let t2 = '<table border="1"><thead><tr><th>Código</th><th>Descrição</th><th>REV</th><th>Data da Revisão</th><th>Validade da Revisão</th></tr></thead><tbody>';
+  getIops().forEach(iop=>{
+    const rv = state.iops[iop.code]||{};
+    const v = getRevValidityInfo(rv.revDate);
+    t2 += `<tr><td>${iop.code}</td><td>${esc(iop.desc)}</td><td>${esc(rv.rev||'')}</td><td>${formatDateBR(rv.revDate)}</td><td>${v?formatDateBR(v.valDateStr):''}</td></tr>`;
+  });
+  t2 += '</tbody></table>';
+  let t3 = '<table border="1"><thead><tr><th>Turno</th><th>Colaborador</th><th>Matrícula</th><th>Função</th><th>Treinamento</th><th>Tipo</th><th>Data de Realização</th><th>Validade</th></tr></thead><tbody>';
+  state.catalog.forEach(t=>{
+    list.filter(c=>c.enabled && isTrainingRequiredFor(c,t)).forEach(c=>{
+      const r = getTrainingRecord(c.matricula, t.id);
+      if(r) t3 += `<tr><td>${c.turno}</td><td>${esc(c.name)}</td><td>${esc(c.matricula)}</td><td>${esc(c.funcao||'')}</td><td>${esc(t.name)}</td><td>${(TYPE_META[t.type]||TYPE_META['INTERNO']).label}</td><td>${formatDateBR(r.realizationDate)}</td><td>${formatDateBR(trainingValidity(r,t))}</td></tr>`;
+    });
+  });
+  t3 += '</tbody></table>';
+  const html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="UTF-8"></head><body><h3>Treinamentos IOPS — ${shiftLabel()}</h3>${t1}<br><h3>Revisões das IOPs</h3>${t2}<br><h3>Outros Treinamentos</h3>${t3}</body></html>`;
   downloadFile(html, 'controle-treinamentos-iops.xls', 'application/vnd.ms-excel;charset=utf-8;');
   showToast('Excel exportado.');
 }
@@ -1990,15 +1611,21 @@ function downloadFile(content, filename, type){
 function triggerPrint(){ switchTab('matriz'); setTimeout(()=>window.print(), 150); }
 
 // ==================== SINCRONIZAÇÃO GOOGLE SHEETS (PLANILHA ÚNICA) ====================
+// Cache primeiro → envia pendências (diff) → puxa do servidor. Edições locais NUNCA são perdidas.
+
+// URL do Web App já embutida no código: ao abrir, o painel sincroniza e puxa os dados
+// atualizados sozinho, sem precisar configurar nada em cada computador.
 const DEFAULT_GS_URL = 'https://script.google.com/macros/s/AKfycbxO_SvCKNC8j_-QZrE4WNdLHvl9P9N507LqTJ1SCtciThchXKyRdS0NRUPCIHZ2hTtT/exec';
 
 function gsConfigKey(){ return 'controle-treinamentos-iops-gs-config'; }
+// Prioridade: (1) URL salva neste computador → (2) URL padrão embutida no código.
+// A marca "disabled" evita que desativar volte ao padrão na próxima abertura.
 function getGsConfig(){
   try{
     const c = JSON.parse(localStorage.getItem(gsConfigKey()));
     if(c){
-      if(c.disabled) return { url:'' };
-      const u = String(c.url || (c.urls && c.urls.T1) || '').trim();
+      if(c.disabled) return { url:'' };                                        // desativado de propósito
+      const u = String(c.url || (c.urls && c.urls.T1) || '').trim();           // migra config antiga de 3 URLs
       if(u) return { url:u };
     }
   }catch(e){}
@@ -2019,6 +1646,7 @@ function openSyncModal(){
 }
 function saveSyncConfig(){
   const url = document.getElementById('gsUrl').value.trim();
+  // Apagar o campo e salvar = desativar (grava a marca para não voltar ao padrão do código)
   localStorage.setItem(gsConfigKey(), JSON.stringify({ url, disabled: !url }));
   closeModal('modalSyncConfig');
   updateSyncIndicator('gray', url ? 'Configurado. Use "Sincronizar agora".' : 'Sincronização desativada');
@@ -2032,7 +1660,7 @@ function deactivateSync(){
   showToast('Sincronização desativada.');
 }
 
-// ---- Transporte ----
+// ---- Transporte (Content-Type text/plain evita preflight CORS) ----
 async function gsFetchJson(url, opts={}){
   const r = await fetch(url, Object.assign({ cache:'no-store' }, opts));
   if(!r.ok) throw new Error('HTTP '+r.status);
@@ -2049,7 +1677,7 @@ async function gsPost(payload){
   return gsFetchJson(url, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(payload) });
 }
 
-// ---- Indicador de sincronização ----
+// ---- Indicador de sincronização (4 estados) ----
 function updateSyncIndicator(status, tooltip){
   state.syncStatus = status;
   const dot = document.getElementById('syncStatusDot');
@@ -2059,14 +1687,14 @@ function updateSyncIndicator(status, tooltip){
   if(ind) ind.title = (tooltip||'')+time;
 }
 
-// ---- Snapshot ----
+// ---- Snapshot: estado local → linhas das abas (mesmas chaves do Code.gs) ----
 function buildSnapshot(){
   const snap = { colaboradores:[], iops:[], treinamentos:[], catalogo:[], registrosGerais:[] };
   state.collaborators.forEach(c=>{
     snap.colaboradores.push({ Matricula:c.matricula, Nome:c.name, Turno:c.turno, Folga:c.folga||'', Funcao:c.funcao||'', Habilitado:c.enabled?'Sim':'Não' });
     Object.keys(c.records).forEach(code=>{
       const r = c.records[code];
-      if(!r.done) return;
+      if(!r.done) return; // só treinamentos realizados vão para a planilha
       snap.treinamentos.push({ Matricula:c.matricula, IopCodigo:code, Realizado:'Sim', DataRealizacao:r.realizationDate||'', DataValidade:r.validityDate||'', ValidadePersonalizada:r.userCustomValidity?'Sim':'Não' });
     });
   });
@@ -2083,7 +1711,7 @@ function buildSnapshot(){
   return snap;
 }
 
-// ---- Diff ----
+// ---- Diff: compara com o último snapshot conhecido e gera operações ----
 const GS_DEFS = {
   colaboradores:   { chave:['Matricula'], campos:['Nome','Turno','Folga','Funcao','Habilitado'] },
   iops:            { chave:['Codigo'], campos:['Descricao','REV','DataRevisao'] },
@@ -2183,7 +1811,7 @@ function applyServerData(data){
   }
 }
 
-// ---- Envio ----
+// ---- Envio com verificação de falhas por item (Code.gs retorna resultados) ----
 async function gsPushOps(ops){
   const resp = await gsPost({ action:'push', ops });
   const falhas = (resp.resultados||[]).filter(r=>!r.ok);
@@ -2193,8 +1821,9 @@ async function gsPushOps(ops){
   return resp;
 }
 
+// ---- Push (chamado por saveState após qualquer edição) ----
 async function triggerRemotePush(){
-  if(!gsCurrentUrl()) return true;
+  if(!gsCurrentUrl()) return true; // sem configuração: mantém só cache local
   const meta = gsLoadMeta();
   const atual = buildSnapshot();
   let ops = diffSnapshots(atual, meta.snapshot);
@@ -2252,6 +1881,7 @@ async function syncNow(silent){
     const semColabs = !(Array.isArray(data.colaboradores) && data.colaboradores.length);
     const semIops = !(Array.isArray(data.iops) && data.iops.length);
     if(semColabs && semIops){
+      // Planilha vazia/nova: envia o estado local completo (migração inicial)
       const meta = gsLoadMeta();
       const atual = buildSnapshot();
       const ops = diffSnapshots(atual, null);
@@ -2266,6 +1896,7 @@ async function syncNow(silent){
       return true;
     }
     applyServerData(data);
+    // Baseline = conteúdo observado no servidor (seções vazias → envia o que existir localmente)
     const baseline = {colaboradores:[],iops:[],treinamentos:[],catalogo:[],registrosGerais:[]};
     ['colaboradores','iops','treinamentos','catalogo','registrosGerais'].forEach(ent=>{
       if(Array.isArray(data[ent]) && data[ent].length) baseline[ent] = data[ent];
@@ -2275,7 +1906,7 @@ async function syncNow(silent){
     meta.snapshot = atual;
     gsSaveMeta(meta);
     const extras = diffSnapshots(atual, baseline);
-    if(extras.length) await triggerRemotePush();
+    if(extras.length) await triggerRemotePush(); // auto-cura: envia dados locais que o servidor ainda não tem
     state.pendingPush = false; persistCache();
     state.lastSyncTime = horaAgora();
     renderAll();
@@ -2305,7 +1936,7 @@ async function testConnection(){
 }
 
 // ==================== UTIL ====================
-function escapeHtml(s){ return String(s??'').replace(/&/g,'&').replace(/</g,'<').replace(/>/g,'>').replace(/"/g,'"').replace(/'/g,'''); }
+function escapeHtml(s){ return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 function showToast(message, isError=false){
   const container = document.getElementById('toastContainer');
   const item = document.createElement('div');
@@ -2320,7 +1951,7 @@ function showToast(message, isError=false){
 (async function init(){
   updateShiftUI();
   applyShiftTexts();
-  loadState(); renderAll();
+  loadState(); renderAll(); // cache primeiro: nada some enquanto o servidor responde
   if(gsCurrentUrl()){
     updateSyncIndicator('gray','Conectando…');
     if(state.pendingPush){
@@ -2328,7 +1959,7 @@ function showToast(message, isError=false){
       const sent = await triggerRemotePush();
       if(!sent){
         showToast('Há alterações locais aguardando envio. Elas estão preservadas — use "Sincronizar agora" após resolver o problema.', true);
-        return;
+        return; // NÃO puxa: preserva as edições locais
       }
     }
     await syncNow(true);
